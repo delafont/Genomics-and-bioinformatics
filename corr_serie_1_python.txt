@@ -1,0 +1,19 @@
+from math import sqrt,log
+from matplotlib.pyplot import plot,show
+
+f = open("genes_expression_100.txt","r")
+g = open("output_py.txt","w")
+header = f.readline() #to skip this line
+g.write("Gene_name \t Ratio \t Mean \n")
+points = []
+
+for l in f:
+    name, c1, c2 = l.split()
+    c1 = float(c1); c2 = float(c2)
+    if c1*c2 != 0:
+        ratio = log(c1/c2, 2)
+        mean = log(sqrt(c1*c2), 10)
+        plot(mean,ratio,"o")
+        g.write(name + '\t' + str(ratio) + '\t' + str(mean) + '\n')
+f.close(); g.close()
+show()

@@ -1,0 +1,9 @@
+data = read.table("genes_expression_100.txt", header=TRUE)
+names = data[,1]
+c1 = data[,2]
+c2 = data[,3]
+ratios = log2(c1/c2)
+means = log10(sqrt(c1*c2))
+plot(ratios~means)
+output = data.frame(Gene_name=names, Ratio=ratios, Mean=means)
+write.table(output,"output_R.txt")
