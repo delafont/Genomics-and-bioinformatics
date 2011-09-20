@@ -1,9 +1,7 @@
-
 \documentclass[a4paper,11pt]{article}
 
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
-%\usepackage[francais]{babel}
 \usepackage{bbm} %math chars
 \usepackage{amsmath}
 \usepackage{indentfirst}
@@ -18,52 +16,46 @@
 \date{September 20, 2011}
 \author{Genomics and bioinformatics - Week 1}
 
-
 \begin{document}
 \maketitle
 
+\section{Website of this course}
+Add the course website to your bookmarks.
 
-\section{UCSC genome browser}
+\url{http://moodle.epfl.ch/course/view.php?id=11181}
+
+\section{Demo of the UCSC genome browser}
 Go to the address \url{http://genome.ucsc.edu/}. Click on ``Genome browser'', select a species 
 and visualize its genomic content; zoom in and out.
 
-\section{Exercise}
-To do this exercise, install R and Python on your computer (see below).
+\section{Programming exercise}
+To complete this exercise, install R and Python on your computer (see below).
 
-Use as much of the documentation given below as needed to obtain the result we want here, using successively R and Python.
+This exercise, which consists in playing with a sample text file, should be completed in both languages. You must write your scripts successively in R and Python. Use as much of the documentation given below as needed to obtain the result we desire here.
 
-Testing file: download genes\_expression\_100.txt at \url{testing file}. It is an RNA-seq output file in .txt tab-delimited format - 100 lines of the form\\
-(Gene name <tab> Expression in condition 1 <tab> Expression in condition 2).
+Testing file: download \texttt{genes\_expression\_100.txt} on the course Moodle website. It is an output file of a typical bioinformatics program in raw text tab-delimited format - 100 lines of the form:\\
+
+\texttt{Gene name <tab> Expression in condition 1 <tab> Expression in condition 2}\\
 
 Using Python, then R, do: 
 \begin{enumerate}
-\item read the file and extract gene names and associated numbers;
-\item compute the ratios between the two numerical columns; take $log_{2}$ of the result;
-\item compute the geometric means between the two numerical columns; take $log_{10}$ of the result;
-\item write these in a new text file: (GeneName <tab> $log_2$(ratio) <tab> $log_{10}$(mean));
-\item plot ratios vs means (use matplotlib for Python).
+\item Read the file and extract gene names and associated numbers;
+\item Compute the ratios between the two numerical columns; take $log_{2}$ of the result;
+\item Compute the geometric means between the two numerical columns; take $log_{10}$ of the result;
+\item Write these results in a new text file: \texttt{"GeneName <tab> $log_2$(ratio) <tab> $log_{10}$(mean)"}
+\item Plot ratios vs means (use  \texttt{matplotlib} for Python).
 \end{enumerate}
 
+\clearpage
 \section{R}
 \subsection{Installation} 
-Download R 2.13 at \url{http://stat.ethz.ch/CRAN/}
+Download R 2.13 at \url{http://stat.ethz.ch/CRAN/}\\
+During the installation, when you are asked what to install, don't forget to include the help files.
 
-\subsubsection{Windows}
-For both R and RStudio: during the installation, choose where you want to install your folder; then you can run it clicking on the .exe file located in the bin/ sub-folder. 
+If you are using Windows: during the installation, choose where you want to install your folder; then you can run it clicking on the .exe file located in the bin/ sub-folder. 
 
 \subsection{Tutorial}
 R tutorial: \url{http://cran.r-project.org/doc/manuals/R-intro.pdf}
-    %Example tutorial:
-    %R is for statistics
-    %R is most useful when you already have data
-    %- open a data file: read.table('data.txt') > data.frame
-    %- extract columns, lines: data[,1], data[1,], data[1]
-    %- class()
-    %- create vectors: c()
-    %- use some functions such as mean, var, median
-    %- graphics: histograms, boxplots, pairs(), plot()
-    %- write to a file: write.table(data, 'output.txt')
-    %- do the exercise 
     
 If you need help:
 \begin{enumerate}
@@ -76,33 +68,16 @@ If you need help:
 \subsection{Reference documentation}
 \url{http://cran.r-project.org/doc/manuals/refman.pdf}
 
-
 \section{Python}
 
 \subsection{Installing}
-Download the Enthought Python distribution at \url{http://www.enthought.com/products/edudownload.php}
+Download the Enthought Python from our USB keys. The packages are also available on \url{http://www.enthought.com/repo/.hidden_epd_installers} (but the server is very slow).
 
-Open a console* and type ``ipython''
-(*on Windows, open the ``Start'' menu and type ``cmd'' in the search field).
+Open a console and type ``ipython''
+(on Windows, to get a console open the ``Start'' menu and type ``cmd'' in the search field).
 
 \subsection{Tutorial}
-Python tutorial: \url{http://docs.python.org/tutorial/} : read 3.1 to 4.6, 5.5 and 7.2.
-
-For Numpy: \url{http://www.scipy.org/Tentative_NumPy_Tutorial}
-    %Example tutorial:
-    %- use it as a calculator > int, float
-    %- print "Hello" > strings
-    %- create a script.py file with several commands and run it : execfile('script.py')
-    %- create lists, dictionaries, use range()
-    %- create a for loop
-    %- insert if statements
-    %- play with loops, lists and dicts
-    %- open a file: f = open('data.txt'), f.close()
-    %- iterate over the lines and print them
-    %- extract elements from a line: split(); \n and \t tags
-    %- write to a new file: g.write()
-    %- do the exercise.
-    %Some more tutorials: http://wiki.python.org/moin/BeginnersGuide/Programmers 
+Python tutorial: \url{http://docs.python.org/tutorial/} read 3.1 to 4.6, 5.5 and 7.2.
 
 \subsection{Reference documentation}
 \url{http://docs.python.org/library/index.html}
