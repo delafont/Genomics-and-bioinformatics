@@ -1,0 +1,14 @@
+# Temporary files #
+.DS_Store
+*.pyc
+*.swp
+*.swo
+*~
+\#*
+.#*
+._*
+
+# TeX files #
+*.log
+*.aux
+*.synctex.gz
