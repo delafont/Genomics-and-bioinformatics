@@ -1,0 +1,119 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{bbm} %math chars
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{fullpage} %minimizes the default margins
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage[center,footnotesize]{caption} %options des legendes des graphes
+\usepackage[section]{placeins} %place les figures d'une section avant le debut de la suivante
+\usepackage{subfig} %a) b) c)
+
+\title{Series 2}
+\date{September 27, 2011}
+\author{Genomics and bioinformatics - Week 2}
+
+\begin{document}
+\maketitle
+
+\section{Description}
+In today's session you will retrieve publicly available genome sequence and annotation data 
+\indent for a particular species and use it to extract some biological information about that species.
+
+\section{Downloading the genome data}
+From the UCSC Genome Browser select the latest assembly of the $Mus$ $musculus$ genome.
+
+Scroll down to ``Assembly details'' and click on the ``Downloads'' link.
+
+From ``Data set by chromosome'' download the \texttt{.fa.gz} file for any chromosome.
+
+From ``Annotation database'' download the \texttt{knownGene.txt.gz} and \texttt{kgAlias.txt.gz} files.
+
+\section{Programming exercise}
+
+\subsection{Using Python}
+\begin{enumerate}
+\item Read the \texttt{.fa} file and extract the chromosome sequence
+\item Determine the length of the sequence
+\item Calculate the number of As, Gs, Cs and Ts in the sequence
+\item Compute the GC-content of the chromosome
+\item Plot GC content vs chromosome length (use  \texttt{matplotlib})
+\end{enumerate}
+
+\Large{\emph\bf Questions}
+\begin{enumerate}
+\normalsize\item What does the GC-content tell us about a genome? 
+\item Using data for all chromosomes, calculate the average GC-content of the mouse genome. Does this compare to the value mentioned in your lecture slides?
+\end{enumerate}
+
+\subsection{Using R}
+\begin{enumerate}
+\normalsize\item Read the \texttt{knownGene.txt} and \texttt{kgAlias.txt}  files
+\item Extract the annotation corresponding to your chromosome (\texttt{chrom} column) from \texttt{knownGene.txt}
+\item Extract a list all the exons in the chromosome (\texttt{exonStarts}, \texttt{exonEnds} columns)
+\item Compute exon sizes. Create a table as shown below,
+
+\scriptsize geneID exonNum exonStart exonEnd exonSize
+
+\scriptsize uc007aet.1	1	3195984	3197398	1415
+
+\scriptsize uc007aet.1	2	3203519	3205713	2195
+
+\scriptsize uc007aeu.1	1	3204562	3207049	2488
+
+\scriptsize uc007aeu.1	2	3411782	3411982	201
+
+\scriptsize uc007aeu.1	3	3660632	3661579	948
+
+\normalsize\item Plot the exon size distribution
+\end{enumerate}
+
+\normalsize\underline{Note}
+
+\normalsize The \texttt{knownGene.txt} and \texttt{kgAlias.txt} files are both tab-delimited files.
+
+Column headers for the \texttt{knownGene.txt} file are,
+
+\scriptsize\texttt {geneID	chrom	strand	txStart	txEnd	cdsStart	cdsEnd	exonCount	exonStarts	exonEnds	proteinID	alignID}
+
+\normalsize {Column headers for the \texttt{kgAlias.txt} file are,}
+
+\scriptsize\texttt {geneID	geneName}\\
+
+\Large {\emph\bf Questions}
+\begin{enumerate}
+\normalsize\item List names of genes with,
+
+ a) the longest exon, b) the shortest exon and c) most number of exons. 
+
+\item List all the intronless genes in the chromosome. 
+\item What can you tell about the exon size distribution across different mouse chromosomes?
+\end{enumerate}
+
+\normalsize\underline{Note}
+
+\indent\normalsize Cross \texttt{knownGene.txt} and \texttt{kgAlias.txt} to obtain \texttt{geneNames} corresponding to each \texttt{geneID}. 
+
+\scriptsize\texttt  geneID geneName
+
+\scriptsize\texttt  uc007aet.1	AK135172, mKIAA1889, uc007aet.1
+
+\scriptsize\texttt  uc007aeu.1	NM\_001011874, NP\_001011874, Q5GH67, XKR4\_MOUSE, Xkr4, Xrg4, uc007aeu.1
+
+\subsection{Reference documentation}
+\normalsize For R - \url{http://cran.r-project.org/doc/manuals/refman.pdf}
+
+For Python - \url{http://docs.python.org/tutorial/}\\
+
+\emph{If you need help:}
+\begin{enumerate}
+\item Go through last week's exercise session for examples
+\item Use Google
+\item Use the ? or help() with R commands
+\item Ask us
+\end{enumerate}
+
+\end{document}
