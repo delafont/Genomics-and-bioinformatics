@@ -12,3 +12,8 @@
 *.log
 *.aux
 *.synctex.gz
+
+# Particular files #
+/week2/chr1.fa
+/week2/kgAlias.txt
+/week2/knownGene.txt
