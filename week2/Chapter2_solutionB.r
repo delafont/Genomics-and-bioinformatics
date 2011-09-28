@@ -30,22 +30,17 @@ for (g in differentGenes) {
         maxGene <- g
         }
     }
+maxGene
 # 3. One needs to check if exons in a gene are contiguous
 for (g in differentGenes) {
     exonIndexes = attr["gene_id"][,1]==g
     start <- attr["start"][,1][exonIndexes]
     end <- attr["end"][,1][exonIndexes]
     strand <- attr["strand"][,1][exonIndexes]
-    # There are exons on both strands!
-    end0 <- sort(end[strand=='+'])
-    start0 <- sort(start[strand=='+'])
-    diff0 <- start0[-1] - end0[-length(end0)]
-    if (sum(diff0)==0 & length(diff0)!=0) print(g)
-    # Second strand
-    end1 <- sort(end[strand=='-'])
-    start1 <- sort(start[strand=='-'])
-    diff1 <- start1[-1] - end1[-length(end1)]
-    if (sum(diff1) == 0  | length(diff1) != 0) print(g)
+    end <- sort(end)
+    start <- sort(start)
+    diff <- start[-1] - end[-length(end)]
+    if (sum(diff)==0 & length(diff)!=0) print(g)
     }
 
 
