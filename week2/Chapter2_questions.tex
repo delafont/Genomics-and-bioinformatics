@@ -20,11 +20,10 @@
 
 \section{Introduction}
 \subsection{Description}
-In today's session, you will use publicly available genome sequence and annotation data for \indent a particular species
+In today's session, you will use publicly available genome sequence and annotation data for a particular species
 to extract some biological information about that species.
 \subsection{Before we begin...}
-If you do not have a working copy of Python and R on your computer please go through last week's tutorial before starting this exercise. 
-
+If you do not have a working copy of Python and R on your computer please go through last week's tutorial before starting this exercise.
 
 
 
@@ -35,9 +34,17 @@ If you do not have a working copy of Python and R on your computer please go thr
 \item Visualize the most recent assembly (mm9) of mouse chromosome 18.
 \item Scroll down to ``Mapping and Sequencing Tracks'' and load the GC percent track.
 \end{enumerate}
-You can obtain more information about the tracks by clicking on them.  
+ You can obtain more information about the tracks by clicking on them.
 \subsection{Downloading genome data}
-Copy the sequence file \texttt{chr18.fa} and annotation files \texttt{chr18.gtf}, \texttt{chr18\_mod.txt} from the USB keys provided by us. 
+Copy the "sequence" file \texttt{chr18.fa} and "annotation" files \texttt{chr18.gtf}, \texttt{chr18\_mod.txt} for mouse chr18 from the USB keys provided by us.\\
+
+The sequence \texttt{.fa} files for mouse can be downloaded from the UCSC Downloads page,
+
+\url{http://hgdownload.cse.ucsc.edu/goldenPath/mm9/chromosomes/}
+
+The .gtf file for the whole mouse genome can be downloaded from ENSEMBL,
+
+\url{ftp://ftp.ensembl.org/pub/release-64/gtf/mus_musculus/}
 
 
 
@@ -46,10 +53,10 @@ Copy the sequence file \texttt{chr18.fa} and annotation files \texttt{chr18.gtf}
 \item Load the \texttt{.fa} file for chr18 and extract the sequence.
 \item Determine the length of the sequence.
 \item Calculate the number of As, Gs, Cs and Ts in the sequence.
-\item Compute the GC-content of the chromosome.
+\item Compute the GC content of the chromosome.
 \item Plot GC content along mouse chr18 using an appropriate window (bin) sizes (use \texttt{matplotlib}).
 \item Write the start and end coordinates of each bin and it's corresponding GC content to a file, as follows: \\
-\texttt {binStart binEnd	GC\_content}
+\texttt {binStart binEnd GC\_content}
 \end{enumerate}
 
 
@@ -57,7 +64,7 @@ Copy the sequence file \texttt{chr18.fa} and annotation files \texttt{chr18.gtf}
 \section{Manipulating data with R}
 \subsection{Exons}
 The \texttt{.gtf} file is a tab-delimited file, with the following column headers: \\
-\texttt {chromosome	source	feature	start	end	score	strand	frame	attributes}
+\texttt {chromosome source feature start end score strand frame attributes}
 \begin{enumerate}
 \item Load the \texttt{.gtf} file for chr18 in R.
 \item Extract the rows corresponding to exons from the \texttt{feature} column to a new table.
@@ -66,12 +73,13 @@ The \texttt{.gtf} file is a tab-delimited file, with the following column header
 \end{enumerate}
 \subsection{Genes}
 The modified annotation file \texttt{chr18\_attributes.txt} is also a tab-delimited file, with the \indent following column headers: \\
-\texttt {chromosome	source	feature	start	end	score	strand	frame	gene\_id	 transcript\_id 	 exon\_number 	 gene\_name 	 gene\_biotype 	 \indent transcript\_name 	 protein\_id }
+\texttt {chromosome source feature start end score strand frame gene\_id transcript\_id exon\_number gene\_name gene\_biotype transcript\_name protein\_id }
 \begin{enumerate}
 \normalsize
 \item Load the modified \texttt{.txt} annotation file for chr18 in R.
 \item Find out the ID and name of the gene containing,
- a) the longest exon, b) the shortest exon and c) most number of exons.
+
+ a) the longest exon, b) most number of exons.
 \item List all the intron-less genes in the chromosome.
 \end{enumerate}
 \subsection{GC content}
@@ -82,11 +90,10 @@ The modified annotation file \texttt{chr18\_attributes.txt} is also a tab-delimi
 
 
 
-
 \section{Reference documentation}
 For R - \url{http://cran.r-project.org/doc/manuals/refman.pdf}\\
-For Python - \url{http://docs.python.org/tutorial/}\\ \\
-\emph{If you need help:}
+\indent For Python - \url{http://docs.python.org/tutorial/}\\ \\
+\indent\emph{If you need help:}
 \begin{enumerate}
 \item Go through last week's exercise session for examples
 \item Use Google
