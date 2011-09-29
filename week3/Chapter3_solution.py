@@ -29,7 +29,7 @@ Edges are defined as couples of vertices, but we like to keep the overlap sequen
 """
 
 
-# Question 2.2 : Build the dual graph #
+# Question 2.2#
 def subseqs(read,l):
     """Extracts all sub-sequences of length l"""
     subs = []
@@ -38,6 +38,8 @@ def subseqs(read,l):
     return subs
 
 l = read_length-1 # arbitrary, to reduce the number of elements
+
+# Build the dual graph 
 Vdual = []
 for r in reads:
     Vdual.extend([subseqs(r,l) for r in reads])
