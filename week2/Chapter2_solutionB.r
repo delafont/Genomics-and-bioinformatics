@@ -18,9 +18,11 @@ attr <- attr[exonLines,]
 geneIds <- attr["gene_id"]
 exonLengths <- attr["end"] - attr["start"]
 differentGenes <- levels(geneIds[1,])
+
 # 2.a)
 maxIndex <- which(exonLengths[,1]==max(exonLengths)) # or: which.max(lengths[,1])
 maxGene <- as.vector(geneIds[maxIndex,]) # as.vector: else it is a "factor vector"
+
 # 2.c)
 maxNrOfExons <- 0
 for (g in differentGenes) {
@@ -31,16 +33,11 @@ for (g in differentGenes) {
         }
     }
 maxGene
-# 3. One needs to check if exons in a gene are contiguous
+
+# 3. Intron-less genes are genes with only one exon
 for (g in differentGenes) {
-    exonIndexes = attr["gene_id"][,1]==g
-    start <- attr["start"][,1][exonIndexes]
-    end <- attr["end"][,1][exonIndexes]
-    strand <- attr["strand"][,1][exonIndexes]
-    end <- sort(end)
-    start <- sort(start)
-    diff <- start[-1] - end[-length(end)]
-    if (sum(diff)==0 & length(diff)!=0) print(g)
+    exonIndexes = which(attr["gene_id"][,1]==g)
+    if (length(exonIndexes)==1) print(g)
     }
 
 
