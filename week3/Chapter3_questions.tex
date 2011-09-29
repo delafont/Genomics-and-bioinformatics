@@ -32,9 +32,11 @@ We are going to create a contig from a bunch of reads. The reads have been speci
 \subsection{Load the reads}
 Read the file \texttt{reads.fastq} and load all the reads it contains inside a list. Of course, you should probably take a look at \texttt{reads.fastq} in your text editor first, this will help you when writing the parsing function.
 \subsection{Find the overlaps}
-Write a function that takes two reads as input and returns True if they overlap, false otherwise. The function should also have a \texttt{min\_overlap} parameter that specifies how many base pairs must match between both reads at a minimum for it to be considered an overlap. If read1 ends with a ``C'' and read2 starts with a ``C'', you can't consider that an overlap.
+Write a function that takes two reads as input and returns the number of base pairs they overlap with. If they don't overlap at all, return 0. The function should also have a \texttt{min\_overlap} parameter that specifies how many base pairs must match between both reads at a minimum for it to be considered an overlap. If read1 ends with a ``C'' and read2 starts with a ``C'', you can't consider that an overlap.
 \subsection{Generate the edges}
 Using the the list of reads you just loaded and the function you just wrote you can now generate a list of edges. Indeed, in the graph we are going to create, the reads will act as the vertices and the overlaps as the edges. As you know, an edge exists if a vertex connects to an other vertex. In our case, a link between two reads exists if a read overlaps an other read.
+\subsection{Find the largest contig}
+Using the the list of edges you just creates, you should be able to extract the largest contig possible, and display it on the screen.
 
 \newpage
 
