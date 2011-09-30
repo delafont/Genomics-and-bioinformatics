@@ -1,4 +1,3 @@
-
 ## Exercise 4.1
 gtf <- read.table('chr18.gtf',header=TRUE,sep='\t') # If you forget the "sep" argument, it cuts all spaces.
 exonLines <- gtf["feature"]=='exon' # The indices of all lines of type "exon".
@@ -41,8 +40,6 @@ for (g in differentGenes) {
     }
 
 
-## Exercise 4.3
-# Something like...
-# pyresult <- read.table("result.py")
-# plot(pyresult["GC_content"])
-# hist(pyresult["GC_content"])
+# Exercise 4.3
+pyresult <- read.table("result.py")
+plot(pyresult$V1, pyresult$V3, tyoe="l", ) # Plot Column1 or Column2 (Start/End) against Column3 (GC%)
