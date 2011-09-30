@@ -42,4 +42,4 @@ for (g in differentGenes) {
 
 # Exercise 4.3
 pyresult <- read.table("result.py")
-plot(pyresult$V1, pyresult$V3, tyoe="l", ) # Plot Column1 or Column2 (Start/End) against Column3 (GC%)
+plot(pyresult$V1, pyresult$V3, type="l", ) # Plot Column1 or Column2 (Start/End) against Column3 (GC%)
