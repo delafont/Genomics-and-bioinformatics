@@ -40,7 +40,7 @@ def subseqs(read,l):
 
 l = read_length-1 # arbitrary, to reduce the number of elements
 
-# Build the dual graph 
+# Build the dual graph
 Vdual = []
 [Vdual.extend(subseqs(r,l-1)) for r in reads]
 Vdual = set(Vdual)
@@ -56,9 +56,9 @@ e.g. with l=3:
 Sequence: AATGTCGATT
 Reads: AATGT, ATGTC, GTCGA, CGATT
 Vdual = AAT, ATG, TGT, GTC, TCG, CGA, GAT, ATT, TTG, TGA, GAC
-Edual = [(AA,AAT,AT), (AT,ATG,TG), ...  
-	 (AT,ATT,TT), (AT,TGA,GA), ...]
-The graph: TG -> GT -> TC 
+Edual = [(AA,AAT,AT), (AT,ATG,TG), ...
+     (AT,ATT,TT), (AT,TGA,GA), ...]
+The graph: TG -> GT -> TC
            |           |
      AA -> AT <- GA <- CG
          \ |             # AA-TT to close the cycle
