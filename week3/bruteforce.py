@@ -16,12 +16,13 @@ def bruteforce(edges):
         for i in xrange(len(comb)-1):
             edge1 = edges[comb[i]]
             edge2 = edges[comb[i+1]]
-            if edge1[2] != edge2[0]: legal = False
+            if edge1[1] != edge2[0]: legal = False
         if not legal: continue
         # How long is it ? #
-        sequence = ''.join(edges[comb[0][0]] + [edges[i][2] for i in comb])
+        sequence = ''.join(edges[comb[0][0]] + [edges[i][1] for i in comb])
         comb_length = len(sequence)
         if comb_length > best_length:
             best_sequence = sequence
             best_comb     = comb
             best_length   = comb_length
+    return best_sequence

@@ -2,6 +2,10 @@
 # V = [1,2,3,4,5,6]
 # E = [(1,2),(2,3),(3,4),(4,5),(5,6),(6,1),(2,6),(6,4),(4,2)]
 # This program finds [1, 2, 6, 4, 2, 3, 4, 5, 6, 1]
+# V = ["AA","AB","BC","CD","DE","EF"]
+# E = [("AA","AB"),("AB","BC"),("BC","CD"),("CD","DE"),("DE","EF"),
+#      ("EF","AA"),("AB","EF"),("EF","CD"),("CD","AB")]
+# Returns ("EF","AA"),("AB","EF"),("EF","CD"),("CD","AB")]
 
 def adjacents(v,E):
     """Returns the list of edges from *E* adjacent to node *v*."""
@@ -9,7 +13,7 @@ def adjacents(v,E):
 
 def walk(v,E):
     """From node *v*, walk along edges *E*, never taking an already
-    used one. Returns the chosen *path* and the remaining edges.
+    used one. Return the chosen *path* and the remaining edges.
     If the graph is Eulerian, *path* is a cycle."""
     path = [v]; adj = adjacents(v,E)
     while adj:
@@ -24,7 +28,7 @@ def hierholzer(V,E):
     """Finds an Eulerian cycle in a connected Eulerian graph defined
     by the set *V* of its vertices and the set *E* of its edges.
     The cycle is returned as a list of vertices."""
-    for v in V: pass # Choose a random vertex
+    v = V[0]
     cycle, E = walk(v,E)
     print cycle
     while len(E) != 0:
