@@ -30,7 +30,6 @@ def hierholzer(V,E):
     The cycle is returned as a list of vertices."""
     v = V[0]
     cycle, E = walk(v,E)
-    print cycle
     while len(E) != 0:
         for i in range(len(cycle)):
             v = cycle[i]

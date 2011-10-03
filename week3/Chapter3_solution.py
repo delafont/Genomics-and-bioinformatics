@@ -22,7 +22,7 @@ for e in edges:
     olaps[e] = overlaps(e[0],e[1])
 
 """ Find the path """
-from bruteforce import bruteforce
+from bruteforce import *
 #sequence = bruteforce(list(edges))
 #print sequence
 
@@ -58,9 +58,9 @@ for s in Sl:
 Edual = list(set(Edual))
 
 """ Find the path """
-from hierholzer import hierholzer
-#path = hierholzer(Vdual, Edual)
-#print path
+from hierholzer import *
+path = hierholzer(Vdual, Edual)
+print path
 
 """
 e.g. with l=3:
