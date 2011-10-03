@@ -1,0 +1,14 @@
+# Contig #
+CCAGGTTTAAAGAATCCACAGATCCAAGGCAAATATTTCTGCCTCAGAGTTCATTGAGAAGCGCCATCCC
+
+# Reads #
+xxxxxxxxxxxxxxxxxxxxxATCCAAGGCAAATATTTCTGxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxCCACAGATCCAAGGCAAATAxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+CCAGGTTTAAAGAATCCACAxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxCCAAGGCAAATATTTCTGCCxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxTTTCTGCCTCAGAGTTCATTxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxTTCATTGAGAAGCGCCATCC
+
+# Params #
+Read length = 20 bp
+Minimum overlap = 5 bp
