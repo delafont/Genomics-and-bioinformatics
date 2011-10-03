@@ -1,4 +1,3 @@
-
 # Sample graph
 # V = [1,2,3,4,5,6]
 # E = [(1,2),(2,3),(3,4),(4,5),(5,6),(6,1),(2,6),(6,4),(4,2)]
@@ -35,4 +34,3 @@ def hierholzer(V,E):
                 sub, E = walk(v,E)
                 cycle = cycle[:i]+sub+cycle[i+1:]
     return cycle
-

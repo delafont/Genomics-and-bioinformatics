@@ -11,7 +11,7 @@ def overlaps(read1, read2, min_overlap=10):
         if read1[-i:] == read2[:i]: return read2[:i]
     return False
 
-# Read the file
+# Read the file #
 with open('reads.fastq', 'r') as f:
     reads = [line.strip() for line in f]
 num_of_reads = len(reads)
@@ -29,26 +29,24 @@ E = [(AATGT,ATGT,ATGTC), (ATGTC,GTC,GTCGA), (GTCGA,CGA,CGATT)]
 Edges are defined as couples of vertices, but we like to keep the overlap sequence between them.
 """
 
-
-# Question 2.2#
-def subseqs(read,l):
+# Question 2.2 #
+def subseqs(read, l):
     """Extracts all sub-sequences of length l"""
-    subs = []
-    for i in len(read)-l:
-        subs.append(read[i:i+l])
-    return subs
+    return [read[i:i+l] for i in len(read-l)]
 
+# Build the dual graph #
 l = read_length-1 # arbitrary, to reduce the number of elements
 
-# Build the dual graph
 Vdual = []
-[Vdual.extend(subseqs(r,l-1)) for r in reads]
+for r in reads: Vdual.extend(subseqs(r,l-1))
 Vdual = set(Vdual)
+
 Sl = []
-[Sl.extend(subseqs(r,l)) for r in reads]
+for r in reads: Sl.extend(subseqs(r,l))
+Sl = set(Sl)
+
 Edual = []
-for s in Sl:
-    Edual.extend([(v1,s,v2) for (v1,v2) in zip(Vdual,Vdual) if (s[:-1]==v1 and s[l:]==v2)])
+for s in Sl: Edual.extend([(v1,s,v2) for (v1,v2) in zip(Vdual,Vdual) if (s[:-1]==v1 and s[l:]==v2)])
 Edual = set(Edual)
 
 """
@@ -56,12 +54,11 @@ e.g. with l=3:
 Sequence: AATGTCGATT
 Reads: AATGT, ATGTC, GTCGA, CGATT
 Vdual = AAT, ATG, TGT, GTC, TCG, CGA, GAT, ATT, TTG, TGA, GAC
-Edual = [(AA,AAT,AT), (AT,ATG,TG), ...
-     (AT,ATT,TT), (AT,TGA,GA), ...]
+Edual = [(AA,AAT,AT), (AT,ATG,TG), (AT,ATT,TT), (AT,TGA,GA), ...]
+
 The graph: TG -> GT -> TC
            |           |
      AA -> AT <- GA <- CG
          \ |             # AA-TT to close the cycle
            TT            # begin from AA, then add the last base of each vertex.
 """
-
