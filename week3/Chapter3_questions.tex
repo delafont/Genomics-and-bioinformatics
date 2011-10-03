@@ -25,24 +25,26 @@ The final goal of the programming exercises you receive each week is for you to 
 We are going to create a contig from a bunch of reads. The reads have been specially created by the assistants for this problem and will be given to you on the Moodle website. Your goal is to generate the largest contig possible. We will consider a simplified ideal case where:
 \begin{itemize}
 \item The reads don't contain any errors.
-\item The reads have the same length (60bp).
+\item The reads have the same length.
 \item The reads are all from the same strand.
 \item The full chromosome of our imaginary species is small.
 \end{itemize}
 
 \subsection{Hamiltonian path problem}
 \begin{enumerate}
-\item Read the file \texttt{reads.fastq} and load all the reads it contains inside a list. It may help you to take a look at \texttt{reads.fastq} in your text editor first.
+\item Read the file \texttt{reads1.fastq} and load all the reads it contains inside a list. It may help you to take a look at \texttt{reads1.fastq} in your text editor first.
 \item Write a function that takes two reads as input and returns the overlap sequence; if they don't overlap, return \texttt{False}. The function should also have a \texttt{min\_overlap} parameter that specifies how many base pairs must match between both reads at a minimum for it to be considered an overlap.
 \item Using the the list of reads you just loaded and the function you just wrote, you can now generate a list of vertices and a list of edges as defined for the Hamiltonian problem. Indeed, the reads will act as the vertices and the overlaps as the edges. As you know, an edge exists if a vertex connects to an other vertex. In our case, a link between two reads exists if a read overlaps another read.
 \item Use the following function (brute force longest path algorithm) to extract the largest contig possible, and display it on the screen. Record the time it takes to compute (import the \texttt{time} library).
+\item Now try it on \texttt{reads2.fastq}.
+
 \end{enumerate}
 
 \subsection{Eulerian path problem (de Bruijn algorithm)}
 \begin{enumerate}
 \item Write a function that for a given read returns a list of all the l-mers contained in the read, \\
 e.g. f(AATGCG) ->  [AATG,ATGC,TGCG] for l=4.
-\item Taking l = 59bp, and using the same reads library as before, generate the list of vertices and the list of edges as defined for the Eulerian problem.
+\item Taking l = 5bp, and using the same reads library as before, generate the list of vertices and the list of edges as defined for the Eulerian problem.
 \item Use the following function (Hierholzer's algorithm) to extract the largest contig possible, and display it on the screen. Record the time it takes to compute, and compare with the Hamiltonian case.
 \end{enumerate}
 
