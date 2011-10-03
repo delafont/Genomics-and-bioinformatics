@@ -12,7 +12,7 @@ def walk(v,E):
     used one. Returns the chosen *path* and the remaining edges.
     If the graph is Eulerian, *path* is a cycle."""
     path = [v]; adj = adjacents(v,E)
-    while 1:
+    while adj:
         e = adj[0]
         E.remove(e)
         path.append(e[1])
@@ -24,7 +24,7 @@ def hierholzer(V,E):
     """Finds an Eulerian cycle in a connected Eulerian graph defined
     by the set *V* of its vertices and the set *E* of its edges.
     The cycle is returned as a list of vertices."""
-    v = V[0] # random
+    for v in V: pass # Choose a random vertex
     cycle, E = walk(v,E)
     print cycle
     while len(E) != 0:
