@@ -35,14 +35,13 @@ See the last section of this document to learn some useful Python tricks.
 \subsection{Hamiltonian path problem}
 \begin{enumerate}
 \item Read the file \texttt{reads1.fastq} and load all the reads it contains inside a list. It may help you to take a look at \texttt{reads1.fastq} in your text editor first.
-\item Write a function that takes two reads as input and returns first read extended with the second; if they don't overlap, return \texttt{False}. The function should also have a \texttt{min\_overlap} parameter that specifies how many base pairs must match between both reads at a minimum for it to be considered an overlap. \\
-e.g. \texttt{overlaps(AATG,TGTT,2) -> AATGTT , overlaps(AATG,TGTT,3) -> False}
+\item Write a function that takes two reads as input and returns the overlap sequence. If they don't overlap, return \texttt{False}. The function should also have a \texttt{min\_overlap} parameter that specifies how many base pairs must match between both reads at a minimum for it to be considered an overlap. \\
+e.g. \texttt{overlaps(AATG,TGTT,2) -> TG , overlaps(AATG,TGTT,3) -> False}
 \item Using the the list of reads you just loaded and the function you just wrote, you can now generate a list of vertices and a list of edges of the overlap graph - i.e. the reads will act as the vertices and the overlaps as the edges. In our case, a edge between two reads exists if the first overlaps the second.
 \item Copy the code from \texttt{findcycles.py} into your code (or import its functions).
-\item Use the function \texttt{bruteforce(edges)} to get an Hamiltonian path from your graph. Deduce the largest contig possible, and display it on the screen.
+\item Use the function \texttt{bruteforce(edges, min\_overlap)} to get an Hamiltonian path from your graph. Deduce the largest contig possible, and display it on the screen.
 \item Record the time it takes to compute: import the \texttt{time} library and use \texttt{time.time()} to get the current time.
 \item The contig should be AATGTCGATT. If you get it right, you can try to build more reads and run it again.
-\item Now try it on \texttt{reads2.fastq}.
 \end{enumerate}
 
 \subsection{Eulerian path problem (de Bruijn algorithm)}
