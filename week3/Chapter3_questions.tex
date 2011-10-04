@@ -57,8 +57,10 @@ e.g. \texttt{subseqs(AATGCG,4) ->  [AATG,ATGC,TGCG]}
 \subsection{Useful Python features}
 \begin{enumerate}
 \item Use list comprehensions:\\
-\texttt{[x+4 for x in [1,2,3]]} \\returns \texttt{[5,6,7]} \\
-\texttt{[(x,y[0]) for x in [1,2] for y in [[1,2],[3,4]] ]}\\ returns \texttt{[(1, 1), (1, 3), (2, 1), (2, 3)]}
+\texttt{[x+4 for x in [1,2,3]]} \\
+returns \texttt{[5,6,7]} \\
+\texttt{[(x,y[0]) for x in [1,2] for y in [[1,2],[3,4]] ]}\\
+returns \texttt{[(1, 1), (1, 3), (2, 1), (2, 3)]}
 \item No need to add ``\texttt{;}'' at the end of your lines. You can do it though if you want to put several statements on the same line.
 \item You can use \texttt{list(set(...))} to get only unique elements of a list. Unfortunately there exists no such built-in function in Python.
 \item Use \texttt{dir(object)} to get all possible methods for this object. If you are using Ipyhon as advised, just type \texttt{object.} and hit the ``tab'' key.

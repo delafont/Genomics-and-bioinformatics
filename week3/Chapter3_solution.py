@@ -21,8 +21,9 @@ edges = [(r1,r2) for r1 in vertices for r2 in vertices if overlaps(r1,r2,min_ove
 
 # Find the path #
 import time
+import findcycles
 t1 = time.time()
-path = bruteforce(edges, min_overlap)
+path = findcycles.bruteforce(edges, min_overlap)
 t2 = time.time()
 
 # Display info #
@@ -40,51 +41,61 @@ sequence = "AATGTCGATT"
 
 #----------------------------------------------------------------------------------------------#
 
-# Question 2.2 #
+""" Question 2.2 """
+
 def subseqs(read, l):
     """Extracts all sub-sequences of length l"""
     return [read[i:i+l] for i in xrange(len(read)-l+1)]
 
-# Build the dual graph #
-all_lmers = []
-for r in reads: all_lmers.extend(subseqs(r,min_overlap))
-all_lmers = list(set(all_lmers))
+""" Read the file again if needed """
+with open('reads1.fastq', 'r') as f:
+    reads = [line.strip() for line in f]
+num_of_reads = len(reads)
+read_length = len(reads[0])
+l = 3 # arbitrary
 
-all_lmers_minus_one = []
-for r in reads: all_lmers_minus_one.extend(subseqs(r,min_overlap-1))
-all_lmers_minus_one = list(set(all_lmers_minus_one))
+""" Build the dual graph """
+Vdual = []
+for r in reads: Vdual.extend(subseqs(r,l-1))
+Vdual = list(set(Vdual))
 
-# The edges #
-edges = []
-for lmer in all_lmers:
-    for small1 in all_lmers_minus_one:
-        for small2 in all_lmers_minus_one:
-            if lmer[:-1]==small1 and lmer[1:]==small2:
-                edges.append((small1,small2))
-edges = list(set(edges))
+Sl = []
+for r in reads: Sl.extend(subseqs(r,l))
+Sl = list(set(Sl))
 
-# Find the path #
+Edual = []
+for s in Sl:
+    Edual.extend([(v1,v2) for v1 in Vdual for v2 in Vdual if (s[:-1]==v1 and s[1:]==v2)])
+Edual = list(set(Edual))
+
+""" Find start and end, bind them """
+starts = [e[0] for e in Edual]
+ends = [e[1] for e in Edual]
+uniques = [e for e in starts+ends if (e in starts and e not in ends)
+                                  or (e in ends and e not in starts)] #should be 2 elements
+Edual.append((uniques[1],uniques[0]))
+
+""" Find the path """
+import findcycles
 import time
 t1 = time.time()
-path = hierholzer(all_lmers_minus_one, edges)
+path = findcycles.hierholzer(Vdual, Edual)
 t2 = time.time()
-
-# Display info #
 print "Eulerian path:", path
-print "Time to find it: %s seconds" % (t2-t1)
-print "The sequence:", make_sequence(path[:], min_overlap-2)
+print "Time to find a cycle:", t2-t1
 
 """
 e.g. with l=3:
 Sequence: AATGTCGATT
 Reads: AATGT, ATGTC, GTCGA, CGATT
-all_lmers           = AAT, ATG, TGT, GTC, TCG, CGA, GAT, ATT, TTG, TGA, GAC
-all_lmers_minus_one = AA, AT, TG, GT, TC, CG, TT, GA
-edges = [(AA,AT), (AT,TG), (AT,TT), (AT,GA), ...]
+Vdual = AA, AT, TG, GT, TC, CG, TT, GA
+Sl = AAT, ATG, TGT, GTC, TCG, CGA, GAT, ATT, TTG, TGA, GAC
+Edual = [(AA,AT), (AT,TG), (AT,TT), (AT,GA), ...]
 
 The graph: TG -> GT -> TC
            |           |
      AA -> AT <- GA <- CG
-      \    |             # AA-TT to close the cycle
-       --> TT            # begin from AA, then add the last base of each vertex.
+         \ |             # AA-TT to close the cycle
+           TT            # begin from AA, then add the last base of each vertex.
 """
+
