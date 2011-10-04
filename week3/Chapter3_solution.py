@@ -9,7 +9,7 @@ def overlaps(read1, read2, min_overlap=3):
     return False
 
 """ Read the file """
-with open('reads1.fastq', 'r') as f:
+with open('reads2.fastq', 'r') as f:
     reads = [line.strip() for line in f]
 num_of_reads = len(reads)
 read_length = len(reads[0])
@@ -23,8 +23,12 @@ for e in edges:
 
 """ Find the path """
 from bruteforce import *
+import time
+t1 = time.time()
 #sequence = bruteforce(list(edges))
 #print sequence
+t2 = time.time()
+print "Time to find a cycle:", t2-t1
 
 """
 e.g. with min_overlap=3:
@@ -43,7 +47,7 @@ def subseqs(read, l):
     return [read[i:i+l] for i in xrange(len(read)-l+1)]
 
 """ Build the dual graph """
-l = 3 # arbitrary
+l = 5 # arbitrary
 Vdual = []
 for r in reads: Vdual.extend(subseqs(r,l-1))
 Vdual = list(set(Vdual))
@@ -53,14 +57,18 @@ for r in reads: Sl.extend(subseqs(r,l))
 Sl = list(set(Sl))
 
 Edual = []
-for s in Sl: 
+for s in Sl:
     Edual.extend([(v1,v2) for v1 in Vdual for v2 in Vdual if (s[:-1]==v1 and s[1:]==v2)])
 Edual = list(set(Edual))
 
 """ Find the path """
-from hierholzer import *
+from findcycles import hierholzer
+import time
+t1 = time.time()
 path = hierholzer(Vdual, Edual)
-print path
+t2 = time.time()
+print "Eulerian path:", path
+print "Time to find a cycle:", t2-t1
 
 """
 e.g. with l=3:
