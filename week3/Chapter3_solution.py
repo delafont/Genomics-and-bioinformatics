@@ -67,6 +67,13 @@ for s in Sl:
     Edual.extend([(v1,v2) for v1 in Vdual for v2 in Vdual if (s[:-1]==v1 and s[1:]==v2)])
 Edual = list(set(Edual))
 
+""" Find start and end, bind them """
+starts = [e[0] for e in Edual]
+ends = [e[1] for e in Edual]
+uniques = [e for e in starts+ends if (e in starts and e not in ends)
+                                  or (e in ends and e not in starts)] #should be 2 elements
+Edual.append((uniques[1],uniques[0]))
+
 """ Find the path """
 import findcycles
 import time

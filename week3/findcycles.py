@@ -73,3 +73,5 @@ def hierholzer(V,E):
             cycle = cycle[:i]+sub+cycle[i+1:]
             notvisited.update(sub)
     return cycle
+
+
