@@ -25,7 +25,7 @@ def bruteforce(edges, min_overlap):
             edgeA = comb[i]
             edgeB = comb[i+1]
             if edgeA[1] != edgeB[0]:
-                comb = comb[:i]
+                comb = comb[:i+1]
                 break
         if not comb: continue
         # How long is it ? #
@@ -95,4 +95,5 @@ def make_sequence(path, min_overlap):
     sequence = path[0]
     for i, vertex in enumerate(path[1:]):
         sequence = overlaps(sequence, vertex, min_overlap)
+        if not sequence: raise Exception("You didn't input a path: " + path[i-1] + '-' + path[i] + '-' + path[i+1] )
     return sequence
