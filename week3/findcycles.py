@@ -7,7 +7,7 @@ return = ['AATGT', 'ATGTC', 'GTCGA', 'CGATT']
 sequence = AATGTCGATT
 """
 
-def bruteforce(vertices, edges, min_overlap):
+def bruteforce(edges, min_overlap):
     """Simply generates all permutation
        and finds the one that passes as the longest
        sequence"""
