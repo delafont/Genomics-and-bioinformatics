@@ -49,8 +49,8 @@ e.g. \texttt{overlaps(AATG,TGTT,2) -> AATGTT , overlaps(AATG,TGTT,3) -> False}
 \begin{enumerate}
 \item Write a function that for a given read returns a list of all the l-mers contained in the read, \\
 e.g. \texttt{subseqs(AATGCG,4) ->  [AATG,ATGC,TGCG]}
-\item Taking \texttt{l} = 3bp, and using the same reads library as before, generate the list of vertices and the list of edges as defined for the de Bruijn graph.
-\item Spot the start and end vertices (the ones that appear only once in the edges), and add one vertex to close the graph.
+\item Taking \texttt{l} = 3 bp, and using the same reads library as before, generate the list of vertices and the list of edges as defined for the de Bruijn graph.
+\item Spot the start and end vertices (in our case, the ones that appear only once in the edges), and add one vertex to close the graph.
 \item Use the \texttt{hierholzer(nodes,edges)} function - that you copied or imported earlier - to find an Eulerian cycle in your graph. Deduce the largest contig possible for \texttt{reads1.fastq}, and display it on the screen. Record the time it takes to compute, and compare with the Hamiltonian case.
 \end{enumerate}
 

@@ -72,14 +72,15 @@ def hierholzer(vertices, edges):
     """Finds an Eulerian cycle in a connected Eulerian graph defined
     by the set *vertices* of its vertices and the set *edges* of its edges.
     The cycle is returned as a list of vertices."""
-    vertex = vertices[0]
-    cycle, edges = walk(vertex, edges)
+    assert any([len(adjacents(v,edges))%2==1 for v in vertices]), "Your graph is not Eulerian."
+    v = vertices[0]
+    cycle, edges = walk(v, edges)
     notvisited = set(cycle)
     while len(notvisited) != 0:
-        vertex = notvisited.pop()
-        if len(adjacents(vertex, edges)) != 0:
-            i = cycle.index(vertex)
-            sub, E = walk(vertex, edges)
+        v = notvisited.pop()
+        if len(adjacents(v, edges)) != 0:
+            i = cycle.index(v)
+            sub, E = walk(v, edges)
             cycle = cycle[:i]+sub+cycle[i+1:]
             notvisited.update(sub)
     return cycle[:-1]
