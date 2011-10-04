@@ -1,6 +1,6 @@
 # Question 2.1 #
 # Read the file #
-with open('reads2.fastq', 'r') as f:
+with open('reads1.fastq', 'r') as f:
     reads = [line.strip() for line in f]
 num_of_reads = len(reads)
 read_length = len(reads[0])
@@ -29,7 +29,6 @@ t2 = time.time()
 # Display info #
 print "Hamiltonian path:", path
 print "Time to find it: %s seconds" % (t2-t1)
-print "The sequence:", make_sequence(path, min_overlap)
 
 """
 EXAMPLE
@@ -52,7 +51,7 @@ with open('reads1.fastq', 'r') as f:
     reads = [line.strip() for line in f]
 num_of_reads = len(reads)
 read_length = len(reads[0])
-l = 3 # arbitrary
+l = 3  #arbitrary
 
 """ Build the dual graph """
 Vdual = []
@@ -68,7 +67,9 @@ for s in Sl:
     Edual.extend([(v1,v2) for v1 in Vdual for v2 in Vdual if (s[:-1]==v1 and s[1:]==v2)])
 Edual = list(set(Edual))
 
-""" Find start and end, bind them """
+""" Find start and end, bind them
+    It is sufficient only if every read overlaps with only one other.
+    You can think of a better criteria in the general case."""
 starts = [e[0] for e in Edual]
 ends = [e[1] for e in Edual]
 uniques = [e for e in starts+ends if (e in starts and e not in ends)

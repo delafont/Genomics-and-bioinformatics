@@ -82,7 +82,7 @@ def hierholzer(vertices, edges):
             sub, E = walk(vertex, edges)
             cycle = cycle[:i]+sub+cycle[i+1:]
             notvisited.update(sub)
-    return cycle
+    return cycle[:-1]
 
 """
 EXAMPLE
