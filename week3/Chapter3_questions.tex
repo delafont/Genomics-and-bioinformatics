@@ -34,23 +34,20 @@ See the last section of this document to learn some useful Python tricks.
 
 \subsection{Hamiltonian path problem}
 \begin{enumerate}
-\item Read the file \texttt{reads1.fastq} and load all the reads it contains inside a list. It may help you to take a look at \texttt{reads1.fastq} in your text editor first.
+\item Read the file \texttt{reads1.fastq} and load all the reads it contains inside a list. It may help you to take a look at \texttt{reads1.fastq} in your text editor first. Try to find the contig by aligning the reads by hand. The reads are AATGT, ATGTC, GTCGA, and CGATT.
 \item Write a function that takes two reads as input and returns the overlap sequence. If they don't overlap, return \texttt{False}. The function should also have a \texttt{min\_overlap} parameter that specifies how many base pairs must match between both reads at a minimum for it to be considered an overlap. \\
 e.g. \texttt{overlaps(AATG,TGTT,2) -> TG , overlaps(AATG,TGTT,3) -> False}
 \item Using the the list of reads you just loaded and the function you just wrote, you can now generate a list of vertices and a list of edges of the overlap graph - i.e. the reads will act as the vertices and the overlaps as the edges. In our case, a edge between two reads exists if the first overlaps the second.
-\item Copy the code from \texttt{findcycles.py} into your code (or import its functions).
-\item Use the function \texttt{bruteforce(edges, min\_overlap)} to get an Hamiltonian path from your graph. Deduce the largest contig possible, and display it on the screen.
-\item Record the time it takes to compute: import the \texttt{time} library and use \texttt{time.time()} to get the current time.
-\item The contig should be AATGTCGATT. If you get it right, you can try to build more reads and run it again.
+\item At this point one could use an algorithm to find an Hamiltonian path in the graph, and deduce the longest contig. But there is no efficient algorithm to do this, so we prefer building a de Bruijn graph.
 \end{enumerate}
 
-\subsection{Eulerian path problem (de Bruijn algorithm)}
+\subsection{Eulerian path problem (de Bruijn graph)}
 \begin{enumerate}
-\item Write a function that for a given read returns a list of all the l-mers contained in the read, \\
+\item Write a function that for a given read returns a list of all the \texttt{l}-mers contained in the read, \\
 e.g. \texttt{subseqs(AATGCG,4) ->  [AATG,ATGC,TGCG]}
 \item Taking \texttt{l} = 3 bp, and using the same reads library as before, generate the list of vertices and the list of edges as defined for the de Bruijn graph.
 \item Spot the start and end vertices (in our case, the ones that appear only once in the edges), and add one vertex to close the graph.
-\item Use the \texttt{hierholzer(nodes,edges)} function - that you copied or imported earlier - to find an Eulerian cycle in your graph. Deduce the largest contig possible for \texttt{reads1.fastq}, and display it on the screen. Record the time it takes to compute, and compare with the Hamiltonian case.
+\item Copy or import the \texttt{hierholzer(nodes,edges)} function from the file \texttt{hierholzer.py} to find an Eulerian cycle in your graph. Deduce the largest contig possible.
 \end{enumerate}
 
 \subsection{Useful Python features}

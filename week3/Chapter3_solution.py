@@ -1,34 +1,24 @@
-# Question 2.1 #
-# Read the file #
+
+""" Question 2.1 """
+
+""" Read the file """
 with open('reads1.fastq', 'r') as f:
     reads = [line.strip() for line in f]
 num_of_reads = len(reads)
 read_length = len(reads[0])
 min_overlap = 5
 
-# Overlap function #
+""" Overlap function """
 def overlaps(read1, read2, min_overlap):
-    """If the end of read1 overlaps with the begining of read2,
-       return read1 extended with the overlap, False otherwise."""
+    """If the end of read1 overlaps with at least *min_overlaps* nucleotides
+    of read2, return the overlap sequence, False otherwise."""
     for i in xrange(read_length, min_overlap-1, -1):
         if read1[-i:] == read2[:i]: return read1 + read2[i:]
     return False
 
-# Build the graph for the Hamiltonian path problem #
-# One can use list(set()) to get unique values in Python
-vertices = list(set(reads))
+""" Build the graph for the Hamiltonian path problem """
+vertices = list(set(reads)) # One can use list(set()) to get unique values in Python
 edges = [(r1,r2) for r1 in vertices for r2 in vertices if overlaps(r1,r2,min_overlap) and not r1 == r2]
-
-# Find the path #
-import time
-import findcycles
-t1 = time.time()
-path = findcycles.bruteforce(edges, min_overlap)
-t2 = time.time()
-
-# Display info #
-print "Hamiltonian path:", path
-print "Time to find it: %s seconds" % (t2-t1)
 
 """
 EXAMPLE
@@ -51,14 +41,14 @@ with open('reads1.fastq', 'r') as f:
     reads = [line.strip() for line in f]
 num_of_reads = len(reads)
 read_length = len(reads[0])
-l = 3  #arbitrary
+l = 3  #arbitrary, but needs to be small enough
 
 """ Build the dual graph """
-Vdual = []
+Vdual = [] # All (l-1)-mers
 for r in reads: Vdual.extend(subseqs(r,l-1))
 Vdual = list(set(Vdual))
 
-Sl = []
+Sl = [] # All l-mers
 for r in reads: Sl.extend(subseqs(r,l))
 Sl = list(set(Sl))
 
@@ -77,13 +67,9 @@ uniques = [e for e in starts+ends if (e in starts and e not in ends)
 Edual.append((uniques[1],uniques[0]))
 
 """ Find the path """
-import findcycles
-import time
-t1 = time.time()
-path = findcycles.hierholzer(Vdual, Edual)
-t2 = time.time()
+import hierholzer
+path = hierholzer.hierholzer(Vdual, Edual)
 print "Eulerian path:", path
-print "Time to find a cycle:", t2-t1
 
 """
 e.g. with l=3:
