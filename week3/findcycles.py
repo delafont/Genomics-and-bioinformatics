@@ -1,82 +1,98 @@
-""" Brute force algorithm for Hamiltonian problem """
+# Brute force algorithm for Hamiltonian problem #
+"""
+EXAMPLE
+edges = [('ATGTC', 'GTCGA'), ('GTCGA', 'CGATT'), ('AATGT', 'ATGTC')]
+comb = [('ATGTC', 'GTCGA'), ('GTCGA', 'CGATT'), ('AATGT', 'ATGTC')]
+return = ['AATGT', 'ATGTC', 'GTCGA', 'CGATT']
+sequence = AATGTCGATT
+"""
 
-# Sample graph
-# edges = [('AATGT','ATGTC'), ('ATGTC','GTCGA'), ('GTCGA','CGATT')]
-# This program finds AATGTCGATT
-
-def build_path(path):
-    """Takes as entry a path = (1,5,6,8)
-       and returns the sequence."""
-
-def bruteforce(edges):
-    """"""
+def bruteforce(vertices, edges, min_overlap):
+    """Simply generates all permutation
+       and finds the one that passes as the longest
+       sequence"""
     # Generate all possiblities #
     from itertools import permutations
     combinations = permutations(edges)
     # Initial variables #
     best_sequence = ''
-    best_comb = None
+    best_path = None
     best_length = -1
     # Core loop #
     for comb in combinations:
-        # Is it legal ? #
-        legal = True
+        # How far can we follow it #
         for i in xrange(len(comb)-1):
-            edge1 = edges[comb[i]]
-            edge2 = edges[comb[i+1]]
-            if edge1[1] != edge2[0]: legal = False
-        if not legal: continue
+            edgeA = comb[i]
+            edgeB = comb[i+1]
+            if edgeA[1] != edgeB[0]:
+                comb = comb[:i]
+                break
+        if not comb: continue
         # How long is it ? #
-        sequence = ''.join(edges[comb[0][0]] + [edges[i][1] for i in comb])
+        path = [edge[0] for edge in comb] + [comb[-1][1]]
+        sequence = make_sequence(path, min_overlap)
         comb_length = len(sequence)
         if comb_length > best_length:
             best_sequence = sequence
-            best_comb     = comb
+            best_path     = path
             best_length   = comb_length
-    return best_sequence
+    return best_path
 
+# Hierholzer's algorithm for Eulerian graphs #
+"""
+EXAMPLE
+V = [1,2,3,4,5,6]
+E = [(1,2),(2,3),(3,4),(4,5),(5,6),(6,1),(2,6),(6,4),(4,2)]
+r = [1, 2, 6, 4, 2, 3, 4, 5, 6, 1]
 
-""" Hierholzer's algorithm for Eulerian graphs """
+EXAMPLE
+V = ["AA","AB","BC","CD","DE","EF"]
+E = [("AA","AB"),("AB","BC"),("BC","CD"),("CD","DE"),("DE","EF"),("EF","AA"),("AB","EF"),("EF","CD"),("CD","AB")]
+r = ['AA', 'AB', 'EF', 'CD', 'AB', 'BC', 'CD', 'DE', 'EF', 'AA']
+"""
 
-# Sample graph
-# V = [1,2,3,4,5,6]
-# E = [(1,2),(2,3),(3,4),(4,5),(5,6),(6,1),(2,6),(6,4),(4,2)]
-# This program finds [1, 2, 6, 4, 2, 3, 4, 5, 6, 1]
-# V = ["AA","AB","BC","CD","DE","EF"]
-# E = [("AA","AB"),("AB","BC"),("BC","CD"),("CD","DE"),("DE","EF"),
-#      ("EF","AA"),("AB","EF"),("EF","CD"),("CD","AB")]
+def adjacents(vertex, edges):
+    """Returns the list of edges from *edges* adjacent to node *vertex*."""
+    return [edge for edge in edges if edge[0] == vertex]
 
-def adjacents(v,E):
-    """Returns the list of edges from *E* adjacent to node *v*."""
-    return [edge for edge in E if edge[0]==v]
-
-def walk(v,E):
-    """From node *v*, walk along edges *E*, never taking an already
+def walk(vertex, edges):
+    """From node *vertex*, walk along edges *edges*, never taking an already
     used one. Return the chosen *path* and the remaining edges.
     If the graph is Eulerian, *path* is a cycle."""
-    path = [v]; adj = adjacents(v,E)
+    path = [vertex]; adj = adjacents(vertex,edges)
     while adj:
-        print adj
         e = adj[0]
-        E.remove(e)
+        edges.remove(e)
         path.append(e[1])
-        v = e[1]
-        adj = adjacents(v,E)
-        if len(adj) == 0: return path, E
+        vertex = e[1]
+        adj = adjacents(vertex,edges)
+    return path, edges
 
-def hierholzer(V,E):
+def hierholzer(vertices, edges):
     """Finds an Eulerian cycle in a connected Eulerian graph defined
-    by the set *V* of its vertices and the set *E* of its edges.
+    by the set *vertices* of its vertices and the set *edges* of its edges.
     The cycle is returned as a list of vertices."""
-    v = V[0]
-    cycle, E = walk(v,E)
-    while len(E) != 0:
-        for i in range(len(cycle)):
-            v = cycle[i]
-            if len(adjacents(v,E)) != 0:
-                sub, E = walk(v,E)
-                cycle = cycle[:i]+sub+cycle[i+1:]
+    vertex = vertices[0]
+    cycle, edges = walk(vertex, edges)
+    notvisited = set(cycle)
+    while len(notvisited) != 0:
+        vertex = notvisited.pop()
+        if len(adjacents(vertex, edges)) != 0:
+            i = cycle.index(vertex)
+            sub, E = walk(vertex, edges)
+            cycle = cycle[:i]+sub+cycle[i+1:]
+            notvisited.update(sub)
     return cycle
 
-
-
+"""
+EXAMPLE
+path = ['AATGT', 'ATGTC', 'GTCGA', 'CGATT']
+return = AATGTCGATT
+"""
+# Sequence retrival #
+def make_sequence(path, min_overlap):
+    """From a list of vertices, builds the contig"""
+    sequence = path[0]
+    for i, vertex in enumerate(path[1:]):
+        sequence = overlaps(sequence, vertex, min_overlap)
+    return sequence
