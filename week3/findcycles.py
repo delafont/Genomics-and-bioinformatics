@@ -1,13 +1,18 @@
-
 """ Brute force algorithm for Hamiltonian problem """
 
-# edges = [('AATGT','ATGT','ATGTC'), ('ATGTC','GTC','GTCGA'), ('GTCGA','CGA','CGATT')]
+# Sample graph
+# edges = [('AATGT','ATGTC'), ('ATGTC','GTCGA'), ('GTCGA','CGATT')]
 # This program finds AATGTCGATT
 
+def build_path(path):
+    """Takes as entry a path = (1,5,6,8)
+       and returns the sequence."""
+
 def bruteforce(edges):
+    """"""
     # Generate all possiblities #
     from itertools import permutations
-    combinations = permutations(range(len(edges)))
+    combinations = permutations(edges)
     # Initial variables #
     best_sequence = ''
     best_comb = None
@@ -40,7 +45,6 @@ def bruteforce(edges):
 # V = ["AA","AB","BC","CD","DE","EF"]
 # E = [("AA","AB"),("AB","BC"),("BC","CD"),("CD","DE"),("DE","EF"),
 #      ("EF","AA"),("AB","EF"),("EF","CD"),("CD","AB")]
-# Returns ("EF","AA"),("AB","EF"),("EF","CD"),("CD","AB")]
 
 def adjacents(v,E):
     """Returns the list of edges from *E* adjacent to node *v*."""
@@ -73,3 +77,6 @@ def hierholzer(V,E):
                 sub, E = walk(v,E)
                 cycle = cycle[:i]+sub+cycle[i+1:]
     return cycle
+
+
+
