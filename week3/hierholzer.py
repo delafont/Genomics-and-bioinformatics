@@ -50,5 +50,5 @@ def hierholzer(vertices, edges):
             assert sub[0] == sub[-1], err
             cycle = cycle[:i]+sub+cycle[i+1:]
             notvisited.update(sub)
-    return cycle[:-1]
+    return cycle
 

@@ -1,14 +1,20 @@
 
-""" Question 2.1 """
+#--------------------#
+#--- Question 2.1 ---#
+#--------------------#
 
-""" Read the file """
-with open('reads1.fastq', 'r') as f:
-    reads = [line.strip() for line in f]
+#---------------#
+# Read the file #
+#---------------#
+#with open('reads1.fastq', 'r') as f:
+#    reads = [line.strip() for line in f]
 num_of_reads = len(reads)
 read_length = len(reads[0])
 min_overlap = 5
 
-""" Overlap function """
+#------------------#
+# Overlap function #
+#------------------#
 def overlaps(read1, read2, min_overlap):
     """If the end of read1 overlaps with at least *min_overlaps* nucleotides
     of read2, return the overlap sequence, False otherwise."""
@@ -16,7 +22,9 @@ def overlaps(read1, read2, min_overlap):
         if read1[-i:] == read2[:i]: return read1 + read2[i:]
     return False
 
-""" Build the graph for the Hamiltonian path problem """
+#--------------------------------------------------#
+# Build the graph for the Hamiltonian path problem #
+#--------------------------------------------------#
 vertices = list(set(reads)) # One can use list(set()) to get unique values in Python
 edges = [(r1,r2) for r1 in vertices for r2 in vertices if overlaps(r1,r2,min_overlap) and not r1 == r2]
 
@@ -30,20 +38,19 @@ sequence = "AATGTCGATT"
 
 #----------------------------------------------------------------------------------------------#
 
-""" Question 2.2 """
+#--------------------#
+#--- Question 2.2 ---#
+#--------------------#
 
 def subseqs(read, l):
     """Extracts all sub-sequences of length l"""
     return [read[i:i+l] for i in xrange(len(read)-l+1)]
 
-""" Read the file again if needed """
-with open('reads1.fastq', 'r') as f:
-    reads = [line.strip() for line in f]
-num_of_reads = len(reads)
-read_length = len(reads[0])
 l = 3  #arbitrary, but needs to be small enough
 
-""" Build the dual graph """
+#----------------------#
+# Build the dual graph #
+#----------------------#
 Vdual = [] # All (l-1)-mers
 for r in reads: Vdual.extend(subseqs(r,l-1))
 Vdual = list(set(Vdual))
@@ -57,16 +64,28 @@ for s in Sl:
     Edual.extend([(v1,v2) for v1 in Vdual for v2 in Vdual if (s[:-1]==v1 and s[1:]==v2)])
 Edual = list(set(Edual))
 
-""" Find start and end, bind them
-    It is sufficient only if every read overlaps with only one other.
-    You can think of a better criteria in the general case."""
+#--------------------------------#
+# Find start and end, bind them. #
+#--------------------------------#
+""" For our simple case, you were asked to do something like the following:
+
 starts = [e[0] for e in Edual]
 ends = [e[1] for e in Edual]
 uniques = [e for e in starts+ends if (e in starts and e not in ends)
-                                  or (e in ends and e not in starts)] #should be 2 elements
+                                  or (e in ends and e not in starts)]
 Edual.append((uniques[1],uniques[0]))
 
-""" Find the path """
+However, here is the general way to find the start and end of your contig,
+which are the vertices with unequal number of outgoing and incoming edges: """
+
+from hierholzer import incoming, outgoing
+start, end = [v for v in Vdual if len(outgoing(v,Edual)) != len(incoming(v,Edual))]
+print start, end # if you get more or less than 2 elements, choose a better value of *l*.
+Edual.append((end, start))
+
+#---------------#
+# Find the path #
+#---------------#
 import hierholzer
 path = hierholzer.hierholzer(Vdual, Edual)
 print "Eulerian path:", path
@@ -85,4 +104,3 @@ The graph: TG -> GT -> TC
          \ |             # AA-TT to close the cycle
            TT            # begin from AA, then add the last base of each vertex.
 """
-
