@@ -1,0 +1,76 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{bbm}
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{fullpage}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage[center,footnotesize]{caption}
+\usepackage[section]{placeins}
+\usepackage{subfig}
+
+\title{Solutions - Series 4}
+\date{October 10, 2011}
+\author{Genomics and bioinformatics - Week 4}
+
+\begin{document}
+\maketitle
+
+\section{Sequence alignment}
+
+\emph{Match:}  \texttt{+1}, \emph{Mismatch:} \texttt{-1}, \emph{Gap:} \texttt{0}
+
+Sequence 1: \texttt{GAATTCAGA}
+
+Sequence 2: \texttt{GGATCGA}.\\
+
+Step 1: INITIALIZATION
+
+Create a matrix with \texttt{m + 1} columns and \texttt{n + 1} rows where \texttt{m} and \texttt{n} correspond to the sizes of Sequences 1 and 2, respectively. \\
+
+
+Step 2: SCORING
+
+Using the given scoring scheme, at each cell, 3 scores are calculated:
+\begin{itemize}
+\item Upper neighbour score + Gap cost
+\item Left neighbour score + Gap cost
+\item Upper-left neighbour score + Match score (if nucleotides match), \emph{OR} 
+
+Upper-left neighbour score + Mismatch cost (if nucleotides do not match)
+\end{itemize}
+
+\indent\emph{The highest score is retained and the arrow is labelled.} The resulting scoring matrix should look something like this, \\
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{scoring.png}\\
+\end{center}
+
+\pagebreak
+
+Step 3: BACKTRACKING
+
+ The process of deduction of the best alignment from the score matrix is known as traceback. The traceback begins with the last cell to be filled, i.e. the bottom-right cell, and is completed when the first, i.e. the top-left cell of the matrix is reached. Several traceback paths are possible. The solution resulting in the best final score is selected to deduce the optimum alignment. It is possible to have more than one optimum alignment. 
+
+A traceback path for the scoring matrix generated in Step 2 is highlighted below, 
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{backtracking.png}
+\end{center}
+
+Step 4: ALIGNMENT
+
+After backtracking, the optimal alignment is easy to recover using following the rule,
+
+ \emph{Left} = Gap , \emph{Up} = Insertion, and \emph{Diagonal} = Match 
+
+The optimum alignment for the two sequences \texttt{GAATTCAGA} and \texttt{GGATCGA} is,\\
+
+\begin{center}
+\includegraphics[width=0.6\textwidth]{alignment.png}
+\end{center}
+
+
+\end{document}
