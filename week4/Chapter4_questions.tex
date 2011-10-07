@@ -60,12 +60,7 @@ path with maximum probability.
 The maximum probability path and the corresponding alignment are calculated by a dynamic
 programming algorithm which is called the Viterbi Algorithm. You will
 see in the exercise that the Viterbi algorithm is actually similar
-to the Needleman-Wunsch algorithm. It goes through the three steps:
-\begin{enumerate}
-\item Intialization
-\item Recursion
-\item Termination
-\end{enumerate}
+to the Needleman-Wunsch algorithm.
 
 A general pair HMM is shown in Figure 1. It consists of the following parameters:
 \begin{figure}
@@ -89,5 +84,7 @@ qy = probability of emitting a pair of characters{[}\_,y{]}
 \textgreek{d} = probability of opening a gap \\
 \textgreek{e} = probability of extending a gap \\
 \end{itemize}
+
+Find the maximum probability path, and deduce the best possible alignment.
 
 \end{document}
