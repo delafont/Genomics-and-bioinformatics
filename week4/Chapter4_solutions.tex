@@ -1,4 +1,4 @@
-\documentclass[a4paper,11pt]{article}
+\documentclass[english, a4paper,11pt]{article}
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{bbm}
@@ -7,6 +7,9 @@
 \usepackage{fullpage}
 \usepackage{url}
 \usepackage{graphicx}
+\usepackage{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage{babel}
 \usepackage[center,footnotesize]{caption}
 \usepackage[section]{placeins}
 \usepackage{subfig}
@@ -66,11 +69,115 @@ After backtracking, the optimal alignment is easy to recover using following the
 
  \emph{Left} = Gap , \emph{Up} = Insertion, and \emph{Diagonal} = Match 
 
-The optimum alignment for the two sequences \texttt{GAATTCAGA} and \texttt{GGATCGA} is,\\
+The optimum alignment for the two sequences \texttt{GAATTCAGA} and \texttt{GGATCGA} is,
 
 \begin{center}
-\includegraphics[width=0.6\textwidth]{alignment.png}
+\includegraphics[width=0.2\textwidth]{alignment.png}
 \end{center}
+
+\section{Pair HMM}
+
+The corresponding HMM is given by
+
+%
+\begin{figure}
+\begin{centering}
+\includegraphics[width=4in]{Slide5}
+\par\end{centering}
+
+\caption{The HMM mpdel for sequence alignment}
+%
+\end{figure}
+
+
+where, p(x,y)=0.125 and p(x,y)=0.04 for mismatch
+
+p(x,\_)=q(\_,y)=0.25
+
+If we consider all probability values with repesct to a random model
+in log-odds
+
+\[
+S(x,y)=log\frac{p(x,y)}{p(x)\; p(y)}\]
+
+
+%
+\begin{figure}
+\begin{centering}
+\includegraphics[width=3in]{Viterbi}
+\par\end{centering}
+
+\caption{Viterbi Algorithm}
+%
+\end{figure}
+$ $
+
+\[
+S(x,y)=1\quad for\quad match\qquad and\quad s(x,y)=-1\quad for\quad mismatch\]
+
+
+The we can consruct the three matrices for VM, VX and VY by the Viterbi
+algorithm
+
+%
+\begin{figure}
+\begin{centering}
+\includegraphics[width=4in]{Slide1}\caption{The matrix for the match state}
+
+\par\end{centering}
+
+%
+\end{figure}
+
+
+%
+\begin{figure}
+\begin{centering}
+\includegraphics[width=4in]{Slide2}
+\par\end{centering}
+
+\caption{Matrix for deletion state}
+
+
+%
+\end{figure}
+
+
+%
+\begin{figure}
+\begin{centering}
+\caption{Matrix for insertion state}
+\includegraphics[width=4in]{Slide3}
+\par\end{centering}
+
+%
+\end{figure}
+
+
+%
+\begin{figure}
+\begin{centering}
+\includegraphics[width=4in]{Slide4}\caption{Alignment by backtracking}
+
+\par\end{centering}
+
+%
+\end{figure}
+
+
+There are two possible optimal alignments
+
+%
+\begin{figure}
+\begin{centering}
+\includegraphics[width=2in]{alignment2}
+\par\end{centering}
+
+\caption{The alignments}
+
+
+%
+\end{figure}
 
 
 \end{document}
