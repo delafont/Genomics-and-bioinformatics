@@ -23,18 +23,19 @@
 
 \section{Sequence alignment}
 
-\emph{Match:}  \texttt{+1}, \emph{Mismatch:} \texttt{-1}, \emph{Gap:} \texttt{0}
+\emph{Match:}  \texttt{+1}, \emph{Mismatch:} \texttt{-1}, \emph{Gap:} \texttt{-2}
 
 Sequence 1: \texttt{GAATTCAGA}
 
 Sequence 2: \texttt{GGATCGA}.\\
 
-Step 1: INITIALIZATION
+\begin{enumerate}
+\item INITIALIZATION
 
 Create a matrix with \texttt{m + 1} columns and \texttt{n + 1} rows where \texttt{m} and \texttt{n} correspond to the sizes of Sequences 1 and 2, respectively. \\
 
 
-Step 2: SCORING
+\item SCORING
 
 Using the given scoring scheme, at each cell, 3 scores are calculated:
 \begin{itemize}
@@ -45,7 +46,7 @@ Using the given scoring scheme, at each cell, 3 scores are calculated:
 Upper-left neighbour score + Mismatch cost (if nucleotides do not match)
 \end{itemize}
 
-\indent\emph{The highest score is retained and the arrow is labelled.} The resulting scoring matrix should look something like this, \\
+The highest score is retained and the arrow is labelled. Here is the resulting scoring matrix: \\
 
 \begin{center}
 \includegraphics[width=0.6\textwidth]{scoring.png}\\
@@ -53,27 +54,33 @@ Upper-left neighbour score + Mismatch cost (if nucleotides do not match)
 
 \pagebreak
 
-Step 3: BACKTRACKING
+\item BACKTRACKING
 
- The process of deduction of the best alignment from the score matrix is known as traceback. The traceback begins with the last cell to be filled, i.e. the bottom-right cell, and is completed when the first, i.e. the top-left cell of the matrix is reached. Several traceback paths are possible. The solution resulting in the best final score is selected to deduce the optimum alignment. It is possible to have more than one optimum alignment. 
+ The process of deduction of the best alignment from the score matrix is known as traceback. 
+ The traceback begins with the last cell to be filled, i.e. the bottom-right cell, and is 
+ completed when the first, i.e. the top-left cell of the matrix is reached. Several 
+ traceback paths are possible. The solution resulting in the best final score is selected 
+ to deduce the optimum alignment. It is possible to have more than one optimum alignment. 
 
-A traceback path for the scoring matrix generated in Step 2 is highlighted below, 
+A traceback path for the scoring matrix generated in Step 2 is highlighted below.
 
 \begin{center}
 \includegraphics[width=0.6\textwidth]{backtracking.png}
 \end{center}
 
-Step 4: ALIGNMENT
+\item ALIGNMENT
 
-After backtracking, the optimal alignment is easy to recover using following the rule,
+After backtracking, the optimal alignment is easy to recover using the following rule:
 
- \emph{Left} = Gap , \emph{Up} = Insertion, and \emph{Diagonal} = Match 
+ \emph{Left} = Deletion , \emph{Up} = Insertion, and \emph{Diagonal} = Match 
 
 The optimum alignment for the two sequences \texttt{GAATTCAGA} and \texttt{GGATCGA} is,
 
 \begin{center}
 \includegraphics[width=0.2\textwidth]{alignment.png}
 \end{center}
+
+\end{enumerate}
 
 \section{Pair HMM}
 
@@ -90,16 +97,17 @@ The corresponding HMM is given by
 \end{figure}
 
 
-where, p(x,y)=0.125 and p(x,y)=0.04 for mismatch
+where $p(x,y)=0.125$ and $p(x,y)=0.04$ for mismatch
 
-p(x,\_)=q(\_,y)=0.25
+$p(x,\_)=q(\_,y)=0.25$
 
 If we consider all probability values with repesct to a random model
 in log-odds
+$$
+S(x,y)=log\frac{p(x,y)}{p(x)\; p(y)}
 
-\[
-S(x,y)=log\frac{p(x,y)}{p(x)\; p(y)}\]
-
+S(x,y)=1 for match and s(x,y)=-1 for mismatch
+$$
 
 %
 \begin{figure}
@@ -110,11 +118,6 @@ S(x,y)=log\frac{p(x,y)}{p(x)\; p(y)}\]
 \caption{Viterbi Algorithm}
 %
 \end{figure}
-$ $
-
-\[
-S(x,y)=1\quad for\quad match\qquad and\quad s(x,y)=-1\quad for\quad mismatch\]
-
 
 The we can consruct the three matrices for VM, VX and VY by the Viterbi
 algorithm
