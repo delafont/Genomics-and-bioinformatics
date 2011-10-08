@@ -48,7 +48,7 @@ def hierholzer(vertices, edges):
             i = cycle.index(v)
             sub, E = walk(v, edges)
             assert sub[0] == sub[-1], err
-            cycle = cycle[:i]+sub+cycle[i+1:]
+            cycle = cycle[:i]+sub[:-1]+cycle[i:]
             notvisited.update(sub)
     return cycle
 
