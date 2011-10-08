@@ -5,10 +5,10 @@ genome = SeqIO.read("chr18.fa", "fasta")
 """
 Alternatively:
 f = open("chr18.fa")
-genome = f.read() 
+genome = f.read()
 f.close()
 
-Note that in this case all the file is read as a single string. 
+Note that in this case all the file is read as a single string.
 For memory reasons it is not optimal.
 Note also the multiple-line comment we use here.
 """
@@ -18,11 +18,11 @@ total_length = len(genome)
 print "The length is:", total_length
 
 # Question 3.3 #
-A_count = genome.seq.count('A')
-C_count = genome.seq.count('C')
-G_count = genome.seq.count('G')
-T_count = genome.seq.count('T')
-print 'A: %s, C: %s, G: %s, T: %s' % (A_count, C_count, G_count, T_count) 
+A_count = genome.seq.count('A') + genome.seq.count('a')
+C_count = genome.seq.count('C') + genome.seq.count('c')
+G_count = genome.seq.count('G') + genome.seq.count('g')
+T_count = genome.seq.count('T') + genome.seq.count('t')
+print 'A: %s, C: %s, G: %s, T: %s' % (A_count, C_count, G_count, T_count)
 # each '%s' will be replaced by the corresponding string on the right of the '%'
 
 """
