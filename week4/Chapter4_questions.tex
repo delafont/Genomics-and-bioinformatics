@@ -59,7 +59,7 @@ path with maximum probabiity. The maximum probability of generating
 the alignment and the corresponding path are calculated by a dynamic
 programming algorithm which is called the Viterbi Algorithm. You will
 see through the exercise that the Viterbi algorithm is actually similar
-to the Needleman-Wunsch algorthm.
+to the Needleman-Wunsch algorithm.
 
 %
 \begin{figure}[h]
@@ -85,7 +85,7 @@ State I inserts a gap to the second sequence
 State J inserts a gap to the first sequence 
 
 
-Here, I is euivalent to Delete state and J is equivalent to the Insertion state;
+Here, I is euivalent to Delete state(D) and J is equivalent to the Insertion state(I);
 So, three states will be denoted by M, D and I in the algorithm written bellow.
 \vspace{0.5cm}
 
@@ -105,7 +105,7 @@ Transition probabilities:
 
 \textgreek{e} = probability of extending a gap
 
-The algorithm is goes through the three steps
+The algorithm goes through the three steps
 
 Step1: Intialisation
 
@@ -153,7 +153,7 @@ where S(x,y)=1 for match, S(x,y)=-1 for mismatch, d=gap penulty=-2 and e=d for l
 
 1) Deduce the emission probability matrix and the transition probabilities for the HMM \\
 2) use the algorithm as shown above to generate the three matrices for Match(M), Delete(D) and Insertion(I)\\
-3) Deduce the alignment bases on this theree matrices
+3) Deduce the alignment based on this theree matrices
 
 
 
