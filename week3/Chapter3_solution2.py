@@ -5,7 +5,7 @@
 
 """
 We used a lot of "List comprehensions" here. For example,
-print [a+5 for a in [1,2,3,4,5,6]] 
+print [a+5 for a in [1,2,3,4,5,6]]
 returns: [6,7,8,9,10,11]
 Each time you can replace it by
 for a in [1,2,3,4,5,6]:
@@ -19,13 +19,14 @@ reads overlap only two-by-two.
 #reads = ["CCACAG", "CACAGA"] # min overlap is 5
 #reads = ["AAATTTGGC", "TGGCAAA", "CAAATTGCGAGT"] #min overlap is 4
 reads = ["AATGT", "ATGTC", "GTCGA", "CGATT"] # min overlap is 3
+#reads = ["AATGT","TGTAT","GTATG","ATGCC"] # min overlap is 3
 
-l = 4  #arbitrary, but need *l* inferior or equal to *min_overlap*+1
+l = 3  #arbitrary, but need *l* inferior or equal to *min_overlap*+1
 
 #------------------#
 # Overlap function #
 #------------------#
-# The function from exercise 1. We will reuse it. 
+# The function from exercise 1. We will reuse it.
 def overlaps(read1, read2, min_overlap):
     """If the end of read1 overlaps with at least *min_overlaps* nucleotides
     of read2, return the overlap sequence, False otherwise."""
@@ -33,8 +34,7 @@ def overlaps(read1, read2, min_overlap):
     if read1 in read2: return read1
     if read2 in read1: return read2
     for i in xrange(read_length, min_overlap-1, -1):
-        if read1[-i:] == read2[:i]: 
-            print read2[:i]
+        if read1[-i:] == read2[:i]:
             return read2[:i]
     return "" # small change here, because False has no length.
 
@@ -56,7 +56,7 @@ Sl = [] # All l-mers
 for r in reads: Sl.extend(subseqs(r,l))
 
 """
-This would suffice with the example we gave you, but actually you 
+This would suffice with the example we gave you, but actually you
 are counting twice l-mers from overlap sequences. One has to remove copies.
 It is even more complicated than what is written here, especially if multiple reads
 overlap in the same region.
@@ -65,21 +65,24 @@ Olaps = [overlaps(v1,v2,l) for v1 in reads for v2 in reads if v1!=v2]
 copies = []
 for o in Olaps: copies.extend(subseqs(o,l))
 for c in copies: Sl.pop(Sl.index(c))
-print copies
 
 Edual = [] # Edges
 for s in Sl:
     linked_by_s = [(v1,v2) for v1 in Vdual for v2 in Vdual if (s[:-1]==v1 and s[1:]==v2 and v1!=v2)]
     Edual.extend(linked_by_s)
-    
+
+print "Vertices:", Vdual
+print "Sl:", Sl
+print "Edges:", Edual
+
 #--------------------------------#
 # Find start and end, bind them. #
 #--------------------------------#
-""" 
+"""
 This part is more difficult.
 The general way to find the start and end of your contig is to look for
 vertices with unequal number of outgoing and incoming edges.
-You don't have to create functions, but else it becomes very ugly and 
+You don't have to create functions, but else it becomes very ugly and
 more difficult to understand.
 """
 
@@ -91,11 +94,10 @@ def incoming(vertex, edges):
     """Returns the list of edges from *edges* coming from node *vertex*."""
     return [edge for edge in edges if edge[1] == vertex]
 
-print [(len(incoming(v,Edual)),len(outgoing(v,Edual))) for v in Vdual]
 start = [v for v in Vdual if len(outgoing(v,Edual)) > len(incoming(v,Edual))]
 end = [v for v in Vdual if len(outgoing(v,Edual)) < len(incoming(v,Edual))]
 Edual.append((end[0], start[0]))
-print "start:",start, "\t end:",end # start and end should both have only one element.
+print "start:",start, ",\t end:",end # start and end should both have only one element.
 
 
 #---------------#
@@ -109,7 +111,7 @@ path = hierholzer.hierholzer(Vdual, Edual)
 #------------------------#
 istart = path.index(start[0])
 path = path[istart:]+path[:istart]
-print "Eulerian path:", path
+print "Eulerian path:", path[:-1]
 contig = path[0]
 for i in range(1,len(path)-1):
     contig = contig+path[i][-1]
