@@ -46,7 +46,7 @@ e.g. \texttt{overlaps(AATG,TGTT,2) -> TG , overlaps(AATG,TGTT,3) -> False}
 \item Write a function that for a given read returns a list of all the \texttt{l}-mers contained in the read, \\
 e.g. \texttt{subseqs(AATGCG,4) ->  [AATG,ATGC,TGCG]}
 \item Taking \texttt{l} = 3 bp, and using the same reads library as before, generate the list of vertices and the list of edges as defined for the de Bruijn graph.
-\item Spot the start and end vertices (in our case, the ones that appear only once in the edges), and add one vertex to close the graph.
+\item Spot the start and end vertices (in our case, the ones that appear only once in the edges), and add one edge from end to start to close the graph.
 \item Copy or import the \texttt{hierholzer(nodes,edges)} function from the file \texttt{hierholzer.py} to find an Eulerian cycle in your graph. Deduce the largest contig possible.
 \end{enumerate}
 
