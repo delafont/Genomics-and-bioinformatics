@@ -27,7 +27,6 @@
 
 
 
-
 \section{Sequence alignment}
 The Needlman-Wunsch algorithm uses a method called ``dynamic programming''. This is a very general programming technique. It involves three main steps:
 \begin{enumerate}
@@ -53,38 +52,109 @@ The best alignment is: .........................................................
 
 
 \section{Pair Hidden Markov Model}
-In this exercise, we will construct a pair Hidden Markov Model for
+
+In this exercise, we will construct a pair Hiden Markov Model for
 the same sequences as in the first exercise and align them using the
-path with maximum probability.
-
-The maximum probability path and the corresponding alignment are calculated by a dynamic
+path with maximum probabiity. The maximum probability of generating
+the alignment and the corresponding path are calculated by a dynamic
 programming algorithm which is called the Viterbi Algorithm. You will
-see in the exercise that the Viterbi algorithm is actually similar
-to the Needleman-Wunsch algorithm.
+see through the exercise that the Viterbi algorithm is actually similar
+to the Needleman-Wunsch algorthm.
 
-A general pair HMM is shown in Figure 1. It consists of the following parameters:
+%
 \begin{figure}[h]
-\begin{centering}
-\includegraphics[width=4in]{HMMfigures.eps}\caption{Pair Hidden Markov Model}
-\par\end{centering}
+\begin{center}
+\includegraphics[width=0.08\textwidth]{HMM.jpg}\caption{Pair Hidden Markov Model}
+
+\end{center}
+
+%
 \end{figure}
 
-\begin{itemize}
-\item Three states: M, I, D.\\
-State M matches one letter from each sequence\\
-State I inserts a gap in the second sequence \\
-State D inserts a gap in the first sequence
 
-\item Emission probabilities: p(x y), q(x) and q(y), where,\\
-p (x,y) = probability of emitting a pair of characters {[}x,y{]} \\
-qx = probability of emitting a pair of character {[}x,\_{]}\\
+The Pair HMM consists of the following parameters(Figure)
+
+\vspace{0.5cm}
+
+Three states: M, I, J
+
+State M matches one letter from each sequence
+
+State I inserts a gap to the second sequence
+
+State J inserts a gap to the first sequence 
+
+
+Here, I is euivalent to Delete state and J is equivalent to the Insertion state;
+So, three states will be denoted by M, D and I in the algorithm written bellow.
+\vspace{0.5cm}
+
+Emission probabilities: p(x y),,q(x) and q(y)
+
+where p (x,y)= probability of emitting a pair of characters {[}x,y{]}
+
+qx =probabilityof emitting a pair of character {[}x,\_{]}
+
 qy = probability of emitting a pair of characters{[}\_,y{]}
 
-\item Transition probabilities:\\
-\textgreek{d} = probability of opening a gap \\
-\textgreek{e} = probability of extending a gap \\
-\end{itemize}
+\vspace{0.5cm}
 
-Find the maximum probability path, and deduce the best possible alignment.
+Transition probabilities:
+
+\textgreek{d} = probability of opening a gap
+
+\textgreek{e} = probability of extending a gap
+
+The algorithm is goes through the three steps
+
+Step1: Intialisation
+
+
+
+
+\[
+VM(0,0)=0; VD(0,0)=-\infty ; VI(0,0)=-\infty;
+V*(-1,j)=V*(i,-1)=-\infty;\]
+
+
+Step2: Recursion
+
+\[ VM(i,j) =S(x_{i},y_{j})+max \left\{ \begin{array}{ll}
+	 VM(i-1,j-1)\\
+         VD(i-1,j-1) \\
+         VI(i-1,j-1)  .\end{array} \right. \] 
+
+\[ VD(i,j) =max \left\{ \begin{array}{ll}
+         VM(i-1,j)-d \\
+         VD(i-1,j)-e  .\end{array} \right. \] 
+
+\[ VI(i,j) =max \left\{ \begin{array}{ll}
+         VM(i,j-1)-d \\
+         VI(i,j-1)-e  .\end{array} \right. \]
+
+
+
+Step3=Termination
+
+\[ VE=max(VM(n,m),VD(n,m),VI(n,m))\]
+
+   
+
+
+To make correspondence to the Needleman-Wunsch algorithm with the scores as given in Exercise 1
+
+\[
+S(x,y)=log\frac{p(x,y)}{p(x)\; p(y)}\]
+
+\[
+d=-log(\delta)\]
+
+where S(x,y)=1 for match, S(x,y)=-1 for mismatch, d=gap penulty=-2 and e=d for linear gap penulty\\
+
+1) Deduce the emission probability matrix and the transition probabilities for the HMM \\
+2) use the algorithm as shown above to generate the three matrices for Match(M), Delete(D) and Insertion(I)\\
+3) Deduce the alignment bases on this theree matrices
+
+
 
 \end{document}
