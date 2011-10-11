@@ -49,9 +49,9 @@ The best alignment is: ........\\
  
 \section{Pair Hidden Markov Model}
 
-In this exercise, we will construct a pair Hiden Markov Model for
+In this exercise, we will construct a pair Hidden Markov Model for
 the same sequences as in the first exercise and align them using the
-path with maximum probabiity. The maximum probability of generating
+path with maximum probability. The maximum probability of generating
 the alignment and the corresponding path are calculated by a dynamic
 programming algorithm which is called the Viterbi Algorithm. You will
 see through the exercise that the Viterbi algorithm is actually similar
@@ -72,26 +72,23 @@ The Pair HMM consists of the following parameters(Figure)
 
 \vspace{0.5cm}
 
-Three states: M, I, J
+Three states: M, I, D
 
 State M matches one letter from each sequence
 
-State I inserts a gap to the second sequence
+State I (Insertion) inserts a gap to the second sequence
 
-State J inserts a gap to the first sequence\\
-
-
-Here, I is equivalent to Delete state(D) and J is equivalent to the Insertion state(I);
+State D (Deletion) inserts a gap to the first sequence\\
 
 
-So, three states will be denoted by M, D and I in the algorithm written bellow.
+So, three states will be denoted by M, I and D in the algorithm written below.
 \vspace{0.5cm}
 
-Emission probabilities: p(x, y), q(x) and q(y), where, 
+Emission probabilities: p(x, y), q(x) and q(y), where
 
-p (x,y) = probability of emitting a pair of characters {[}x,y{]}
+p(x,y) = probability of emitting a pair of characters {[}x,y{]}
 
-q(x) =probability of emitting a pair of character {[}x,\_{]}
+q(x) = probability of emitting a pair of character {[}x,\_{]}
 
 q(y) = probability of emitting a pair of character {[}\_,y{]}
 
@@ -103,18 +100,18 @@ Transition probabilities:
 
 \textgreek{e} = probability of extending a gap
 
+\vspace{0.5cm}
+The algorithm goes through the three steps:\\
 
-The algorithm goes through the three steps\\
 
-
-Step1: Intialisation
+Step 1: Initialization
 \[
 VM(0,0)=0; VD(0,0)=-\infty ; VI(0,0)=-\infty;
 V*(-1,j)=V*(i,-1)=-\infty;\]
 \newpage
 
 
-Step2: Recursion
+Step 2: Recursion
 
 \[ VM(i,j) =S(x_{i},y_{j})+max \left\{ \begin{array}{ll}
 	 VM(i-1,j-1)\\
@@ -143,18 +140,13 @@ S(x,y)=log\frac{p(x,y)}{p(x)\; p(y)}\]
 \[
 d=-log(\delta)\]
 
-where, S(x,y) = 1 for match, 
+where 
+
+S(x,y) = 1 for match, 
 
 S(x,y) = -1 for mismatch,
 
-d = -2 for gap penalty,
-
-<<<<<<< HEAD
-1) Deduce the emission probability matrix and the transition probabilities for the HMM \\
-2) use the algorithm as shown above to generate the three matrices for Match(M), Delete(D) and Insertion(I)\\
-3) Deduce the alignment based on these theree matrices
-=======
-e = d, in case of linear gap penalty.\\
+d = -2 for gap penalty.
 
 \begin{enumerate}
 \item Deduce the emission probability matrix and the transition probabilities for the HMM
@@ -190,7 +182,6 @@ Backtracking matrix:
 \includegraphics[width=0.8\textwidth]{matrix.png}
 \end{center}
 \vspace{0.5cm}
->>>>>>> Edited Question 2 - formatting + added solution matrices
 
 The possible alignments are: ............
 
