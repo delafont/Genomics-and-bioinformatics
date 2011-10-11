@@ -43,6 +43,7 @@ Sequence 2: \texttt{GGATCGA}.
 \includegraphics[width=0.8\textwidth]{matrix.png}
 \end{center}
 \vspace{0.5cm}
+
 The best alignment is: ........\\
 
  
@@ -77,20 +78,22 @@ State M matches one letter from each sequence
 
 State I inserts a gap to the second sequence
 
-State J inserts a gap to the first sequence 
+State J inserts a gap to the first sequence\\
 
 
-Here, I is euivalent to Delete state(D) and J is equivalent to the Insertion state(I);
+Here, I is equivalent to Delete state(D) and J is equivalent to the Insertion state(I);
+
+
 So, three states will be denoted by M, D and I in the algorithm written bellow.
 \vspace{0.5cm}
 
-Emission probabilities: p(x y),,q(x) and q(y)
+Emission probabilities: p(x, y), q(x) and q(y), where, 
 
-where p (x,y)= probability of emitting a pair of characters {[}x,y{]}
+p (x,y) = probability of emitting a pair of characters {[}x,y{]}
 
-qx =probabilityof emitting a pair of character {[}x,\_{]}
+q(x) =probability of emitting a pair of character {[}x,\_{]}
 
-qy = probability of emitting a pair of characters{[}\_,y{]}
+q(y) = probability of emitting a pair of character {[}\_,y{]}
 
 \vspace{0.5cm}
 
@@ -100,17 +103,15 @@ Transition probabilities:
 
 \textgreek{e} = probability of extending a gap
 
-The algorithm goes through the three steps
+
+The algorithm goes through the three steps\\
 
 
 Step1: Intialisation
-
-
-
-
 \[
 VM(0,0)=0; VD(0,0)=-\infty ; VI(0,0)=-\infty;
 V*(-1,j)=V*(i,-1)=-\infty;\]
+\newpage
 
 
 Step2: Recursion
@@ -126,18 +127,15 @@ Step2: Recursion
 
 \[ VI(i,j) =max \left\{ \begin{array}{ll}
          VM(i,j-1)-d \\
-         VI(i,j-1)-e  .\end{array} \right. \]
+         VI(i,j-1)-e  .\end{array} \right. \]  
 
 
 
-Step3=Termination
+Step 3: Termination
 
-\[ VE=max(VM(n,m),VD(n,m),VI(n,m))\]
+\[ VE=max(VM(n,m),VD(n,m),VI(n,m))\]\\
 
-   
-
-
-To make correspondence to the Needleman-Wunsch algorithm with the scores as given in Exercise 1
+To make correspondence to the Needleman-Wunsch algorithm with the scores given in Exercise 1,
 
 \[
 S(x,y)=log\frac{p(x,y)}{p(x)\; p(y)}\]
@@ -145,12 +143,56 @@ S(x,y)=log\frac{p(x,y)}{p(x)\; p(y)}\]
 \[
 d=-log(\delta)\]
 
-where S(x,y)=1 for match, S(x,y)=-1 for mismatch, d=gap penulty=-2 and e=d for linear gap penulty\\
+where, S(x,y) = 1 for match, 
 
+S(x,y) = -1 for mismatch,
+
+d = -2 for gap penalty,
+
+<<<<<<< HEAD
 1) Deduce the emission probability matrix and the transition probabilities for the HMM \\
 2) use the algorithm as shown above to generate the three matrices for Match(M), Delete(D) and Insertion(I)\\
 3) Deduce the alignment based on these theree matrices
+=======
+e = d, in case of linear gap penalty.\\
 
+\begin{enumerate}
+\item Deduce the emission probability matrix and the transition probabilities for the HMM
+\item Use the algorithm as shown above to generate the three matrices for Match(M), Delete(D) and Insertion(I)
+\item Deduce the alignment based on the three matrices.
+\end{enumerate}
+
+\underline{Solution:}
+\newpage
+
+Matrix 1:
+\begin{center}
+\includegraphics[width=0.8\textwidth]{matrix.png}
+\end{center}
+\vspace{1.5cm}
+
+Matrix 2:
+\begin{center}
+\includegraphics[width=0.8\textwidth]{matrix.png}
+\end{center}
+\vspace{1.5cm}
+
+\newpage 
+
+Matrix 3: 
+\begin{center}
+\includegraphics[width=0.8\textwidth]{matrix.png}
+\end{center}
+\vspace{0.5cm}
+
+Backtracking matrix:
+\begin{center}
+\includegraphics[width=0.8\textwidth]{matrix.png}
+\end{center}
+\vspace{0.5cm}
+>>>>>>> Edited Question 2 - formatting + added solution matrices
+
+The possible alignments are: ............
 
 
 \end{document}
