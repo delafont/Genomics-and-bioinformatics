@@ -12,6 +12,11 @@ for a in [1,2,3,4,5,6]:
     print a+5
 But list comprehensions are one of the reasons why Python is attractive, try it!
 
+Also note that strings are arrays of characters, so you can index them the same way:
+'Bioinformatics'[3:6] -> 'inf'
+'Bioinformatics'[:-5] -> 'Bioinform' (minus means 'from the end')
+'Bioinformatics'[:7]  -> 'Bioinfo'
+
 The code is designed to work in simple situations, where for example
 reads overlap only two-by-two.
 """
@@ -19,7 +24,7 @@ reads overlap only two-by-two.
 #reads = ["CCACAG", "CACAGA"] # min overlap is 5
 #reads = ["AAATTTGGC", "TGGCAAA", "CAAATTGCGAGT"] #min overlap is 4
 reads = ["AATGT", "ATGTC", "GTCGA", "CGATT"] # min overlap is 3
-#reads = ["AATGT","TGTAT","GTATG","ATGCC"] # min overlap is 3
+#reads = ["AATGT","TGTAT","GTATG","ATGCC"] # min overlap is 3 - the example done on the board
 
 l = 3  #arbitrary, but need *l* inferior or equal to *min_overlap*+1
 
@@ -31,12 +36,12 @@ def overlaps(read1, read2, min_overlap):
     """If the end of read1 overlaps with at least *min_overlaps* nucleotides
     of read2, return the overlap sequence, False otherwise."""
     read_length = min(len(read1),len(read2))
-    if read1 in read2: return read1
+    if read1 in read2: return read1 # in case one of the reads contains the other one
     if read2 in read1: return read2
     for i in xrange(read_length, min_overlap-1, -1):
         if read1[-i:] == read2[:i]:
             return read2[:i]
-    return "" # small change here, because False has no length.
+    return "" # small change here, because one cannot write len(False).
 
 #------------------#
 # Subseqs function #
@@ -59,7 +64,7 @@ for r in reads: Sl.extend(subseqs(r,l))
 This would suffice with the example we gave you, but actually you
 are counting twice l-mers from overlap sequences. One has to remove copies.
 It is even more complicated than what is written here, especially if multiple reads
-overlap in the same region.
+overlap in the same region. It is not the method used by the real algorithm.
 """
 Olaps = [overlaps(v1,v2,l) for v1 in reads for v2 in reads if v1!=v2]
 copies = []
@@ -94,8 +99,8 @@ def incoming(vertex, edges):
     """Returns the list of edges from *edges* coming from node *vertex*."""
     return [edge for edge in edges if edge[1] == vertex]
 
-start = [v for v in Vdual if len(outgoing(v,Edual)) > len(incoming(v,Edual))]
-end = [v for v in Vdual if len(outgoing(v,Edual)) < len(incoming(v,Edual))]
+start = [v for v in Vdual if len(outgoing(v,Edual)) > len(incoming(v,Edual))] # should contain 1 element
+end = [v for v in Vdual if len(outgoing(v,Edual)) < len(incoming(v,Edual))] # should contain 1 element
 Edual.append((end[0], start[0]))
 print "start:",start, ",\t end:",end # start and end should both have only one element.
 
@@ -104,17 +109,18 @@ print "start:",start, ",\t end:",end # start and end should both have only one e
 # Find the path #
 #---------------#
 import hierholzer
-path = hierholzer.hierholzer(Vdual, Edual)
+cycle = hierholzer.hierholzer(Vdual, Edual)
 
 #------------------------#
 # Reconstruct the contig #
 #------------------------#
-istart = path.index(start[0])
-path = path[istart:]+path[:istart]
-print "Eulerian path:", path[:-1]
-contig = path[0]
-for i in range(1,len(path)-1):
-    contig = contig+path[i][-1]
+istart = cycle.index(start[0]) # index of 'start' vertex in *path*
+cycle = cycle[istart:]+cycle[:istart] # put 'start' at the beginning, 'end' at the end of *path*
+path = cycle[:-1]
+print "Eulerian path:", path # remove last element to break the cycle between start and end
+contig = path[0] # begin from the 'start' vertex
+for i in range(1,len(path)):
+    contig = contig+path[i][-1] # add the last letter of each vertex in the path
 print "Contig:",contig
 
 """
