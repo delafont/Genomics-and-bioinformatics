@@ -64,7 +64,7 @@ for r in reads: Sl.extend(subseqs(r,l))
 This would suffice with the example we gave you, but actually you
 are counting twice l-mers from overlap sequences. One has to remove copies.
 It is even more complicated than what is written here, especially if multiple reads
-overlap in the same region. It is not the method used by the real algorithm.
+overlap in the same region. The method used here is not the one used by the real algorithm.
 """
 Olaps = [overlaps(v1,v2,l) for v1 in reads for v2 in reads if v1!=v2]
 copies = []
