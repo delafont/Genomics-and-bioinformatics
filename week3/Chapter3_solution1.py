@@ -6,8 +6,13 @@
 #---------------#
 # Read the file #
 #---------------#
-with open('reads1.fastq', 'r') as f:
-    reads = [line.strip() for line in f]
+f = open('reads1.fastq', 'r')
+reads = []
+for line in f:
+    reads.append(line.strip()) 
+    # .strip('xyz') removes chars x,y,z at both extremities of the string
+    # use .split() if you need to extract words from a line
+
 num_of_reads = len(reads)
 read_length = len(reads[0])
 min_overlap = 5
@@ -20,14 +25,17 @@ def overlaps(read1, read2, min_overlap):
     of read2, return the overlap sequence, False otherwise."""
     read_length = min(len(read1),len(read2))
     for i in xrange(read_length, min_overlap-1, -1):
-        if read1[-i:] == read2[:i]: return read2[:i]
+        if read1[-i:] == read2[:i]: 
+            return read2[:i]
     return False
 
 #--------------------------------------------------#
 # Build the graph for the Hamiltonian path problem #
 #--------------------------------------------------#
 vertices = list(set(reads)) # One can use list(set()) to get unique values in Python
-edges = [(r1,r2) for r1 in vertices for r2 in vertices if overlaps(r1,r2,min_overlap) and not r1 == r2]
+edges = [(r1,r2) for r1 in vertices for r2 in vertices \
+            if overlaps(r1,r2,min_overlap) and not r1 == r2] 
+            #'\' is to continue on a new line
 
 """ 
 Try to write an algorithm that finds the way if you like.
