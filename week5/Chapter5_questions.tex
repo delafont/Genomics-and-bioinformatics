@@ -22,7 +22,7 @@ Lorem ipsum.
 
 %-----------------------------------------------------------------------------%
 \section{Reading frame}
-In this exercise you are given an nucleotide sequence which contains a coding region somewhere. You have to deduce what is the reading frame of this coding region.
+In this exercise you are given a nucleotide sequence which contains a coding region somewhere. You have to deduce what is the reading frame of this coding region.
 
 The general procedure to find the right frame for reading a nucleotide sequence is to convert the nucleotide sequence into the corresponding possible amnio acid sequences and see which one makes the most sense. As you know, the base pairs are read three by three and translated into amino acids. One can hence read a sequence in three different ways: A, B and C.
 
@@ -33,13 +33,13 @@ The general procedure to find the right frame for reading a nucleotide sequence 
 	\label{fig:gene_distribution_rib}
 \end{figure}
 
-So, to convert a base pair sequence (e.g. \texttt{CAGATTCTC}...) to an amino acid sequence (e.g. \texttt{GWLPHLQRI}...) you cut the base pair sequence in pieces of 3 nucleotides (e.g. \texttt{"CAG", "ATT",...}), and use a conversion table that links any possible 3mer to one of the 21 amnio acids. For instance, \texttt{CAG} codes for glutamine.
+So, to convert a base pair sequence (e.g. \texttt{CAGATTCTC}...) to a amino acid sequence (e.g. \texttt{GWLPHLQRI}...) you cut the base pair sequence in pieces of 3 nucleotides (e.g. \texttt{"CAG", "ATT",...}), and use a conversion table that links any possible 3mer to one of the 21 amnio acids. For instance, \texttt{CAG} codes for glutamine.
 
 \subsection{All 3mers}
 To build the conversion table that links 3mers to amino acids. We first need to build an exhaustive list of 3mers. Write the code that takes as input the list of the four base pairs and generates as output all the possible permutations of size three.
 	
 The output should start like this and have 64 elements:
-
+	
 \begin{verbatim}
     bases = ["t", "c", "a", "g"]
 	codons = ['ttt', 'ttc', 'tta', 'ttg', 'tct', 'tcc', 'tca', 'tcg', 'tat', ...
