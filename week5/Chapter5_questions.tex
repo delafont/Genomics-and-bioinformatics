@@ -16,8 +16,16 @@
 \begin{document}
 \maketitle
 
-\section{Markow model}
-Lorem ipsum.
+\section{Markov model}
+Plasmodium Falciparum (protozoa responsible of malaria in humans) has a GC content of about 20\%, and a genome length of 23Mb. Suppose now that a protein has a strong affinity with GC rich isochores (long regions of DNA with a relatively homogeneous GC content, which tend to be more flexible and contain more genes). We are interested in finding isochores to discover potential binding sites. In the case of Falciparum, only two 7Kb DNA isochores have a 50\% GC content. 
+\begin{enumerate}
+\item Draw a Hidden Markov Model that reflects the situation: identify hidden states and observed variables.
+\item What are the emission probabilities from each state?
+\item What is the probability, taking a random position in the genome, to be in an isochore? Call this probability $x = P(I)$, the complementary $y = 1-x = P(N)$.
+\item Call $p$, $q$ the transition probabilities between your two states $N$ and $I$. $p$ represents the probability $P(I|N)$, and $q$ is $P(N|I)$. What are then $P(I|I), P(N|N), P(I) \;\text{and}\; P(N)$, as functions of $p$ and $q$ ?
+\item Find $p$ and $q$ solving the equations obtained above.
+\item Call $M_{\sigma,s}$ the matrix of transition probabilities, and $E_{T_n,s}$ the emission probability of character $T_n$ from state $s$. Write the fist steps $F_{n,s}$ of the Forward Algorithm for the following sequence: AAGGCTT.
+\end{enumerate}
 
 \section{Reading frame}
 In this exercise you are given an nucleotide sequence which contains a coding region somewhere. You have to deduce what is the reading frame of this coding region.
@@ -31,10 +39,10 @@ The general procedure to find the right frame for reading a nucleotide sequence 
 	\label{fig:gene_distribution_rib}
 \end{figure}
 
-So, to convert a base pair sequence (e.g. \texttt{CAGATTATG}...) to an amino acid sequence (e.g. \texttt{GWLPHLQRI}...) you cut the base pair sequence in pieces of 3 nucleotides (e.g. \texttt{"CAG", "ATT",...}), and use a conversion table that links any possible 3mer to one of the 21 amnio acids. For instance, \texttt{CAG} codes for glutamine.
+So, to convert a base pair sequence (e.g. \texttt{CAGATTATG}...) to an amino acid sequence (e.g. \texttt{GWLPHLQRI}...) you cut the base pair sequence in pieces of 3 nucleotides (e.g. \texttt{"CAG", \"ATT\",...}), and use a conversion table that links any possible 3mer to one of the 21 amnio acids. For instance, \texttt{CAG} codes for glutamine.
 
-\subsection{three-mers}
-To build the conversion table that links 3-mers to amino acids. We first need to build an exhaustive list of three-mers. Write the function that takes four base pairs this as input and generates all the possible permutations of size three.
+\subsection{3-mers}
+To build the conversion table that links 3-mers to amino acids. We first need to build an exhaustive list of 3-mers. Write the function that takes four base pairs this as input and generates all the possible permutations of size three.
 
 \begin{quote}
 \begin{verbatim}
