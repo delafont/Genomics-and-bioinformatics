@@ -1,0 +1,71 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{bbm}
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{fullpage}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage[center,footnotesize]{caption}
+\usepackage[section]{placeins}
+\usepackage{subfig}
+\title{Series 5 - BLAST exercise solutions}
+\date{October 18, 2011}
+\author{Genomics and bioinformatics - Week 5}
+\begin{document}
+\maketitle
+
+WORK IN PROGRESS..... 
+
+\section{BLAST}
+
+\begin{enumerate}
+\item Do you get any matches to \texttt{fragment\_007}? Which parameters did you use? Record the alignment statistics for the top hits.
+
+Using the Nucleotide Collection (nr/nt) Database and optimizing for "more dissimilar sequences"
+(discontiguous megablast)
+
+\item Extract the sequence of the hit with the highest query coverage (this may not necessarily be the top hit) and perform another nucleotide BLAST, using the same parameters. Record the alignment statistics for the top hits.
+
+\item What differences do you observe between the two BLAST results?
+
+\item To which parameter could you attribute the changes in the E-values?  
+
+\item What is the default threshold for the E-value on NCBI BLAST?
+
+\item Do you have any significant hits suggesting a possible function for \texttt{fragment\_007}? 
+\end{enumerate}
+
+\subsection{Protein BLAST}
+
+Using the python function from the previous exercise, obtain the amino acid sequences for \texttt{fragment\_007.fasta} in three reading frames. Choose the appropriate reading frame and save the corresponding protein sequence in \texttt{aa\_007.fasta} format.\\
+
+Perform a protein BLAST with \texttt{aa\_007.fasta} 
+
+\begin{enumerate}
+\item Are any well-known protein domains found? 
+
+\item Do you get any significant hits? Record the alignment statistics for the top hits. 
+
+\item What is the possible function of the protein encoded by \texttt{fragment\_007}?
+
+\item Which species is most predominant in your BLAST output?
+
+\item Could you have obtained the same results using another BLAST program, without having to translate the nucleotide sequence of \texttt{fragment\_007}?
+
+\item How do results from Protein BLAST compare with the results from Nucleotide BLAST?
+
+
+\end{enumerate}
+
+\section{Finding orthologs}
+
+Putative ortholog of \emph{Saccharomyces cerevisiae} Pho2p in \emph{Candida glabrata} is \texttt{CAGL0L07436g}
+
+In a paper comparing the phosphate signal transduction in \emph{S. cerevisiae} and \emph{C. gabrata} (Genetics 182:471-9,2009), the authors identified the ortholog of Pho2p in \emph{C. gabrata}. \\
+
+Are the findings of the paper consistent with your observations?
+Yes
+
+\end{document}
