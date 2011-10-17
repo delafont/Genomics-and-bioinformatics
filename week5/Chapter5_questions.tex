@@ -50,7 +50,7 @@ The output should start like this and have 64 elements:
 	
 \begin{verbatim}
 bases = ["t", "c", "a", "g"]
-codons = ['ttt', 'ttc', 'tta', 'ttg', 'tct', 'tcc', 'tca', 'tcg', 'tat', ...
+codons = ['ttt', 'ttc', 'tta', 'ttg', 'tct', 'tcc', 'tca', 'tcg', 'tat', ...]
 \end{verbatim}
 
 \subsection{3-mer to amino acid}
@@ -58,7 +58,7 @@ We can now build a dictionary that links every 3mer to an amino acid. If you bui
 
 \begin{verbatim}
 aminos = "FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG"
-codon_to_amino = \{'aaa': 'K', 'aac': 'N', 'aag': 'K', 'aat': 'N', 'aca': 'T', ...
+codon_to_amino = {'aaa': 'K', 'aac': 'N', 'aag': 'K', 'aat': 'N', 'aca': 'T', ...}
 \end{verbatim}
 
 \subsection{Sequence to protein}
