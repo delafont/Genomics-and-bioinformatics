@@ -24,11 +24,11 @@ Plasmodium Falciparum (protozoa responsible of malaria in humans) has a GC conte
 \item What is the probability, taking a random position in the genome, to be in an isochore? Call this probability $x = P(I)$, the complementary $y = 1-x = P(N)$.
 \item Call $p$, $q$ the transition probabilities between your two states $N$ and $I$. $p$ represents the probability $P(I|N)$, and $q$ is $P(N|I)$. What are then $P(I|I), P(N|N), P(I) \;\text{and}\; P(N)$, as functions of $p$ and $q$ ?
 \item Find $p$ and $q$ solving the equations obtained above.
-\item Call $M_{\sigma,s}$ the matrix of transition probabilities, and $E_{T_n,s}$ the emission probability of character $T_n$ from state $s$. Write the fist steps $F_{n,s}$ of the Forward Algorithm for the following sequence: AAGGCTT.
+\item Call $M_{\sigma,s}$ the matrix of transition probabilities, and $E_{T_n,s}$ the emission probability of character $T_n$ from state $s$. Write the fist steps $F_{n,s}$ of the Forward Algorithm for the following sequence: \texttt{"AAGGCTT"}.
 \end{enumerate}
 
 \section{Reading frame}
-In this exercise you are given a nucleotide sequence which contains a coding region somewhere. You have to deduce what is the reading frame of this coding region.
+In this exercise you are given a nucleotide sequence (\texttt{"sequence.txt"}) which contains a coding region somewhere. You have to deduce what is the reading frame of this coding region.
 
 The general procedure to find the right frame for reading a nucleotide sequence is to convert the nucleotide sequence into the corresponding possible amino acid sequences and see which one makes the most sense. As you know, the base pairs are read three by three and translated into amino acids. One can hence read a sequence in three different ways: A, B and C.
 
@@ -77,13 +77,13 @@ You should be able to use it like this:
 \end{quote}
 
 \subsection{Testing the three reading frames}
-You can now load the file \texttt{"sequence.fa"} and call the function you wrote in the last step with the three different possible frames and decide which one is right one.
+You can now load the file \texttt{"sequence.txt"} and call the function you wrote in the last step with the three different possible frames and decide which one is right one.
 
 
 \section{BLAST}
 A common use of the BLAST tool is to identify the function of an unknown sequence. You have been provided with the sequence of a DNA fragment, \texttt{"fragment\_007.fasta"} from an unknown micro-organism. Your aim is to use the NCBI BLAST programs to determine what kind of protein is \texttt{fragment\_007} is likely to encode.\\
 
-\url{http://blast.ncbi.nlm.nih.gov/Blast.cgi?CMD=Web&PAGE_TYPE=BlastHome}
+\url{http://blast.ncbi.nlm.nih.gov/Blast.cgi}
 
 \subsection{Nucleotide BLAST}
 Perform a nucleotide BLAST using \texttt{fragment\_007.fasta} 
