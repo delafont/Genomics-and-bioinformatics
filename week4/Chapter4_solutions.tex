@@ -24,8 +24,8 @@
 
 \section{Sequence alignment}
 \emph{Match:}  \texttt{+1}, \emph{Mismatch:} \texttt{-1}, \emph{Gap:} \texttt{-2}
-Sequence 1: \texttt{GAATTCAGA}
-Sequence 2: \texttt{GGATCGA}.\\
+Sequence 1: \texttt{GAATTCAG}
+Sequence 2: \texttt{GGATCG}.\\
 
 \subsection{Initialization}
 Create a matrix with \texttt{m + 1} columns and \texttt{n + 1} rows where \texttt{m} and \texttt{n} correspond to the sizes of Sequences 1 and 2, respectively. \\
@@ -61,7 +61,7 @@ After backtracking, the optimal alignment is easy to recover using the following
 
  \emph{Left} = Deletion , \emph{Up} = Insertion, and \emph{Diagonal} = Match 
 
-The optimum alignment for the two sequences \texttt{GAATTCAGA} and \texttt{GGATCGA} is,
+The optimum alignment for the two sequences \texttt{GAATTCAG} and \texttt{GGATCG} is,
 
 \begin{center}
 \includegraphics[width=0.2\textwidth]{alignment.png}
