@@ -17,7 +17,7 @@
 \maketitle
 
 \section{Markov model}
-Plasmodium Falciparum (protozoa responsible of malaria in humans) has a GC content of about 20\%, and a genome length of 23Mb. Suppose now that a protein has a strong affinity with GC rich isochores (long regions of DNA with a relatively homogeneous GC content, which tend to be more flexible and contain more genes). We are interested in finding isochores to discover potential binding sites. In the case of Falciparum, only two 7Kb DNA isochores have a 50\% GC content. 
+\emph{Plasmodium Falciparum} (protozoan parasite that causes malaria in humans) has a GC content of about 20\%, and a genome length of 23Mb. Suppose now that our protein of interest has a strong affinity with GC rich isochores (long regions of DNA with a relatively homogeneous GC content, which tend to be more flexible and contain more genes). We are interested in finding isochores to discover potential binding sites of the protein. In the case of \emph{P. falciparum}, only two 7Kb DNA isochores have a 50\% GC content. 
 \begin{enumerate}
 \item Draw a Hidden Markov Model that reflects the situation: identify hidden states and observed variables.
 \item What are the emission probabilities from each state?
@@ -85,23 +85,23 @@ A common use of the BLAST tool is to identify the function of an unknown sequenc
 
 \url{http://blast.ncbi.nlm.nih.gov/Blast.cgi}
 
-\subsection{Nucleotide BLAST}
+\subsection{Nucleotide BLAST - blastn}
 Perform a nucleotide BLAST using \texttt{fragment\_007.fasta} 
 \begin{enumerate}
 \item Do you get any matches to \texttt{fragment\_007}? Which parameters did you use? Record the alignment statistics for the top hits.
 
 \item Extract the sequence of the hit with the highest query coverage (this may not necessarily be the top hit) and perform another nucleotide BLAST, using the same parameters. Record the alignment statistics for the top hits.
 
-\item What changes do you observe in the E-values? To which parameter could you attribute the these changes?  
+\item What changes do you observe in the E-values? To which parameter would you attribute the these changes?  
 
 \item What is the default threshold for the E-value on NCBI BLAST?
 
 \item Do you have any significant hits suggesting a possible function for \texttt{fragment\_007}? 
 \end{enumerate}
 
-\subsection{Protein BLAST}
+\subsection{Protein BLAST - blastp}
 
-Using the python function from the previous exercise, obtain the amino acid sequences for \texttt{fragment\_007.fasta} in three reading frames. Choose the appropriate reading frame and save the corresponding protein sequence in \texttt{aa\_007.fasta} format.\\
+Using the python function from the previous exercise, obtain the amino acid sequences for \texttt{fragment\_007.fasta} in three reading frames. Choose the appropriate reading frame and save the corresponding amino acid sequence in \texttt{aa\_007.fasta} format.\\
 
 Perform a protein BLAST with \texttt{aa\_007.fasta} 
 
@@ -114,16 +114,15 @@ Perform a protein BLAST with \texttt{aa\_007.fasta}
 
 \item Which species is most predominant in your BLAST output?
 
-\item Could you have obtained the same results using another BLAST program, without having to translate the nucleotide sequence of \texttt{fragment\_007}?
+\item Is there a BLAST program that would have given you the same results as BLASTp using the nucleotide sequence of \texttt{fragment\_007} as input?
 
-\item How do results from Protein BLAST compare with the results from Nucleotide BLAST?
-
+\item How do results from BLASTp compare with the results from BLASTn?
 
 \end{enumerate}
 
 \subsection{Finding orthologs}
 
-You have been provided with the sequence of the Pho2p protein from the famous yeast, \emph{Saccharomyces cerevisiae}. Run BLAST to find out whether any putative orthologs of Pho2p are present in another, less famous yeast, \emph{Candida glabrata}.\\
+You have been provided with the sequence of the Pho2p protein from the famous yeast, \emph{Saccharomyces cerevisiae}. Run BLAST to find out whether any putative orthologs of Pho2p are present in another, not so famous yeast, \emph{Candida glabrata}.\\
 
 In a paper comparing the phosphate signal transduction in \emph{S. cerevisiae} and \emph{C. gabrata} (Genetics 182:471-9,2009), the authors identified the ortholog of Pho2p in \emph{C. gabrata}. \\
 
@@ -132,16 +131,8 @@ Are the findings of the paper consistent with your observations?
 \section{Some BLAST tips}
 
 \begin{enumerate}
-\item These can be used as a guide but should be considered with common sense. 
-
-\begin{itemize}
-\item E-value < 10e-100 Identical sequences. You will get long alignments across the entire query and hit sequence. 
-\item 10e-50 < E-value < 10e-100 Almost identical sequences. A long stretch of the query protein is matched to the database. 
-\item 10e-10 < E-value < 10e-50 Closely related sequences, could be a domain match or similar. 
-\item 1 < E-value < 10e-6 Could be a true homologue but it is a grey area. 
-\item E-value > 1 Proteins are most likely not related 
-\item E-value > 10 Hits are most likely junk unless the query sequence is very short. 
-\end{itemize}
+\item This web page provides useful guidelines for BLAST usage and explains the different flavors of BLAST:
+\url{http://www.clcbio.com/index.php?id=995}
 
 \item \emph{Reciprocal Best Hit}
 
