@@ -25,7 +25,7 @@ codon_to_amino['tga'] = '\033[41m*\033[0m'
 raw = open("sequence_001.txt", "r").read()
 sequence = raw.replace(" ","").replace("\n","")
 for i in [0,1,2]: print seq_to_prot(sequence[i:])
-for i in [-1,-2,-3]: print seq_to_prot((sequence)[i::-1])
+for i in [-1,-2,-3]: print seq_to_prot(sequence[i::-1])
 
 """
 The answer is obisously the third reading frame in the forward direction since the
