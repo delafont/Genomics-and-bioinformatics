@@ -24,11 +24,11 @@ Plasmodium Falciparum (protozoa responsible of malaria in humans) has a GC conte
 \item What is the probability, taking a random position in the genome, to be in an isochore? Call this probability $x = P(I)$, the complementary $y = 1-x = P(N)$.
 \item Call $p$, $q$ the transition probabilities between your two states $N$ and $I$. $p$ represents the probability $P(I|N)$, and $q$ is $P(N|I)$. What are then $P(I|I), P(N|N), P(I) \;\text{and}\; P(N)$, as functions of $p$ and $q$ ?
 \item Find $p$ and $q$ solving the equations obtained above.
-\item Call $M_{\sigma,s}$ the matrix of transition probabilities, and $E_{T_n,s}$ the emission probability of character $T_n$ from state $s$. Write the fist steps $F_{n,s}$ of the Forward Algorithm for the following sequence: \texttt{"AAGGCTT"}.
+\item Call $M\_{\sigma,s}$ the matrix of transition probabilities, and $E\_{T\_n,s}$ the emission probability of character $T\_n$ from state $s$. Write the fist steps $F\_{n,s}$ of the Forward Algorithm for the following sequence: \texttt{"AAGGCTT"}.
 \end{enumerate}
 
 \section{Reading frame}
-In this exercise you are given a nucleotide sequence (\texttt{"sequence_001.txt"}) which contains a coding region somewhere. You have to deduce what is the reading frame of this coding region.
+In this exercise you are given a nucleotide sequence (\texttt{"sequence\_001.txt"}) which contains a coding region somewhere. You have to deduce what is the reading frame of this coding region.
 
 The general procedure to find the right frame for reading a nucleotide sequence is to convert the nucleotide sequence into the corresponding possible amino acid sequences and see which one makes the most sense. As you know, the base pairs are read three by three and translated into amino acids. One can hence read a sequence in three different ways: A, B and C.
 
@@ -56,7 +56,7 @@ We can now build a dictionary that links every 3mer to an amino acid. If you bui
 
 \begin{verbatim}
 aminos = "FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG"
-codon_to_amino = {'aaa': 'K', 'aac': 'N', 'aag': 'K', 'aat': 'N', 'aca': 'T', ...
+codon\_to\_amino = \{'aaa': 'K', 'aac': 'N', 'aag': 'K', 'aat': 'N', 'aca': 'T', ...
 \end{verbatim}
 
 \subsection{Sequence to protein}
@@ -77,7 +77,7 @@ You should be able to use it like this:
 \end{quote}
 
 \subsection{Testing the three reading frames}
-You can now load the file \texttt{"sequence_001.txt"} and call the function you wrote in the last step with the three different possible frames and decide which one is right one.
+You can now load the file \texttt{"sequence\_001.txt"} and call the function you wrote in the last step with the three different possible frames and decide which one is right one.
 
 
 \section{BLAST}
