@@ -30,7 +30,7 @@ for i in [-1,-2,-3]: print seq_to_prot(complementary[i::-1])
 
 """
 The answer is obisously the third reading frame in the forward direction since the
-other reading frames are filled with stop codin ons everywhere.
+other reading frames are filled with stop codons everywhere.
 
 This example was taken from the yeast TCP1-beta gene.
 The original file is found here:
