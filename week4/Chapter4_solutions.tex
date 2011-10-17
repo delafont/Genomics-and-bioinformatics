@@ -76,72 +76,111 @@ The optimum alignment for the two sequences \texttt{GAATTCAGA} and \texttt{GGATC
 
 
 
-
 \section{Pair HMM}
 
-The corresponding HMM is given by figure \ref{fig:hmmmodel}.
+\subsection{Finding the Emission and Transtion Probabilities}
+The corresponding HMM is given by the following figure .
 
-\begin{figure}
+
 \begin{centering}
-\includegraphics[width=4in]{Slide5}
-\par\end{centering}
-\caption{The HMM model for sequence alignment}
-\label{fig:hmmmodel}
-\end{figure}
+\includegraphics[width=0.3\textwidth]{HMM.jpg}
 
-where $p(x,y)=0.125$ and $p(x,y)=0.04$ for mismatch
+\end{centering}
 
-$p(x,\_)=q(\_,y)=0.25$
+
+
+
 
 If we consider all probability values with respect to a random model
 in log-odds
-$$S(x,y)=log\frac{p(x,y)}{p(x)\; p(y)}$$
+$$S(x,y)=log\frac{p(x,y)}{p(x)\; p(y)}$$ where $p(x)$ is the probability of choosing one nucleotide at random. So, $p(x)=1/4$.
 
 $S(x,y)=1$ for match and $s(x,y)=-1$ for mismatch
 
-\begin{figure}
-\begin{centering}
-\includegraphics[width=3in]{Viterbi}
-\par\end{centering}
-\caption{Viterbi Algorithm}
-\end{figure}
+$p(x,y)=p(x|y)\;p(y)$ where $p(x|y)$ is the prbability of $x$ conditioned on $y$. Therefore,
 
-The we can construct the three matrices for VM, VX and VY by the Viterbi
+$$S(x,y)=log\frac{p(x|y)}{p(x)}$$ 
+So, we can find the  emision probability values with this following equation
+
+$$p(x|y)=2^{S(x,y)}\;p(x)$$
+
+
+The emission prbabiliy matrix is given by
+
+
+\begin{table}[ht]
+\caption{Emission Probability Matrix} % title of Table
+\centering % used for centering table
+\begin{tabular}{c c c c c} % centered columns (4 columns)
+
+-- & A  & C & G & T \\ [0.5ex] % inserts table
+%heading
+
+A & 1/2 & 1/8 & 1/8 & 1/8 \\ % inserting body of the table
+C & 1/8  & 1/2 & 1/8 & 1/8 \\
+G & 1/8 & 1/8 & 1/2 & 1/8 \\
+T & 1/8 & 1/8 & 1/8 & 1/2 \\ [1ex] % [1ex] adds vertical space
+
+\hline %inserts single line
+\end{tabular}
+\label{table:nonlin} % is used to refer this table in the text
+\end{table}
+
+and  $q(x,_)=q(_,y)=1/4$
+and the Transition Prbabilities are
+
+$\delta=1/4$ and $\epsilon=\delta$.
+
+\subsection{Constructing the Three Matrices (VM,VD and VI)}
+
+Then we can construct the three matrices for VM, VD and VI by the Viterbi
 algorithm.
 
-\begin{figure}
-\begin{centering}
-\includegraphics[width=4in]{Slide1}\caption{The matrix for the match state}
-\par\end{centering}
-\end{figure}
+Matrix $V_M$:
+%\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Slide1}
+%\caption{The matrix for the match state VM}
+\end{center}
+%\end{figure}
 
-\begin{figure}
-\begin{centering}
-\includegraphics[width=4in]{Slide2}
-\par\end{centering}
-\caption{Matrix for deletion state}
-\end{figure}
+\newpage
+Matrix $V_D$:
+%\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Slide2}
+%\caption{Matrix for deletion state VD}
+\end{center}
+%\end{figure}
 
-\begin{figure}
-\begin{centering}
-\caption{Matrix for insertion state}
-\includegraphics[width=4in]{Slide3}
-\par\end{centering}
-\end{figure}
+Matrix $V_I$:
+%\begin{figure}[h]
+\begin{center}
 
-\begin{figure}
-\begin{centering}
-\includegraphics[width=4in]{Slide4}\caption{Alignment by backtracking}
-\par\end{centering}
-\end{figure}
+\includegraphics[width=0.8\textwidth]{Slide3}
+%\caption{Matrix for insertion state VI}
+\end{center}
+%\end{figure}
+
+\subsection{Deducing the Alignments}
+
+The final matrix is formed by taking maximum value from the three elements of each matrix.
+\newpage
+Alignment by backtracking:
+%\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{Slide4}
+%\caption{Alignment by backtracking}
+\end{center}
+%\end{figure}
 
 There are two possible optimal alignments.
 
-\begin{figure}
-\begin{centering}
-\includegraphics[width=2in]{alignment2.png}
-\par\end{centering}
-\caption{The alignments}
-\end{figure}
+%\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{alignment2.png}
+\end{center}
+%\caption{The alignments}
+%\end{figure}
 
 \end{document}
