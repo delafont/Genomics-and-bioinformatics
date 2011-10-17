@@ -22,11 +22,10 @@ The goal of this exercise is to design and analyze a Hidden Markov model. \\
 \begin{enumerate}
 \item Draw a Hidden Markov Model that reflects the situation: identify hidden states and observed variables.
 \item What are the emission probabilities from each state?
-\item What is the probability, taking a random position in the genome, to be in an isochore? Call this probability $x = P(I)$, the complementary $1-x = P(N)$.
-\item Call $p$, $q$ the transition probabilities between your two states $N$ and $I$. $p$ represents the probability $P(I|N)$, and $q$ is $P(N|I)$. Write then $P(I|I), P(N|N), P(I) \;\text{and}\; P(N)$, as functions of $p$ and $q$.
+\item What is the probability, taking a random position in the genome, to be in the isochore? Call this probability $x = P(I)$, the complementary $1-x = P(N)$.
+\item Call $p$, $q$ the transition probabilities between two states $N$ and $I$. Write $P(I|N)$, $P(N|I)$, $P(I|I)$, $P(N|N)$, $P(I)$ and $P(N)$ as functions of $x$, $p$ and $q$, and the relations between them (Bayes' formula). Deduce that $\frac{x}{1-x}=\frac{1-p}{p}$.
 \item Once in a given state, consider the random variable that describes the number of (Bernoulli) steps until one leaves the state - what is the name of its distribution, and its mean?
-\item Find $p$ and $q$. 
-\item Call $M_{\sigma,s}$ the matrix of transition probabilities, and $E(T_n,s)$ the emission probability of character $T_n$ from state $s$. Write the first steps $F_{n,s}$ of the Forward Algorithm for the following sequence: \texttt{"AAGGCTT"}.
+\item Estimate $p$ and $q$.
 \end{enumerate}
 
 \section{Reading frame}
@@ -50,7 +49,7 @@ The output should start like this and have 64 elements:
 	
 \begin{verbatim}
 bases = ["t", "c", "a", "g"]
-codons = ['ttt', 'ttc', 'tta', 'ttg', 'tct', 'tcc', 'tca', 'tcg', 'tat', ...]
+codons = ['ttt', 'ttc', 'tta', 'ttg', 'tct', 'tcc', 'tca', 'tcg', 'tat', ... ]
 \end{verbatim}
 
 \subsection{3-mer to amino acid}
@@ -58,7 +57,7 @@ We can now build a dictionary that links every 3mer to an amino acid. If you bui
 
 \begin{verbatim}
 aminos = "FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG"
-codon_to_amino = {'aaa': 'K', 'aac': 'N', 'aag': 'K', 'aat': 'N', 'aca': 'T', ...}
+codon_to_amino = {'aaa': 'K', 'aac': 'N', 'aag': 'K', 'aat': 'N', 'aca': 'T', ... }
 \end{verbatim}
 
 \subsection{Sequence to protein}
