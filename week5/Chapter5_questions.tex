@@ -17,13 +17,15 @@
 \maketitle
 
 \section{Markov model}
-\emph{Plasmodium Falciparum} (protozoan parasite that causes malaria in humans) has a GC content of about 20\%, and a genome length of 23Mb. Suppose now that our protein of interest has a strong affinity with GC rich isochores (long regions of DNA with a relatively homogeneous GC content, which tend to be more flexible and contain more genes). We are interested in finding isochores to discover potential binding sites of the protein. In the case of \emph{P. falciparum}, only two 7Kb DNA isochores have a 50\% GC content. The goal of this exercise is to design and analyze a Hidden Markov model that can help identify such regions.
+The goal of this exercise is to design and analyze a Hidden Markov model. \\
+\emph{Plasmodium Falciparum} (protozoan parasite that causes malaria in humans) has a GC content of about 20\%, and a genome length of 23Mb. Suppose now that our protein of interest has a strong affinity with GC rich isochores (long regions of DNA with a relatively homogeneous GC content, which tend to be more flexible and contain more genes). We are interested in finding isochores to discover potential binding sites of the protein. In the case of \emph{P. falciparum}, we know that only one 7Kb DNA isochore has a 50\% GC content - but suppose we don't know where it is.
 \begin{enumerate}
 \item Draw a Hidden Markov Model that reflects the situation: identify hidden states and observed variables.
 \item What are the emission probabilities from each state?
-\item What is the probability, taking a random position in the genome, to be in an isochore? Call this probability $x = P(I)$, the complementary $y = 1-x = P(N)$.
-\item Call $p$, $q$ the transition probabilities between your two states $N$ and $I$. $p$ represents the probability $P(I|N)$, and $q$ is $P(N|I)$. What are then $P(I|I), P(N|N), P(I) \;\text{and}\; P(N)$, as functions of $p$ and $q$ ?
-\item Find $p$ and $q$ solving the equations obtained above.
+\item What is the probability, taking a random position in the genome, to be in an isochore? Call this probability $x = P(I)$, the complementary $1-x = P(N)$.
+\item Call $p$, $q$ the transition probabilities between your two states $N$ and $I$. $p$ represents the probability $P(I|N)$, and $q$ is $P(N|I)$. Write then $P(I|I), P(N|N), P(I) \;\text{and}\; P(N)$, as functions of $p$ and $q$.
+\item Once in a given state, consider the random variable that describes the number of (Bernoulli) steps until one leaves the state - what is the name of its distribution, and its mean?
+\item Find $p$ and $q$. 
 \item Call $M_{\sigma,s}$ the matrix of transition probabilities, and $E(T_n,s)$ the emission probability of character $T_n$ from state $s$. Write the first steps $F_{n,s}$ of the Forward Algorithm for the following sequence: \texttt{"AAGGCTT"}.
 \end{enumerate}
 
@@ -32,7 +34,7 @@ In this exercise you are given a nucleotide sequence (\texttt{"sequence\_001.txt
 
 The general procedure to find the right frame for reading a nucleotide sequence is to convert the nucleotide sequence into the corresponding possible amino acid sequences and see which one makes the most sense. As you know, the base pairs are read three by three and translated into amino acids. This can be done in the 5' to 3' orientation or the 3' to 5' orientation. One can hence read a sequence in six different ways: A, B, C, D, E and F.
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
 	\centering
 	\includegraphics[width=0.7\textwidth]{reading_frame.pdf}
 	\caption{Six possible reading frames.}
