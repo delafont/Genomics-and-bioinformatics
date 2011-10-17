@@ -22,13 +22,14 @@ codon_to_amino['tag'] = '\033[41m*\033[0m'
 codon_to_amino['tga'] = '\033[41m*\033[0m'
 
 # Question 2.4 #
-raw = open("sequence.fa", "r").read()
+raw = open("sequence_001.txt", "r").read()
 sequence = raw.replace(" ","").replace("\n","")
 for i in [0,1,2]: print seq_to_prot(sequence[i:])
+for i in [-1,-2,-3]: print seq_to_prot((sequence)[i::-1])
 
 """
-The answer is obisously the third reading frame since the
-two first reading frames are filled with stop codons everywhere.
+The answer is obisously the third reading frame in the forward direction since the
+other reading frames are filled with stop codin ons everywhere.
 
 This example was taken from the yeast TCP1-beta gene.
 The original file is found here:
