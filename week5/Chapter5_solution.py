@@ -21,7 +21,7 @@ complementary = sequence.replace("a","T").replace("t","A").replace("g","C").repl
 for i in [-1,-2,-3]: print seq_to_prot(complementary[i::-1])
 
 """
-The answer is obisously the third reading frame in the forward direction since the
+The answer is obviously the third reading frame in the forward direction since the
 other reading frames are filled with stop codons everywhere.
 
 This example was taken from the yeast TCP1-beta gene.
