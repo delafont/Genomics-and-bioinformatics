@@ -8,10 +8,7 @@ codon_to_amino = dict(zip(codons, aminos))
 
 # Question 2.3 #
 def seq_to_prot(seq):
-    prot = ''
-    for i in xrange(0, len(seq), 3):
-        prot += codon_to_amino.get(seq[i:i+3], '')
-    return prot
+    return ''.join([codon_to_amino.get(seq[i:i+3], '') for i in xrange(0, len(seq), 3)])
 
 # Question 2.4 #
 raw = open("sequence_001.txt", "r").read()
