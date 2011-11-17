@@ -32,7 +32,7 @@ The score of a gene is obtained by summing the respective scores of the exons it
 Note that junction reads are ``lost'' during the mapping on exons. For the moment they are not taken into account, although there may be a non-negligible quantity of them. Also they could help the redistribution of reads telling how many times at least a transcript was produced. Bowtie can save them into a separate BAM file that one could remap on the transcriptome to improve the results. Some biologists take it as a necessary condition to trust the program. Just to give an idea, from a typical experiment [KAP1 with MEF cells, 62M mm9 reads], we got 26\% of unaligned reads on the exonome, 45\% of which mapped to the transcriptome, meaning that there are about 12\% of reads from splice junctions. Moreover, about half of the remaining (6\% of total reads) mapped somewhere else in the genome.
 \\
 
-At the end of the pipeline, scores are normalized and variance-stabilized. Then we look for differential expression of genome regions across samples using a negative binomial Generalized Linear Model (GLM) with the count data.
+At the end of the pipeline, scores are normalized [DESeq]. Then we look for differential expression of genome regions across samples using a negative binomial generalized linear model (GLM) [R's \texttt{glm.nb}] with the count data.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Transcripts expression}
@@ -125,7 +125,7 @@ Since we are trying distribute the exon counts among transcripts, the sum of sco
 
 The relevance of the least-squares approach is given by the differences $||E-MT||_2$.
  
-The rank of $M$ is bounded by $\min(n,m)$. Usually, there are less alternative transcripts than exons ($m<n$). This is equivalent to project - when estimating $M^{+}E$ - $n$-dimensional data onto an $m$-dimensional subspace. Therefore, scores on transcripts can be only inferior to exon scores, and there is a - minized - loss of information. But for usual analyses that consider ratios between different conditions, we can hope that the list of differentially expressed transcripts remains the same. 
+The rank of $M$ is bounded by $\min(n,m)$. Usually, there are less alternative transcripts than exons ($m<n$). This is equivalent to project - when estimating $M^{+}E$ - $n$-dimensional data onto an $m$-dimensional subspace. Therefore, scores on transcripts can be only inferior to exon scores, and there is a - minimized - loss of information. But for usual analyses that consider ratios between different conditions, we can hope that the list of differentially expressed transcripts remains the same. 
 
 A typical experiment [still KAP1 with MEF cells] lead to the following results.
 
@@ -137,75 +137,79 @@ Surprisingly, the size of least-squares errors are not correlated with the ratio
 
 The unconstrained least-squares problem is the maximum likelihood estimator for linear regression of \emph{normally distributed} data. Count data must use different models. Weighted least-squares applied to the exponential of our data (?) correspond to the generalized linear model we want to apply for differential expression analysis. However we believe that the NNLS solution is equivalent.
 
+\subsection{Normalization}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{GLM analysis module}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Encouraged by an article showing the comparison between different kinds of analysis modules [ref], we chose to replace the \texttt{R} package \texttt{DESeq} by a Generalized Linear Model (GLM), i.e. a non-linear regression model. The idea is to take into account the effect of the different parameters that define each of the different conditions, instead of only computing the ratios between scores in one condition and another. Since our observations (counts) seem to have a negative binomial distribution [ref], a standard regression is not appropriate.
+Encouraged by an article showing the comparison between different kinds of analysis modules [ref], we chose to replace the \texttt{R} package \texttt{DESeq} by a Generalized Linear Model (GLM), i.e. a non-linear regression model. The idea is to take into account the effect of the different parameters that define each of the different conditions, instead of only computing the ratios between scores in one condition and another. Since our observations (counts) seem to have a negative binomial distribution [ref], a standard (normal) regression is not appropriate.
 
 \subsection{Remainder about GLMs}
-A regression model tries to explain a response variable $Y$ by covariates $X_1,X_2,\ldots$. For instance, the normal linear model is defined as $ Y = X\beta + \epsilon$, where $Y \sim N(X\beta,\sigma^2)$, $\beta$ is a vector of parameters to estimate, and $\epsilon \sim N(0,\sigma^2)$.
+A regression model tries to explain a response variable $Y$ by covariates $X = (X_1,X_2,\ldots)$. For instance, the normal linear model is defined as $Y|X \sim N(X\beta,\sigma^2)$, $\beta$ being a vector of parameters to estimate.
 
-A GLM is determinate by the distribution of $Y$, and a \emph{link function} $g$ that connects the mean of $Y$, $\mu$, and the linear term:
-$$ \mu = g(X\beta) $$
-Once chosen the distribution of $Y$, one must choose a link function that maps the domain of $Y$ to that of $X$. In particular there is a unique \emph{canonical} link function that guarantees the existence of a minimal sufficient statistic for $\beta$, and that makes more sense with distributions of the exponential family (such as negative binomial \emph{only if the dispersion parameter in known and constant}). In the negative binomial case, it is $\log(\frac{\mu}{\mu+\theta})$, but is rarely used. One usually prefers the logarithm. Square root or even identity link functions are also supported in \texttt{R}. We are using the logarithm for our application.
+A GLM is determinate by the distribution of $Y|X$, and a \emph{link function} $g$ that connects the mean of $Y$, $\mu$, and the linear term:
+$$ \mu|X = g(X\beta) $$
+Once chosen the distribution of $Y$, one must choose a link function that maps the domain of $Y$ to that of $X$. In particular there is a unique \emph{canonical} link function that guarantees the existence of a minimal sufficient statistic for $\beta$, and thus makes more sense with distributions of the exponential family (such as negative binomial \emph{only if the dispersion parameter $\theta$ in known and constant}). In the negative binomial case, it is $\log(\frac{\mu}{\mu+\theta})$, but is rarely used. One usually prefers the logarithm. Square root or even identity link functions are also supported in \texttt{R}. We are using the logarithm for our application.
 
 \subsection{Our data}
 
+One usually wants to compare samples from different experimental conditions. Each condition is called a ``group'', called $g_1, \ldots, g_l$. Samples from a same group (``runs'') are biological or technical replicates.
 A typical output of the RNA-seq module is a tab-delimited file of the form
 
 \vspace{0.5 cm}
-\begin{tabular}{lllll}
-\textbf{FeatureName} & \textbf{Group1.1} & \textbf{Group1.2} & \textbf{Group2.1} & \ldots \\
-Gene1       & 23       & 24       & 48       & \ldots \\
-Gene2       & 11       & 11       & 18       & \ldots \\
+\begin{tabular}{llllllllll}
+               & \textbf{g1.1} & \textbf{g1.2} & \textbf{g1.3} & \textbf{g2.1} & \textbf{g2.2} & 
+                 \textbf{g2.3} & \textbf{g3.1} & \textbf{g3.2} & \textbf{g3.3} \\
+\textbf{feat1} & 178 & 138 & 83 & 1935 & 53 & 120 & 263 & 928 & 492 \\
+\textbf{feat2} & 159 & 142 & 112 & 504 & 442 & 528 & 577 & 156 & 1244 \\
+\textbf{feat3} & 59 & 19 & 166 & 58 & 1130 & 826 & 103 & 463 & 852 \\
 \ldots
 \end{tabular}
 \vspace{0.5 cm}
 
-Each numeric column is a different sample, some are replicates from the same experimental conditions. Each line represents a different feature (gene, exon, or transcript). We build a different GLM for each feature.
-
-\subsection{Normalization}
+Each numeric column is a different sample, labeled \texttt{group\_name.run\_index}. Each line represents a different feature (gene, exon, or transcript). We build a different GLM for each feature.
 
 \subsection{Design}
-The design matrix indicates which combination of parameters defines which condition. An example of design matrix could be
+The design matrix indicates which combination of parameters defines which condition. Our covariates are the parameters that determine our conditions, e.g. temperature, treatment, peak in ChIP-seq data, a.s.o. An example of design matrix could be
 
 \vspace{0.5 cm}
 \begin{tabular}{lllll}
-             & \textbf{Group1} & \textbf{Group2} & \textbf{Group3}\\
-Temperature  & 40       & 40       & 60 \\
-Treatment    & 1        & 0        & 1  
+                            & \textbf{g1} & \textbf{g2} & \textbf{g3}\\
+\textbf{Temperature (T)}    & 30       & 40       & 60 \\
+\textbf{Treatment (tr)}     & 1        & 1        & 1  \\
+\textbf{ChIP\_peak (Ch)}    & 0        & 0        & 1
 \end{tabular}
 \vspace{0.5 cm}
 
 \subsection{Formulation of the GLM}
 
-Let us take one of our features, say $f$. Our response variable $Y$ is the score vector of $f$ in $d$ different samples:
+Let us take one of our genomic features, say $f$. Our response variable $Y$ is the score vector of $f$ in $d$ different samples:
 $$ Y = (f_1,\ldots,f_d)^T $$
-Our covariates are the parameters that determine our conditions, e.g. temperature, treatment, peak in ChIP-seq data, a.s.o.
 
 We can write the model as 
 $$ 
 \begin{pmatrix} 
-f_{G1.1} \\ f_{G1.2} \\ f_{G1.3} \\ f_{G2.1} \\ f_{G2.2} \\ f_{G3.1} \\ \vdots \\ f_{Gd.x}
+f_{g1.1} \\ f_{g1.2} \\ f_{g1.3} \\ f_{g2.1} \\ f_{g2.2} \\ f_{g2.3} \\ f_{g3.1} \\ f_{g3.2} \\ f_{g3.3}
 \end{pmatrix}
 =
 \begin{pmatrix}
-1 & 0 & 0 & \cdots & 0 & 1 \\
-1 & 0 & 0 & \cdots & 0 & 1 \\
-1 & 0 & 0 & \cdots & 0 & 1 \\
-0 & 1 & 0 & \cdots & 0 & 1 \\
-0 & 1 & 0 & \cdots & 0 & 1 \\
-1 & 0 & 0 & \cdots & 1 & 0 \\
-\vdots \\
-0 & 0 & 1 & \cdots & 1 & 0 \\
+1 & 0 & 0 & 0 & 1 & 1 & 0 \\
+1 & 0 & 0 & 0 & 1 & 1 & 0 \\
+1 & 0 & 0 & 0 & 1 & 1 & 0 \\
+0 & 1 & 0 & 0 & 1 & 1 & 0 \\
+0 & 1 & 0 & 0 & 1 & 1 & 0 \\
+0 & 1 & 0 & 0 & 1 & 1 & 0 \\
+0 & 0 & 1 & 0 & 1 & 0 & 1 \\
+0 & 0 & 1 & 0 & 1 & 0 & 1 \\
+0 & 0 & 1 & 0 & 1 & 0 & 1 \\
 \end{pmatrix}
 \begin{pmatrix}
-\beta_{T20} \\ \beta_{T40} \\ \beta_{T60} \\ \vdots \\ \beta_{treat0} \\ \beta_{treat1}
+\beta_{T30} \\ \beta_{T40} \\ \beta_{T60} \\ \beta_{tr0} \\ \beta_{tr1} \\ \beta_{Ch0} \\ \beta_{Ch1}
 \end{pmatrix}	
 $$
 
-For each feature, we get an estimate $\beta = (\beta_{T40},\ldots,\beta_{treat1})$ that gives the contribution of each covariate to the total variance of $Y$.
+For each feature, we get an estimate $\beta = (\beta_{T40},\ldots,\beta_{Ch1})$ that gives the contribution of each covariate to the total variance of $Y$.
 
 \subsection{Contrasts}
 The contrasts matrix indicates which tests we want to perform. An example contrasts matrix looks like
