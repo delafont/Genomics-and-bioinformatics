@@ -4,20 +4,14 @@
 """
 EXAMPLES
 
-V = [1,2,3,4,5,6]
-E = [(1,2),(2,3),(3,4),(4,5),(5,6),(6,1),(2,6),(6,4),(4,2)]
-returns [[1, 2, 3, 4, 5, 6], [2, 3, 4, 5, 6, 1], [3, 4, 5, 6, 1, 2],
-         [4, 5, 6, 1, 2, 3], [5, 6, 1, 2, 3, 4], [6, 1, 2, 3, 4, 5]]
-
-V = [1,2,3,4]
-E = [(1,2),(1,4),(2,3),(3,4),(2,4)]
-returns [[1, 2, 3, 4]]
-
-
 V = ['AA','AB','BC','CD','DE','EF']
 E = [('AA','AB'),('AB','BC'),('BC','CD'),('CD','DE'),('DE','EF'),('EF','AA'),('AB','EF'),('EF','CD'),('CD','AB')]
 returns [['AA','AB','BC','CD','DE','EF'], ['AB','BC','CD','DE','EF','AA'], ['BC','CD','DE','EF','AA','AB'],
          ['CD','DE','EF','AA','AB','BC'], ['DE','EF','AA','AB','BC','CD'], ['EF','AA','AB','BC','CD','DE']]
+
+V = ['a','b','c','d','e']
+E = [('a','b'),('a','c'),('b','d'),('d','c'),('d','e'),('e','c'),('c','e')]
+returns [['a', 'b', 'd', 'c', 'e'], ['a', 'b', 'd', 'e', 'c']]
 """
 
 class Node(object):
@@ -72,5 +66,4 @@ def hamiltonian(V, E):
         paths = q
 
     return [[n.name for n in p] for p in paths]
-
 
