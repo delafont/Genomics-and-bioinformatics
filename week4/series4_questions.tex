@@ -19,23 +19,23 @@
 \DeclareFontEncoding{LGR}{}{}
 \DeclareTextSymbol{\~}{LGR}{126}
 \title{Series 4}
-\date{October 11, 2011}
-\author{Genomics and bioinformatics - Week 4}
+\date{}
+\author{Genomics and bioinformatics - Week 5 - October 11, 2011}
 \begin{document}
 \maketitle
 
 
 
 
-\section{Sequence alignment}
-The Needlman-Wunsch algorithm uses a method called ``dynamic programming''. This is a very general programming technique. It involves three main steps:
+\section{Sequence alignment: Needlman-Wunsch}
+The Needlman-Wunsch algorithm uses a method called ``dynamic programming'' - a very general programming technique. It involves three main steps:
 \begin{enumerate}
 \item Initialization
 \item Scoring (matrix fill)
 \item Alignment (backtracking)
 \end{enumerate}
 In the first exercise of this session you will manually perform a global alignment of two sequences based on the following scoring scheme:
-\emph{Match:} \texttt{+1}, \emph{Mismatch:} \texttt{-1}, \emph{Gap:} \texttt{-2}\\
+\emph{Match:} \texttt{+1}, \emph{Mismatch:} \texttt{-1}, \emph{Gap:} \texttt{-2} .\\
 Sequence 1: \texttt{GAATTCAG}\\
 Sequence 2: \texttt{GGATCG}.
 \vspace{0.5cm}
@@ -57,88 +57,53 @@ programming algorithm which is called the Viterbi Algorithm. You will
 see through the exercise that the Viterbi algorithm is actually similar
 to the Needleman-Wunsch algorithm.
 
-%
+
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=0.5\textwidth]{HMM.jpg}\caption{Pair Hidden Markov Model}
-
+\includegraphics[width=0.5\textwidth]{HMM.jpg}
+\caption{Pair Hidden Markov Model}
+\label{fig:HMM}
 \end{center}
-
-%
 \end{figure}
 
 
-The Pair HMM consists of the following parameters(Figure)
+The Pair HMM consists of the following parameters (see fig.~\ref{fig:HMM}):
 
 \vspace{0.5cm}
 
-Three states: M, I, D
+Three states:
 
-State M matches one letter from each sequence
+State M matches one letter from each sequence.
 
-State I (Insertion) inserts a gap to the second sequence
+State I (Insertion) inserts a gap to the second sequence.
 
-State D (Deletion) inserts a gap to the first sequence\\
+State D (Deletion) inserts a gap to the first sequence.
 
-
-So, three states will be denoted by M, I and D in the algorithm written below.
 \vspace{0.5cm}
 
-Emission probabilities: p(x, y), q(x) and q(y), where
+Emission probabilities:
 
-p(x,y) = probability of emitting a pair of characters {[}x,y{]}
+$p(x,y)$ = probability of emitting a pair of characters {[}x,y{]}.
 
-q(x) = probability of emitting a pair of character {[}x,\_{]}
+$q(x)$ = probability of emitting a pair of characters {[}x,-{]} (insertion).
 
-q(y) = probability of emitting a pair of character {[}\_,y{]}
+$q(y)$ = probability of emitting a pair of characters {[}-,y{]} (deletion).
 
 \vspace{0.5cm}
 
 Transition probabilities:
 
-\textgreek{d} = probability of opening a gap
+$\delta$ = probability of opening a gap
 
-\textgreek{e} = probability of extending a gap
+$\varepsilon$ = probability of extending a gap
 
 \vspace{0.5cm}
-The algorithm goes through the three steps:\\
-
-
-Step 1: Initialization
-\[
-VM(0,0)=0; VD(0,0)=-\infty ; VI(0,0)=-\infty;
-V*(-1,j)=V*(i,-1)=-\infty;\]
-\newpage
-
-
-Step 2: Recursion
-
-\[ VM(i,j) =S(x_{i},y_{j})+max \left\{ \begin{array}{ll}
-	 VM(i-1,j-1)\\
-         VD(i-1,j-1) \\
-         VI(i-1,j-1)  .\end{array} \right. \] 
-
-\[ VD(i,j) =max \left\{ \begin{array}{ll}
-         VM(i-1,j)-d \\
-         VD(i-1,j)-e  .\end{array} \right. \] 
-
-\[ VI(i,j) =max \left\{ \begin{array}{ll}
-         VM(i,j-1)-d \\
-         VI(i,j-1)-e  .\end{array} \right. \]  
-
-
-
-Step 3: Termination
-
-\[ VE=max(VM(n,m),VD(n,m),VI(n,m))\]\\
 
 To make correspondence to the Needleman-Wunsch algorithm with the scores given in Exercise 1,
 
-\[
-S(x,y)=log\frac{p(x,y)}{p(x)\; p(y)}\]
 
-\[
-d=-log(\delta)\]
+$$S(x,y)=log_2\frac{p(x,y)}{p(x)\; p(y)} \quad , \quad d=-log(\delta)$$
+
 
 where 
 
@@ -146,11 +111,55 @@ S(x,y) = 1 for match,
 
 S(x,y) = -1 for mismatch,
 
-d = -2 for gap penalty.
+d = e = -2 for gap penalty.
+
+\newpage
+The Viterbi algorithm goes through the three steps:\\
+
+
+Step 1: Initialization:\\
+
+$V_M(0,0):=0$
+
+$V_D(0,0):=-\infty$
+
+$V_I(0,0):=-\infty$
+
+$V_*(-1,j)=V_*(i,-1):=-\infty \;$ ($_*$ accounts for either M, D or I)
+\vspace{0.5cm}
+
+Step 2: Recursion:
+\begin{eqnarray}
+&&
+V_M(i,j) =S(x_{i},y_{j})+max 
+	\left\{ \begin{array}{l}
+	 V_M(i-1,j-1) \\
+     V_D(i-1,j-1) \\
+     V_I(i-1,j-1)
+    \end{array} \right.\nonumber\\
+&&
+V_D(i,j) =max \left\{ 
+    \begin{array}{ll}
+     V_M(i-1,j)-d \\
+     V_D(i-1,j)-e 
+    \end{array} \right.\nonumber\\
+&&
+V_I(i,j) =max \left\{ 
+    \begin{array}{ll}
+     V_M(i,j-1)-d\\
+     V_I(i,j-1)-e
+    \end{array} \right.\nonumber
+\end{eqnarray}
+
+
+Step 3: Termination:
+
+$$V_E=max(V_M(n,m),V_D(n,m),V_I(n,m))$$
+
 
 \begin{enumerate}
-\item Deduce the emission probability matrix and the transition probabilities for the HMM
-\item Use the algorithm as shown above to generate the three matrices for Match(M), Delete(D) and Insertion(I)
+\item Deduce the emission probability matrix and the transition probabilities of the HMM.
+\item Use the algorithm as shown above to generate the three matrices for Match(M), Deletion(D) and Insertion(I).
 \item Deduce the alignment based on the three matrices.
 \end{enumerate}
 

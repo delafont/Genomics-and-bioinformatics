@@ -23,7 +23,7 @@ def overlaps(read1, read2, min_overlap=3):
     """If the end of read1 overlaps with at least *min_overlap* nucleotides
     of read2, return the overlap sequence, False otherwise."""
     read_length = min(len(read1),len(read2))
-    for i in xrange(read_length, min_overlap-1, -1):
+    for i in range(read_length, min_overlap-1, -1):
         if read1[-i:] == read2[:i]:
             return read2[:i]
     return False
@@ -63,9 +63,3 @@ E = [(AATGT,ATGTC), (ATGTC,GTCGA), (GTCGA,CGATT)]
 sequence = "AATGTCGATT"
 """
 
-
-#--------------------#
-#--- Question 2.2 ---#
-#--------------------#
-
-# See next week!

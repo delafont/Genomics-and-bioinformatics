@@ -11,7 +11,7 @@
 \usepackage[section]{placeins}
 \usepackage{subfig}
 
-\title{Series 4}
+\title{Series 3}
 \date{}
 \author{Genomics and bioinformatics - Week 4 - October 3, 2012}
 
@@ -27,39 +27,45 @@ We are going to create a contig from a bunch of reads. The reads have been speci
 \item The reads don't contain any errors.
 \item The reads have the same length.
 \item The reads are all from the same strand.
-\item No two reads are the same.
+\item The reads are unique (no replicates).
 \item The full chromosome of our imaginary species is small.
 \end{itemize}
-See the last section of this document to learn some useful Python tricks.
 
 \subsection{Hamiltonian path problem}
 \begin{enumerate}
 \item Read the file \texttt{reads1.fastq} and load all the reads it contains inside a list. It may help you to take a look at \texttt{reads1.fastq} in your text editor first. Try to find the contig by aligning the reads by hand. The reads are AATGT, ATGTC, GTCGA, and CGATT.
 \item Write a function that takes two reads as input and returns the overlap sequence. If they don't overlap, return \texttt{False}. The function should also have a \texttt{min\_overlap} parameter that specifies how many base pairs must match between both reads at a minimum for it to be considered an overlap. \\
-e.g. \texttt{overlaps(AATG,TGTT,2) -> TG , overlaps(AATG,TGTT,3) -> False}
+e.g. \texttt{overlaps(AATG,TGTT,2)} $\rightarrow$ \texttt{TG , overlaps(AATG,TGTT,3)} $\rightarrow$ \texttt{False}
 \item Using the the list of reads you just loaded and the function you just wrote, you can now generate a list of vertices and a list of edges of the overlap graph - i.e. the reads will act as the vertices and the overlaps as the edges. In our case, an edge between two reads exists if the first overlaps the second.
-\item Copy or import the \texttt{hamiltonian(nodes,edges)} function from the file \texttt{hamiltonian.py} to find an Hamiltonian path in the graph, and deduce the longest contig. Use the \texttt{time} library to measure the time it takes to find the path.
+\item Copy or import the \texttt{hamiltonian(nodes,edges)} function from the file \texttt{hamiltonian.py} to find an Hamiltonian path in the graph, and deduce the longest contig. It will also print the time it takes to find the path.
 \end{enumerate}
 
 \subsection{Eulerian path problem (de Bruijn graph)}
 \begin{enumerate}
 \item Write a function that for a given read returns a list of all the \texttt{l}-mers contained in the read, \\
-e.g. \texttt{subseqs(AATGCG,4) ->  [AATG,ATGC,TGCG]}
+e.g. \texttt{subseqs(AATGCG,4)} $\rightarrow$  \texttt{[AATG,ATGC,TGCG]}
 \item Taking \texttt{l} = 3 bp, and using the same reads library as before, generate the list of vertices and the list of edges as defined for the de Bruijn graph.
 \item Spot the start and end vertices (in our case, the ones that appear only once in the edges), and add one edge from end to start to close the graph.
-\item Copy or import the \texttt{hierholzer(nodes,edges)} function from the file \texttt{hierholzer.py} to find an Eulerian cycle in your graph. Deduce the largest contig possible. Use the \texttt{time} library to measure the time it takes to find the path, and compare with the previous section.
+\item Copy or import the \texttt{hierholzer(nodes,edges)} function from the file \texttt{hierholzer.py} to find an Eulerian cycle in your graph. Deduce the largest contig possible. It will also print the time it takes to find the path.
+\item If you have time, it is interesting to try with more reads defining a more complex network. Then compare the time taken by both algorithms. The second should be much faster.\\
+\textit{Note:} some pathological cases \textit{could} cause the `hierholzer' hand-made script to fail.
 \end{enumerate}
+
 
 \subsection{Useful Python features}
 \begin{enumerate}
-\item You can use `list comprehensions':\\
+\item No need to add ``\texttt{;}'' at the end of your lines. You can do it though if you want to put several statements on the same line.
+\item You can use \texttt{list(set(...))} to get only unique elements of a list. Unfortunately, there exists no such built-in function in Python.
+\item Use \texttt{dir(object)} to get all possible methods for this object. If you are using IPython as advised, just type \texttt{object.} and hit the ``tab'' key.
+\item You can use ``list comprehensions'':\\
 \texttt{[x+4 for x in [1,2,3]]} \\
 returns \texttt{[5,6,7]} \\
+\texttt{[x+4 for x in [1,2,3] if x>1]} \\
+returns \texttt{[6,7]} \\
 \texttt{[(x,y[0]) for x in [1,2] for y in [[1,2],[3,4]] ]}\\
-returns \texttt{[(1, 1), (1, 3), (2, 1), (2, 3)]}
-\item No need to add ``\texttt{;}'' at the end of your lines. You can do it though if you want to put several statements on the same line.
-\item You can use \texttt{list(set(...))} to get only unique elements of a list. Unfortunately there exists no such built-in function in Python.
-\item Use \texttt{dir(object)} to get all possible methods for this object. If you are using Ipyhon as advised, just type \texttt{object.} and hit the ``tab'' key.
+returns \texttt{[(1, 1), (1, 3), (2, 1), (2, 3)]}\\
+\texttt{[x for y in [(1,4),(2,3),(3,5)] for x in y]} \# note the inversion\\
+returns \texttt{[1, 4, 2, 3, 3, 5]} \# there are simpler methods, of course\\
 \end{enumerate}
 
 \end{document}
