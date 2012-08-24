@@ -11,8 +11,8 @@
 \usepackage[section]{placeins}
 \usepackage{subfig}
 \title{Series 5 - solutions}
-\date{October 18, 2011}
-\author{Genomics and bioinformatics - Week 5}
+\date{}
+\author{Genomics and bioinformatics - Week 6 - October 18, 2011}
 \begin{document}
 \maketitle
 
@@ -36,15 +36,17 @@ Note that the two equations are equivalent, so one cannot use them to find p and
 \item From state I, one can consider the event ``staying in I'' as a fail, with probability $1-p$, and ``leaving to N'' as a success, with probability $p$. The number X of failures before the first success is given by a geometric distribution:
 $$ P(X=k) = (1-p)^k p, \qquad P(X<k) = 1-(1-p)^{k+1}, $$
 which mean is $E[X] = \frac{1-p}{p}$ (another formulation, taking X as the time of the first success, leads to $E[X] = \frac{1}{p}$).
+\footnote{\url{http://en.wikipedia.org/wiki/Geometric_distribution}}
 \item If the isochore is generated from a geometric process as in the previous point, its length is most probably the mean of the distribution. So $7000 = E[X] = \frac{1-p}{p} \Rightarrow p = \frac{1}{7001}$ (or $\frac{1}{7000}$ with the alternative formulation), confirming what one could expect intuitively. The average length of the (two) normal regions is $\frac{23000000-7000}{2} = 11496500$, so one could do the same with $E[X] = 11496500 = \frac{1-q}{q}$ to obtain $q = \frac{1}{11496501}$.
 \end{enumerate}
+
 
 \section{BLAST}
 
 \begin{enumerate}
 \item Do you get any matches to \texttt{fragment\_007}? Which parameters did you use? Record the alignment statistics for the top hits.
 
-Using the Nucleotide Collection (nr/nt) Database and optimizing for ``more dissimilar sequences''
+- Using the Nucleotide Collection (nr/nt) Database and optimizing for ``more dissimilar sequences''
 (discontiguous megablast)
 
 \vspace{0.5cm}
@@ -63,15 +65,15 @@ Using the Nucleotide Collection (nr/nt) Database and optimizing for ``more dissi
 
 \item What changes do you observe in the E-values? To which parameter could you attribute the these changes?  
 
-Improvement in the E-values. Parameter - Query coverage.
+- Improvement in the E-values. Parameter - Query coverage.
 
 \item What is the default threshold for the E-value on NCBI BLAST?
 
-10
+- 10
 
 \item Do you have any significant hits suggesting a possible function for \texttt{fragment\_007}? 
 
-The E-values are not significant. 
+- The E-values are not significant. 
 
 \end{enumerate}
 
@@ -80,7 +82,7 @@ The E-values are not significant.
 \begin{enumerate}
 \item Are any well-known protein domains found? 
 
-Peptidases S8 S53 superfamily
+- Peptidases S8 S53 superfamily
 
 \item Do you get any significant hits? Record the alignment statistics for the top hits. 
 
@@ -92,30 +94,31 @@ Peptidases S8 S53 superfamily
 
 \item What is the possible function of the protein encoded by \texttt{fragment\_007}?
 
-\texttt{fragment\_007} encodes for a subtilase family domain protein. It is a member of the peptidases S8 (subtilisin and kexin) and S53 (sedolisin) family. These include endopeptidases and exopeptidases.
+- \texttt{fragment\_007} encodes for a subtilase family domain protein. It is a member of the peptidases S8 (subtilisin and kexin) and S53 (sedolisin) family. These include endopeptidases and exopeptidases.
 
 \item Which species is most predominant in your BLAST output?
 
-\emph{Prevotella} species
+- \emph{Prevotella} species
 
 \item Could you have obtained the same results using another BLAST program, without having to translate the nucleotide sequence of \texttt{fragment\_007}?
 
-Yes, using blastx
+- Yes, using blastx
 
 \item How do results from Protein BLAST compare with the results from Nucleotide BLAST?
 
-Amino acid sequences are more conserved than nucleotide sequences. Often even the highest-scoring subject sequences retrieved using the nucleotide sequence will cover only small regions of the query sequence, while quite often the corresponding sequences retrieved using the amino acid sequence will cover more of the gene.
+- Amino acid sequences are more conserved than nucleotide sequences. Often even the highest-scoring subject sequences retrieved using the nucleotide sequence will cover only small regions of the query sequence, while quite often the corresponding sequences retrieved using the amino acid sequence will cover more of the gene.
 
 \end{enumerate}
 
 \section{Finding orthologs}
+\begin{enumerate}
+\item Putative ortholog of \emph{Saccharomyces cerevisiae} Pho2p in \emph{Candida glabrata}?
 
-Putative ortholog of \emph{Saccharomyces cerevisiae} Pho2p in \emph{Candida glabrata}?
+- \texttt{CAGL0L07436g}
 
-\texttt{CAGL0L07436g}
+\item Are the findings of the paper consistent with your observations?
 
-Are the findings of the paper consistent with your observations?
-
-Yes
+- Yes
+\end{enumerate}
 
 \end{document}
