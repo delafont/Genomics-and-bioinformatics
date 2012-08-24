@@ -11,9 +11,9 @@
 \usepackage[section]{placeins}
 \usepackage{subfig}
 
-\title{Series 3}
-\date{October 3, 2011}
-\author{Genomics and bioinformatics - Week 3}
+\title{Series 4}
+\date{}
+\author{Genomics and bioinformatics - Week 4 - October 3, 2012}
 
 \begin{document}
 \maketitle
@@ -37,8 +37,8 @@ See the last section of this document to learn some useful Python tricks.
 \item Read the file \texttt{reads1.fastq} and load all the reads it contains inside a list. It may help you to take a look at \texttt{reads1.fastq} in your text editor first. Try to find the contig by aligning the reads by hand. The reads are AATGT, ATGTC, GTCGA, and CGATT.
 \item Write a function that takes two reads as input and returns the overlap sequence. If they don't overlap, return \texttt{False}. The function should also have a \texttt{min\_overlap} parameter that specifies how many base pairs must match between both reads at a minimum for it to be considered an overlap. \\
 e.g. \texttt{overlaps(AATG,TGTT,2) -> TG , overlaps(AATG,TGTT,3) -> False}
-\item Using the the list of reads you just loaded and the function you just wrote, you can now generate a list of vertices and a list of edges of the overlap graph - i.e. the reads will act as the vertices and the overlaps as the edges. In our case, a edge between two reads exists if the first overlaps the second.
-\item At this point one could use an algorithm to find an Hamiltonian path in the graph, and deduce the longest contig. But there is no efficient algorithm to do this, so we prefer building a de Bruijn graph.
+\item Using the the list of reads you just loaded and the function you just wrote, you can now generate a list of vertices and a list of edges of the overlap graph - i.e. the reads will act as the vertices and the overlaps as the edges. In our case, an edge between two reads exists if the first overlaps the second.
+\item Copy or import the \texttt{hamiltonian(nodes,edges)} function from the file \texttt{hamiltonian.py} to find an Hamiltonian path in the graph, and deduce the longest contig. Use the \texttt{time} library to measure the time it takes to find the path.
 \end{enumerate}
 
 \subsection{Eulerian path problem (de Bruijn graph)}
@@ -47,12 +47,12 @@ e.g. \texttt{overlaps(AATG,TGTT,2) -> TG , overlaps(AATG,TGTT,3) -> False}
 e.g. \texttt{subseqs(AATGCG,4) ->  [AATG,ATGC,TGCG]}
 \item Taking \texttt{l} = 3 bp, and using the same reads library as before, generate the list of vertices and the list of edges as defined for the de Bruijn graph.
 \item Spot the start and end vertices (in our case, the ones that appear only once in the edges), and add one edge from end to start to close the graph.
-\item Copy or import the \texttt{hierholzer(nodes,edges)} function from the file \texttt{hierholzer.py} to find an Eulerian cycle in your graph. Deduce the largest contig possible.
+\item Copy or import the \texttt{hierholzer(nodes,edges)} function from the file \texttt{hierholzer.py} to find an Eulerian cycle in your graph. Deduce the largest contig possible. Use the \texttt{time} library to measure the time it takes to find the path, and compare with the previous section.
 \end{enumerate}
 
 \subsection{Useful Python features}
 \begin{enumerate}
-\item Use list comprehensions:\\
+\item You can use `list comprehensions':\\
 \texttt{[x+4 for x in [1,2,3]]} \\
 returns \texttt{[5,6,7]} \\
 \texttt{[(x,y[0]) for x in [1,2] for y in [[1,2],[3,4]] ]}\\

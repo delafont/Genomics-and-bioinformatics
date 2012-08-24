@@ -11,6 +11,8 @@ E = [("AA","AB"),("AB","BC"),("BC","CD"),("CD","DE"),("DE","EF"),("EF","AA"),("A
 returns ['AA', 'AB', 'EF', 'CD', 'AB', 'BC', 'CD', 'DE', 'EF', 'AA']
 """
 
+import time
+
 def outgoing(vertex, edges):
     """Returns the list of edges from *edges* entering into node *vertex*."""
     return [edge for edge in edges if edge[0] == vertex]
@@ -38,6 +40,7 @@ def hierholzer(vertices, edges):
     The cycle is returned as a list of vertices."""
     err = "Your graph is either not Eulerian, or connected, or cyclic."
     assert all([(len(outgoing(v,edges))+len(incoming(v,edges)))%2==0 for v in vertices]), err
+    t1 = time.time()
     v = vertices[0]
     cycle, edges = walk(v, edges)
     assert cycle[0] == cycle[-1], err
@@ -50,5 +53,7 @@ def hierholzer(vertices, edges):
             assert sub[0] == sub[-1], err
             cycle = cycle[:i]+sub[:-1]+cycle[i:]
             notvisited.update(sub)
+    t2 = time.time()
+    print "Running time: %s" % (t2-t1,)
     return cycle
 

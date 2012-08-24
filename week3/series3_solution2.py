@@ -1,7 +1,7 @@
 
-#--------------------#
-#--- Question 2.2 ---#
-#--------------------#
+#--------------#
+# Question 2.2 #
+#--------------#
 
 """
 We used a lot of "List comprehensions" here. For example,

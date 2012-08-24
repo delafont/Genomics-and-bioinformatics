@@ -14,15 +14,12 @@ E = [('a','b'),('a','c'),('b','d'),('d','c'),('d','e'),('e','c'),('c','e')]
 returns [['a', 'b', 'd', 'c', 'e'], ['a', 'b', 'd', 'e', 'c']]
 """
 
+import time
+
 class Node(object):
     def __init__(self, name='',idx=-1,active=1,label=''):
         self.name = name        # node name
         self.idx = idx          # node index
-        self.active = active    # activity flag
-        self.label = label      # current state
-        self.inc_edges = set()  # incoming edges
-        self.out_edges = set()  # outgoing edges
-        self.edges = set()      # all communicating edges
         self.neighbours = set() # all accessible nodes
 
     def __eq__(self,node):
@@ -35,8 +32,6 @@ class Vertex(object):
         self.inc = inc          # node it comes from
         self.out = out          # node it goes to
         self.name = ''          # vertex name
-        self.active = 1         # activity flag
-        self.label = ''         # current state
 
     def __getitem__(self,i):
         if i==0: return self.inc
@@ -48,7 +43,7 @@ def hamiltonian(V, E):
     V = [Node(idx=i,name=V[i]) for i in range(len(V))]
     for e in E:
         V[e[0].idx].neighbours.add(V[e[1].idx])
-
+    t1 = time.time()
     L = 1
     paths = [[v] for v in V]
     while L < len(V):
@@ -64,6 +59,7 @@ def hamiltonian(V, E):
         for p in toremove: paths.remove(p)
         L+=1
         paths = q
-
+    t2 = time.time()
+    print "Running time: %s" % (t2-t1,)
     return [[n.name for n in p] for p in paths]
 

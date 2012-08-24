@@ -13,16 +13,21 @@
 \usepackage{subfig} %a) b) c)
 
 \title{Series 1}
-\date{September 20, 2011}
-\author{Genomics and bioinformatics - Week 1}
+\date{}
+\author{Genomics and bioinformatics - Weeks 1 and 2 - September 20, 2012}
 
 \begin{document}
 \maketitle
 
 This first series will introduce you with data visualization, and its treatment using computer programming.
+Solutions will be provided the next week. 
+
+Solutions to programming exercises are scripts showing \textit{one}
+way to solve them, accompanied with many comments and advice. Since the best way to learn programming is to 
+imitate examples, we strongly advise to look at them carefully.
 
 \section{Website of this course}
-Add the course website to your bookmarks.
+Add the course website to your bookmarks:
 
 \url{http://moodle.epfl.ch/course/view.php?id=11181}
 
@@ -84,11 +89,10 @@ For Windows users: during the installation, choose where you want to install you
 \item Whole reference documentation: \url{http://cran.r-project.org/doc/manuals/refman.pdf}
 \end{enumerate}
 
-\subsection{Useful functions for this exercise}
-For this session, you will probably be interested in the following features:
+\subsection{Some useful features for this exercise}
 \begin{itemize}
 \item \texttt{read.table, write.table, c, plot, data.frame, log2, log10, colnames, rownames}.
-\item How to select rows and columns: \texttt{data[1,], data[,1], data[1,1], data\$''col1''}.
+\item How to select rows and columns:\\ \texttt{data[,1], data\$''col1'', data[''col1'']; data[1,]; data[1,1]; data[2:5,3:4]}.
 \item Data types: data frames, vectors.
 \end{itemize}
 
@@ -112,7 +116,7 @@ Download the Enthought distribution of Python from our USB keys. The packages ar
 \end{itemize}
 
 Open a console and type ``ipython''
-(to get a console on Windows, open the ``Start'' menu and type ``cmd'' in the search field. On a Mac, use Terminal 
+(to get a console on Windows, open the ``Start'' menu and type ``cmd'' in the search field. On a Mac, use ®Terminal 
 from your Applications folder).
 
 \subsection{If you need help}
@@ -123,11 +127,12 @@ from your Applications folder).
 \item Whole reference documentation: \url{http://docs.python.org/library/index.html}
 \end{enumerate}
 
-\subsection{Useful functions for this exercise}
-For this session, you will probably be interested in the following features:
+\subsection{Some useful features for this exercise}
 \begin{itemize}
-\item Files: \texttt{open, close, read, readline, readlines, write}.\\
-      Strings: \texttt{split}. \\
+\item Print a variable: \texttt{print}. \\
+    Run a script (do not copy \& paste): \texttt{execfile}.
+\item Files: \texttt{open, close, read, readline, readlines, write}. \\
+	Strings: \texttt{split}. \\
       A useful pattern:
 	\begin{verbatim}
 	for line in file:

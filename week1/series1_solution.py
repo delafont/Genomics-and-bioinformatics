@@ -1,3 +1,8 @@
+
+#-----------------------#
+# Question 1.3 - Python #
+#-----------------------#
+
 # These functions are not included by default, so you have to import them:
 from math import sqrt,log
 from matplotlib.pyplot import plot,show
