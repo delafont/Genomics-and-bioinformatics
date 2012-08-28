@@ -95,7 +95,7 @@ For Windows users: during the installation, choose where you want to install you
 \subsection{Some useful features for this exercise}
 \begin{itemize}
 \item \texttt{read.table, write.table, c, plot, data.frame, log2, log10, colnames, rownames}.
-\item How to select rows and columns:\\ \texttt{data[,1], data\$''col1'', data[''col1'']; data[1,]; data[1,1]; data[2:5,3:4]}.
+\item How to select rows and columns:\\ \texttt{data[,1], data\$col1, data[''col1'']; data[1,]; data[1,1]; data[2:5,3:4]}.
 \item Data types: data frames, vectors.
 \end{itemize}
 
@@ -119,12 +119,14 @@ Download the Enthought distribution of Python from our USB keys. The packages ar
 \end{itemize}
 
 Open a console and type ``ipython''
-(to get a console on Windows, open the ``Start'' menu and type ``cmd'' in the search field. On a Mac, use ®Terminal 
+(to get a console on Windows, open the ``Start'' menu and type ``cmd'' in the search field. On a Mac, use Terminal 
 from your Applications folder).
 
 \subsection{If you need help}
 \begin{enumerate}
-\item A sample Python tutorial: \url{http://docs.python.org/tutorial/} \\(read chapters 3.1 to 4.6, 5.5 and 7.2).
+\item Some Python tutorials: \\
+      \url{http://docs.python.org/tutorial/} (official, english, read 3.1 to 4.6, 5.5 and 7.2),\\
+      \url{http://www.siteduzero.com/} (french).
 \item Use Google for fast access to the reference.
 \item Ask you assistants.
 \item Whole reference documentation: \url{http://docs.python.org/library/index.html}
@@ -134,8 +136,7 @@ from your Applications folder).
 \begin{itemize}
 \item Print a variable: \texttt{print}. \\
     Run a script (do not copy \& paste): \texttt{execfile}.
-\item Files: \texttt{open, close, read, readline, readlines, write}. \\
-	Strings: \texttt{split}. \\
+\item Files: \texttt{open, close, read, readline, readlines, write}. Strings: \texttt{split}. \\
       A useful pattern:
 	\begin{verbatim}
 	for line in file:
@@ -143,7 +144,7 @@ from your Applications folder).
 	\end{verbatim}
 \item Data types: \texttt{file, int, float, str, list}, \\
 	  	and conversions: \texttt{int('4'), float('4.0'), str(4)}.
-\item Loops and conditions: \texttt{for, if}.
+\item Loops and conditions: \texttt{for, if, in}.
 \item Libraries and their specific functions: 
 	\begin{verbatim}
 	from math import sqrt, log
