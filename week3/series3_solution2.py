@@ -21,12 +21,13 @@ The code is designed to work in simple situations, where for example
 reads overlap only two-by-two.
 """
 
-#reads = ["CCACAG", "CACAGA"] # min overlap is 5
-#reads = ["AAATTTGGC", "TGGCAAA", "CAAATTGCGAGT"] #min overlap is 4
-reads = ["AATGT", "ATGTC", "GTCGA", "CGATT"] # min overlap is 3
-#reads = ["AATGT","TGTAT","GTATG","ATGCC"] # min overlap is 3 - the example done on the board
+#reads = ["CCACAG", "CACAGA"]; l=5 # arbitrary, but need *l* inferior or equal to *min_overlap*+1
+#reads = ["AAATTTGGC", "TGGCAAA", "CAAATTGCGAGT"]; l=4
+reads = ["AATGT", "ATGTC", "GTCGA", "CGATT"]; l=3
+#reads = ["AATGT","TGTAT","GTATG","ATGCC"]; l=3 # the example done on the board
+#reads = ["AATTGCTAG","GCTAGGGCC","TTGCTAGGG","GGGCCTACT"]; l=5 # FAILS
 
-l = 3  #arbitrary, but need *l* inferior or equal to *min_overlap*+1
+l = 3  #
 
 #------------------#
 # Overlap function #
@@ -55,7 +56,7 @@ def subseqs(read, l):
 #----------------------#
 Vdual = [] # Vertices: all unique (l-1)-mers
 for r in reads: Vdual.extend(subseqs(r,l-1))
-Vdual = list(set(Vdual))
+Vdual = list(set(Vdual)) # list(set(.)) returns unique elements
 
 Sl = [] # All l-mers
 for r in reads: Sl.extend(subseqs(r,l))
@@ -63,13 +64,13 @@ for r in reads: Sl.extend(subseqs(r,l))
 """
 This would suffice with the example we gave you, but actually you
 are counting twice l-mers from overlap sequences. One has to remove copies.
-It is even more complicated than what is written here, especially if multiple reads
+It is even more complicated than what is written here, especially if more than two reads
 overlap in the same region. The method used here is not the one used by the real algorithm.
 """
 Olaps = [overlaps(v1,v2,l) for v1 in reads for v2 in reads if v1!=v2]
 copies = []
-for o in Olaps: copies.extend(subseqs(o,l))
-for c in copies: Sl.pop(Sl.index(c))
+for o in Olaps: copies.extend(subseqs(o,l)) # list all l-mers contained in the overlaps between reads
+for c in copies: Sl.pop(Sl.index(c)) # remove them from Sl, since they are counted twice
 
 Edual = [] # Edges
 for s in Sl:
@@ -84,11 +85,9 @@ print "Edges:", Edual
 # Find start and end, bind them. #
 #--------------------------------#
 """
-This part is more difficult.
 The general way to find the start and end of your contig is to look for
 vertices with unequal number of outgoing and incoming edges.
-You don't have to create functions, but else it becomes very ugly and
-more difficult to understand.
+You don't have to create functions, but else it can become ugly and complicated.
 """
 
 def outgoing(vertex, edges):
