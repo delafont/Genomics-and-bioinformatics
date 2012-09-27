@@ -1,0 +1,163 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{a4wide}
+\usepackage{booktabs}
+
+\title{Genomics and Bioinformatics}
+\date{November 1, 2011}
+\author{Examination - Week 7}
+\begin{document}
+\maketitle
+
+\section*{Question 1}
+
+Consider the following reads:
+AATGCAT, GCATGCA, TGCAATG, AATGCGA
+
+\begin{enumerate}
+\item Construct the overlap graph based on the above reads, using an
+  overlap size of $4$ bases.
+  Draw a path that goes
+  through every \emph{vertex} (Hamiltonian path), and write the
+  corresponding contig. 
+\item Make a list $S_4$ of all unique $4$-mers (9 elements) and the
+  list $S_5$ of all (non-unique) 5-mers (12 elements). 
+\item Construct the De Bruijn graph with $S_4$ as vertex set and
+  $S_5$ as edge set.
+\item Add one edge to make this graph eulerian and find an eulerian path.
+  Write down the corresponding contig. 
+\end{enumerate}
+
+\section*{Question 2}
+In this question you will compute the optimal global alignment between
+these two sequences using the Needleman-Wunsch algorithm. 
+
+\begin{description}
+\item[Sequence 1:] \texttt{ACGTATAGGC}
+\item[Sequence 2:] \texttt{ACTAAGC}
+\end{description}
+
+\begin{enumerate}
+\item Sequence alignment\\
+First, find the alignment that has the highest score using the
+classical version of the Needleman-Wunsch algorithm. In this version a
+match is worth +1 point. A mismatch is penalized -1 point. An
+insertion/deletion (gap) is penalized -2 point. 
+\item Affine gap penalty\\
+Secondly, calculate the score of the above alignment with a gap
+opening penalty of -2 and an gap extension penalty of -1. Using these
+new rules, is there a different alignment with a higher score ?
+\end{enumerate}
+
+\subsection*{Hint}
+The gap extension penalty is counted for every gap, the opening penalty
+only for the first gap in a consecutive stretch. For example three
+consecutive gaps cost $-5=-2+3*(-1)$.
+
+For this second part, you don't need to fill a dynamic algorithm
+table, just compute the score and try to improve it.
+
+
+\section*{Question 3}
+
+In this question you will build a profile HMM based on the following multiple
+sequence alignment:
+\begin{verbatim}
+ACT
+AAT
+ACC
+TCT
+TCC
+\end{verbatim}
+
+\begin{enumerate}
+\item Convert each column of this multiple alignment to nucleotide
+  frequencies. Set three hidden 'match' states $M_1$, $M_2$, and $M_3$
+  which will emit with the frequencies of the corresponding columns in
+  the alignment.
+\item Set four hidden 'insert' states $I_0$, $I_1$, $I_2$, and $I_3$ which
+  all emit with background frequencies ($1/4$ each base).
+\item Transitions are as follows: $I_n$ has transitions to itself
+  (probability $20\%$) and to $M_{n+1}$ (except $I_3$), $M_n$ has transitions to
+  $M_{n+1}$ (probability $80\%$) and $I_n$, except $M_3$ which only has a transition
+  to $I_3$.
+\item Draw the HMM diagram, write the transition matrix $\mathcal{M}$ and the
+  emission matrix $\mathcal{E}$. Fill in the missing transition probabilities
+  so that the matrix is consistent.
+\item Complete the table below using Viterbi's algorithm and give the
+  most likely sequence of hidden states 
+  for the test sequence \texttt{GACAT}
+
+  \textbf{Remark:} All
+  probabilities have been multiplied by $5$ to simplify the
+  calculations, the results are unchanged.  
+\begin{table}[h]
+  \begin{center}
+    \begin{tabular}{rccccccccccc}
+      \toprule
+      & - & G & A & C & A & T \\
+      \midrule
+      $I_0$&$1$&$5/4$&$25/16$&$125/64$&$625/256$&$3125/1024$\\
+      $M_1$&$0$&$0  $&$15   $&$0     $&$375/16 $&$625/32   $\\
+      $I_1$&$0$&$0  $&$0    $&$75/4  $&$375/16 $&$1875/32  $\\
+      $M_2$&$0$&$0  $&$0    $&$240   $&$75     $&$0        $\\
+      $I_2$&$0$&$0  $&$0    $&$0     $&$300    $&$    $\\
+      $M_3$&$0$&$0  $&$0    $&$0     $&$       $&$     $\\
+      $I_3$&$0$&$0  $&$0    $&$0     $&$       $&$        $\\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+\end{table}
+
+\item Convert the resulting sequence of hidden states into an
+  alignment containing all the sequences of the multiple alignment
+  above and this last test sequence.
+\end{enumerate}
+
+\section*{Question 4}
+
+Circadian rhythms (often referred to as the ``body clock``) are
+ubiquitous in most life forms. The ``period`` family of genes is an 
+essential component of this clock.
+
+The table below provides BLAST scores of pairwise
+alignments for six period family proteins from three different
+species, 
+
+\begin{enumerate}
+\item {\bf dm\_per} from {\it Drosophila melanogaster}, i.e. fruit fly,
+\item {\bf dr\_per2} and {\bf per3} from {\it Danio rerio}, i.e. zebra fish,
+\item {\bf mm\_per1}, {\bf mm\_per2} and {\bf mm\_per3} from {\it Mus
+  musculus}, i.e. mouse.
+\end{enumerate}
+
+\begin{center}
+	\begin{tabular} {| l || l | l | l | l | l | l |}
+	\hline
+ 	& dm\_per & dr\_per2 & dr\_per3 & mm\_per1 & mm\_per2 & mm\_per3 \\ \hline\hline
+	dm\_per & -  & 116 & 125 & 129 & 123 & 121 \\	\hline
+	dr\_per2 &	114 & - & 661 & 887 & 947& 497 \\	\hline
+	dr\_per3 & 123 & 644 & - & 667 & 666 & 699 \\	\hline
+	mm\_per1 & 126 & 745 & 572 & - & 640 & 80 \\	\hline
+	mm\_per2 & 126 & 984 & 680 & 832 & - & 455 \\	\hline
+	mm\_per3 & 124 & 499 & 709 & 537 & 488 & - \\
+	\hline
+	\end{tabular}
+\end{center}
+\vspace{0.05 cm}
+
+\begin{enumerate}
+\item Based on the table above, draw the gene tree for the six period
+  proteins (dm\_per, dr\_per2, dr\_per3,  mm\_per1, mm\_per2,
+  mm\_per3). 
+\item Using this tree, give examples of:
+  \begin{itemize} 
+  \item an orthologous pair, 
+  \item a paralogous pair in the same species, and 
+  \item a paralogous pair in different species.
+  \end{itemize}
+\end{enumerate}
+
+\end{document}
