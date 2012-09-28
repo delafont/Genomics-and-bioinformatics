@@ -26,7 +26,7 @@ AATGCAT, GCATGCA, TGCAATG, AATGCGA
   list $S_5$ of all (non-unique) 5-mers (12 elements). 
 \item Construct the De Bruijn graph with $S_4$ as vertex set and
   $S_5$ as edge set.
-\item Add one edge to make this graph eulerian and find an eulerian path.
+\item Add one edge to make this graph Eulerian and find an Eulerian path.
   Write down the corresponding contig. 
 \end{enumerate}
 
@@ -74,10 +74,10 @@ TCC
 
 \begin{enumerate}
 \item Convert each column of this multiple alignment to nucleotide
-  frequencies. Set three hidden 'match' states $M_1$, $M_2$, and $M_3$
+  frequencies. Set three hidden `match' states $M_1$, $M_2$, and $M_3$
   which will emit with the frequencies of the corresponding columns in
   the alignment.
-\item Set four hidden 'insert' states $I_0$, $I_1$, $I_2$, and $I_3$ which
+\item Set four hidden `insert' states $I_0$, $I_1$, $I_2$, and $I_3$ which
   all emit with background frequencies ($1/4$ each base).
 \item Transitions are as follows: $I_n$ has transitions to itself
   (probability $20\%$) and to $M_{n+1}$ (except $I_3$), $M_n$ has transitions to
