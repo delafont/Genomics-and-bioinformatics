@@ -16,14 +16,6 @@
 \begin{document}
 \maketitle
 
-
-In today's session, you will use publicly available genome sequence and annotation data for a particular species
-to extract some biological information about that species.
-
-If you do not have a working copy of Python and R on your computer, please go through last week's tutorial before starting this exercise.
-
-
-
 \section{Getting data with UCSC}
 \subsection{Visualizing genome data}
 \begin{enumerate}
@@ -40,6 +32,19 @@ for mouse chr18 from the USB keys provided by us. \\\\
 and the \texttt{.gtf} file for the whole mouse genome can be downloaded from ENSEMBL:\\
 \url{ftp://ftp.ensembl.org/pub/release-64/gtf/mus_musculus/} .
 
+
+\section{Overlap graphs}
+Here are five ``reads'': TCTATA, GGTCTA, TATCTA, TCTAGC, TATATC, originate from a single, longer contig.
+\begin{enumerate}
+\item Try to reassemble the contig by hand, looking at the overlaps between the reads.
+\item Build an (Hamiltonian) overlaph graph with these reads, and draw the longest path. 
+From there, reconstruct the contig.
+\item Take $l=4$ and build the corresponding ``de Bruijn'' graph. Find an Eulerian cycle, and reconstruct the contig. \\
+\textit{Note}: the ``de Bruijn'' graph must be Eulerian, thus some edges of the graph have to be doubled.
+Try to understand which ones you must double (look at the overlaps between reads), and think about a 
+criterion to do it automatically.
+
+\end{enumerate}
 
 
 \section{Manipulating data with Python}
