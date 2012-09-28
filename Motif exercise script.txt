@@ -1,0 +1,41 @@
+####EXO Motifs Analysis a partir de Fasta###
+source("http://bioconductor.org/biocLite.R")
+biocLite("Biostrings")
+source("http://bioconductor.org/biocLite.R")
+biocLite("seqLogo")
+source("http://bioconductor.org/biocLite.R")
+biocLite("rGADEM")
+source("http://bioconductor.org/biocLite.R")
+biocLite("MotIV")
+
+library(rGADEM)
+library(MotIV)
+library(seqLogo)
+library(Biostrings)
+
+####simple sogo from small set####
+
+###EXAMPLE FROM seqLogo###
+mFile <- system.file("Exfiles/pwm1", package="seqLogo")
+m <- read.table(mFile)
+pwm <- makePWM(m)
+seqLogo(pwm)
+seqLogo(pwm, ic.scale=FALSE)
+
+###EXAMPLE using Biostrings####
+patterns <- DNAStringSet(c("GCTAGC", "GGTACC", "GCATGC"))
+pwm <- PWM(patterns)
+seqLogo(t(t(pwm) * 1/colSums(pwm)))
+seqLogo(t(t(pwm) * 1/colSums(pwm)), ic.scale=FALSE)
+
+####EXAMPLE using a fasta and denovo motif finding####
+Seq<-read.DNAStringSet("CDG1P.fa", "fasta")
+gadem<-GADEM(Seq,verbose=1)
+motifs <- getPWM(gadem)
+print(motifs)
+seqLogo(motifs$m3)
+
+###### comparaison of motif and Jaspar data base of known motifs####
+analysis.jaspar <- motifMatch(motifs)
+summary(analysis.jaspar)
+plot(analysis.jaspar, ncol = 2, top = 10, rev = FALSE, main = "Logo", bysim = TRUE)
