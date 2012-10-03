@@ -20,22 +20,22 @@
 \DeclareTextSymbol{\~}{LGR}{126}
 \title{Series 4}
 \date{}
-\author{Genomics and bioinformatics - Week 5 - October 11, 2011}
+\author{Genomics and bioinformatics - Week 4 - October 9, 2011}
 \begin{document}
 \maketitle
 
 
-
-
 \section{Sequence alignment: Needlman-Wunsch}
-The Needlman-Wunsch algorithm uses a method called ``dynamic programming'' - a very general programming technique. It involves three main steps:
-\begin{enumerate}
-\item Initialization
-\item Scoring (matrix fill)
-\item Alignment (backtracking)
-\end{enumerate}
-In the first exercise of this session you will manually perform a global alignment of two sequences based on the following scoring scheme:
-\emph{Match:} \texttt{+1}, \emph{Mismatch:} \texttt{-1}, \emph{Gap:} \texttt{-2} .\\
+In this exercise you will manually perform a global alignment of two sequences using the
+Needleman-Wunsch algorithm and based on the following scoring scheme: for $X,Y$ in $\{A,T,G,C,-\}$, 
+$$
+M(X,Y) = \left\{ 
+\begin{array}{l}
+	+2 \quad\text{if}\quad X = Y \\
+	-1 \quad\text{if}\quad X \neq Y \\
+	-2 \quad\text{if}\quad X = - \quad\text{or}\quad Y = -
+\end{array} \right.
+$$
 Sequence 1: \texttt{GAATTCAG}\\
 Sequence 2: \texttt{GGATCG}.
 \vspace{0.5cm}
@@ -46,15 +46,15 @@ Sequence 2: \texttt{GGATCG}.
 
 The best alignment is: ........\\
 
- 
+\newpage 
+
 \section{Pair Hidden Markov Model}
 
 In this exercise, we will construct a pair Hidden Markov Model for
 the same sequences as in the first exercise and align them using the
-path with maximum probability. The maximum probability of generating
-the alignment and the corresponding path are calculated by a dynamic
-programming algorithm which is called the Viterbi Algorithm. You will
-see through the exercise that the Viterbi algorithm is actually similar
+path with maximum probability. The maximum probability path and the 
+corresponding alignment are calculated by an algorithm called the Viterbi Algorithm. 
+You will see through the exercise that the Viterbi algorithm is actually equivalent
 to the Needleman-Wunsch algorithm.
 
 
@@ -102,14 +102,14 @@ $\varepsilon$ = probability of extending a gap
 To make correspondence to the Needleman-Wunsch algorithm with the scores given in Exercise 1,
 
 
-$$S(x,y)=log_2\frac{p(x,y)}{p(x)\; p(y)} \quad , \quad d=-log(\delta)$$
+$$S(x,y)=log_2\frac{p(x,y)}{p(x)\; p(y)} \quad , \quad d=-log(\delta) \quad ,$$
 
 
-where 
+where
 
-S(x,y) = 1 for match, 
+S(x,y) = 1 if $x=y$, 
 
-S(x,y) = -1 for mismatch,
+S(x,y) = -1 if $x\neq y$,
 
 d = e = -2 for gap penalty.
 
@@ -163,7 +163,6 @@ $$V_E=max(V_M(n,m),V_D(n,m),V_I(n,m))$$
 \item Deduce the alignment based on the three matrices.
 \end{enumerate}
 
-\underline{Solution:}
 \newpage
 
 Matrix $V_M$:
