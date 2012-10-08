@@ -25,7 +25,7 @@
 \maketitle
 
 
-\section{Sequence alignment: Needlman-Wunsch}
+\section{Sequence alignment: Needleman-Wunsch}
 In this exercise you will manually perform a global alignment of two sequences using the
 Needleman-Wunsch algorithm and based on the following scoring scheme: for $X,Y$ in $\{A,T,G,C,-\}$, 
 $$
@@ -69,40 +69,34 @@ to the Needleman-Wunsch algorithm.
 
 The Pair HMM consists of the following parameters (see fig.~\ref{fig:HMM}):
 
-\vspace{0.5cm}
-
-Three states:
+\begin{itemize}
+\item Three states:
 
 State M matches one letter from each sequence.
 
-State I (Insertion) inserts a gap to the second sequence.
+State I (Insertion) inserts a gap to the first sequence.
 
-State D (Deletion) inserts a gap to the first sequence.
+State D (Deletion) inserts a gap to the second sequence.
 
-\vspace{0.5cm}
+\item Emission probabilities:
 
-Emission probabilities:
+$p(x,y)$ = probability of emitting a pair of characters $[x,y]$ ($x,y \in \{A,T,G,C\}$).
 
-$p(x,y)$ = probability of emitting a pair of characters {[}x,y{]}.
+$p(x)$ = probability of emitting a pair of characters $[x,-]$.
 
-$q(x)$ = probability of emitting a pair of characters {[}x,-{]} (insertion).
+$p(y)$ = probability of emitting a pair of characters $[-,y]$.
 
-$q(y)$ = probability of emitting a pair of characters {[}-,y{]} (deletion).
-
-\vspace{0.5cm}
-
-Transition probabilities:
+\item Transition probabilities (affine gaps case):
 
 $\delta$ = probability of opening a gap
 
 $\varepsilon$ = probability of extending a gap
-
-\vspace{0.5cm}
+\end{itemize}
 
 To make correspondence to the Needleman-Wunsch algorithm with the scores given in Exercise 1,
 
 
-$$S(x,y)=log_2\frac{p(x,y)}{p(x)\; p(y)} \quad , \quad d=-log(\delta) \quad ,$$
+$$S(x,y)=log_2\frac{p(x,y)}{p(x)\; p(y)} \quad , \quad d=log_2(\delta) \quad ,$$
 
 
 where
@@ -111,7 +105,7 @@ S(x,y) = 1 if $x=y$,
 
 S(x,y) = -1 if $x\neq y$,
 
-d = e = -2 for gap penalty.
+d = e = -2 for (linear) gap penalty.
 
 \newpage
 The Viterbi algorithm goes through the three steps:\\
@@ -158,8 +152,10 @@ $$V_E=max(V_M(n,m),V_D(n,m),V_I(n,m))$$
 
 
 \begin{enumerate}
-\item Deduce the emission probability matrix and the transition probabilities of the HMM.
-\item Use the algorithm as shown above to generate the three matrices for Match(M), Deletion(D) and Insertion(I).
+\item Deduce the emission probability matrix and the transition probabilities of the HMM.\\
+	\textit{Note}: suppose that independent emissions of A,T,G,C are equiprobable.\\
+	\textit{Hint}: at some point, use the formula defining conditional probabilities.
+\item Use the algorithm shown above to generate the three matrices for Match(M), Deletion(D) and Insertion(I).
 \item Deduce the alignment based on the three matrices.
 \end{enumerate}
 
