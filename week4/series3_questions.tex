@@ -18,7 +18,7 @@
 \DeclareRobustCommand{\textgreek}[1]{\leavevmode{\greektext #1}}
 \DeclareFontEncoding{LGR}{}{}
 \DeclareTextSymbol{\~}{LGR}{126}
-\title{Series 4}
+\title{Series 3}
 \date{}
 \author{Genomics and bioinformatics - Week 4 - October 9, 2011}
 \begin{document}
@@ -74,17 +74,17 @@ The Pair HMM consists of the following parameters (see fig.~\ref{fig:HMM}):
 
 State M matches one letter from each sequence.
 
-State I (Insertion) inserts a gap to the first sequence.
-
 State D (Deletion) inserts a gap to the second sequence.
+
+State I (Insertion) inserts a gap to the first sequence.
 
 \item Emission probabilities:
 
-$p(x,y)$ = probability of emitting a pair of characters $[x,y]$ ($x,y \in \{A,T,G,C\}$).
+$p(x,y) =$ probability of emitting a pair of characters $[x,y]$ in state M ($x,y \in \{A,T,G,C\}$).
 
-$p(x)$ = probability of emitting a pair of characters $[x,-]$.
+$p(x) = p(x,-) =$ probability of emitting a pair of characters $[x,-]$ in state D.
 
-$p(y)$ = probability of emitting a pair of characters $[-,y]$.
+$p(y) = p(-,y) =$ probability of emitting a pair of characters $[-,y]$ in state I.
 
 \item Transition probabilities (affine gaps case):
 
@@ -97,9 +97,6 @@ To make correspondence to the Needleman-Wunsch algorithm with the scores given i
 
 
 $$S(x,y)=log_2\frac{p(x,y)}{p(x)\; p(y)} \quad , \quad d=log_2(\delta) \quad ,$$
-
-
-where
 
 S(x,y) = 1 if $x=y$, 
 
@@ -125,20 +122,20 @@ $V_*(-1,j)=V_*(i,-1):=-\infty \;$ ($_*$ accounts for either M, D or I)
 Step 2: Recursion:
 \begin{eqnarray}
 &&
-V_M(i,j) =S(x_{i},y_{j})+max 
+V_M(i,j) =S(x_{i},y_{j})+\max 
 	\left\{ \begin{array}{l}
 	 V_M(i-1,j-1) \\
      V_D(i-1,j-1) \\
      V_I(i-1,j-1)
     \end{array} \right.\nonumber\\
 &&
-V_D(i,j) =max \left\{ 
+V_D(i,j) =\max \left\{ 
     \begin{array}{ll}
      V_M(i-1,j)-d \\
      V_D(i-1,j)-e 
     \end{array} \right.\nonumber\\
 &&
-V_I(i,j) =max \left\{ 
+V_I(i,j) =\max \left\{ 
     \begin{array}{ll}
      V_M(i,j-1)-d\\
      V_I(i,j-1)-e
@@ -148,15 +145,14 @@ V_I(i,j) =max \left\{
 
 Step 3: Termination:
 
-$$V_E=max(V_M(n,m),V_D(n,m),V_I(n,m))$$
+$$V_E(n,m)=\max(V_M(n,m),V_D(n,m),V_I(n,m)) \qquad \forall m,n$$
 
-
+\underline{Questions:}
 \begin{enumerate}
 \item Deduce the emission probability matrix and the transition probabilities of the HMM.\\
-	\textit{Note}: suppose that independent emissions of A,T,G,C are equiprobable.\\
-	\textit{Hint}: at some point, use the formula defining conditional probabilities.
-\item Use the algorithm shown above to generate the three matrices for Match(M), Deletion(D) and Insertion(I).
-\item Deduce the alignment based on the three matrices.
+	\textit{Note}: suppose that independent emissions of A,T,G,C are equiprobable (1/4).
+\item Use the algorithm shown above to generate $V_M, V_D, V_I, V_E$.
+\item Deduce the alignment based on these matrices.
 \end{enumerate}
 
 \newpage
@@ -181,7 +177,7 @@ Matrix $V_I$:
 \end{center}
 \vspace{0.5cm}
 
-Backtracking matrix:
+Backtracking matrix $V_E$:
 \begin{center}
 \includegraphics[width=0.8\textwidth]{matrix.png}
 \end{center}

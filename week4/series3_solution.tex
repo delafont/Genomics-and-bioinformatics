@@ -68,41 +68,13 @@ The corresponding HMM is described in the following figure:
 
 \end{centering}
 
-
-First, from $d = -log_2(\delta)$ and $d = -2$ we deduce $\delta = 2^{-2} = \frac{1}{4} = \varepsilon$, 
-giving the transition probabilities.
-
-Then we consider all probability values with respect to a random model in log-odds, i.e.:
-$$S(x,y)=log_2\frac{p(x,y)}{p(x)\; p(y)},$$
-with $S(x,y)=1$ for match, $S(x,y)=-1$ for mismatch, 
-and $p(x)$ is the probability of choosing one nucleotide at random: $p(x)=p(y)=1/4$.
-
-We also have $p(x,y)=p(x|y)\;p(y)$, where $p(x|y)$ is the probability of $x$ conditioned on $y$. Therefore,
-$$S(x,y)=log_2\frac{p(x|y)}{p(x)}$$.
-
-So we can find the emission probability values with the following equation:
-$$p(x|y)=2^{S(x,y)}\;p(x)$$
-
-Finally, the emission probability matrix is given by
-
-\begin{table}[ht]
-\caption{Emission Probability Matrix}
-\centering 
-\begin{tabular}{c|c|c|c|c|}
--- & A  & C & G & T \\
-\hline
-A & 1/2 & 1/8 & 1/8 & 1/8 \\
-\hline
-C & 1/8  & 1/2 & 1/8 & 1/8 \\
-\hline
-G & 1/8 & 1/8 & 1/2 & 1/8 \\
-\hline
-T & 1/8 & 1/8 & 1/8 & 1/2 \\ \hline
-
-\end{tabular}
-\label{table:nonlin}
-\end{table}
-
+\begin{enumerate}
+\item Transitions: from $d = log_2(\delta)$ and $d = -2$ we deduce $\delta = 2^{-2} = \frac{1}{4} = \varepsilon$.
+\item Emissions: $p(x)$ is the probability of choosing one nucleotide at random: $p(x)=p(y)=1/4$.\\
+Inverting the formula for $S(x,y)$, one gets $p(x,y) = \frac{1}{16}2^{S(x,y)}$: \\
+$p(x,x) = \frac{1}{8}$,\\
+$p(x,y) = \frac{1}{32}$ if $x \neq y$.
+\end{enumerate}
 
 \subsection{Constructing the Three Matrices (VM,VD and VI)}
 
