@@ -96,13 +96,15 @@ $\varepsilon$ = probability of extending a gap
 To make correspondence to the Needleman-Wunsch algorithm with the scores given in Exercise 1,
 
 
-$$S(x,y)=log_2\frac{p(x,y)}{p(x)\; p(y)} \quad , \quad d=log_2(\delta) \quad ,$$
+$$S(x,y)=\lambda \cdot log_2\frac{p(x,y)}{p(x)\; p(y)} \quad , \quad d=log_2(\delta) \quad ,$$
 
 S(x,y) = 1 if $x=y$, 
 
 S(x,y) = -1 if $x\neq y$,
 
-d = e = -2 for (linear) gap penalty.
+d = e = -2 for (linear) gap penalty,
+
+$\lambda = \frac{1}{log_2(3)}$ (just for scaling).
 
 \newpage
 The Viterbi algorithm goes through the three steps:\\
@@ -112,9 +114,9 @@ Step 1: Initialization:\\
 
 $V_M(0,0):=0$
 
-$V_D(0,0):=-\infty$
-
 $V_I(0,0):=-\infty$
+
+$V_D(0,0):=-\infty$
 
 $V_*(-1,j)=V_*(i,-1):=-\infty \;$ ($_*$ accounts for either M, D or I)
 \vspace{0.5cm}
@@ -129,23 +131,23 @@ V_M(i,j) =S(x_{i},y_{j})+\max
      V_I(i-1,j-1)
     \end{array} \right.\nonumber\\
 &&
-V_D(i,j) =\max \left\{ 
-    \begin{array}{ll}
-     V_M(i-1,j)-d \\
-     V_D(i-1,j)-e 
-    \end{array} \right.\nonumber\\
-&&
 V_I(i,j) =\max \left\{ 
     \begin{array}{ll}
+     V_M(i-1,j)-d \\
+     V_I(i-1,j)-e 
+    \end{array} \right.\nonumber\\
+&&
+V_D(i,j) =\max \left\{ 
+    \begin{array}{ll}
      V_M(i,j-1)-d\\
-     V_I(i,j-1)-e
+     V_D(i,j-1)-e
     \end{array} \right.\nonumber
 \end{eqnarray}
 
 
 Step 3: Termination:
 
-$$V_E(n,m)=\max(V_M(n,m),V_D(n,m),V_I(n,m)) \qquad \forall m,n$$
+$$V_E(n,m)=\max(V_M(n,m),V_D(n,m),V_I(n,m)), \quad \text{for all} \;  m,n$$
 
 \underline{Questions:}
 \begin{enumerate}

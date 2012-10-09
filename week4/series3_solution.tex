@@ -71,9 +71,10 @@ The corresponding HMM is described in the following figure:
 \begin{enumerate}
 \item Transitions: from $d = log_2(\delta)$ and $d = -2$ we deduce $\delta = 2^{-2} = \frac{1}{4} = \varepsilon$.
 \item Emissions: $p(x)$ is the probability of choosing one nucleotide at random: $p(x)=p(y)=1/4$.\\
-Inverting the formula for $S(x,y)$, one gets $p(x,y) = \frac{1}{16}2^{S(x,y)}$: \\
-$p(x,x) = \frac{1}{8}$,\\
-$p(x,y) = \frac{1}{32}$ if $x \neq y$.
+Inverting the formula for $S(x,y)$, one gets $p(x,y) = \frac{1}{16}\cdot 2^{\frac{S(x,y)}{\lambda}}$: \\
+$p(x,x) = \frac{1}{16}\cdot 2^{log_2(3)} = \frac{1}{16}\cdot 3 = \frac{3}{16}$,\\
+$p(x,y) = \frac{1}{16} \cdot 2^{-log_2(3)} = \frac{1}{16} \cdot 2^{log_2(1/3)} 
+  = \frac{1}{16}\cdot \frac{1}{3} = \frac{1}{48}$ if $x \neq y$.
 \end{enumerate}
 
 \subsection{Constructing the Three Matrices (VM,VD and VI)}
@@ -105,11 +106,11 @@ Matrix $V_I$:
 %\caption{Matrix for insertion state VI}
 \end{center}
 %\end{figure}
-
+ \newpage
 \subsection{Deducing the Alignments}
 
 The final matrix is formed by taking maximum value from the three elements of each matrix.
-\newpage
+
 Alignment by backtracking:
 %\begin{figure}[ht]
 \begin{center}
