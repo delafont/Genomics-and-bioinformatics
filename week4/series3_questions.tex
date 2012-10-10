@@ -98,11 +98,11 @@ To make correspondence to the Needleman-Wunsch algorithm with the scores given i
 
 $$S(x,y)=\lambda \cdot log_2\frac{p(x,y)}{p(x)\; p(y)} \quad , \quad d=log_2(\delta) \quad ,$$
 
-S(x,y) = 1 if $x=y$, 
+$S(x,y) = 1$ if $x=y$, 
 
-S(x,y) = -1 if $x\neq y$,
+$S(x,y) = -1$ if $x\neq y$,
 
-d = e = -2 for (linear) gap penalty,
+$d = e = -2$ for (linear) gap penalty,
 
 $\lambda = \frac{1}{log_2(3)}$ (just for scaling).
 
@@ -133,14 +133,14 @@ V_M(i,j) =S(x_{i},y_{j})+\max
 &&
 V_I(i,j) =\max \left\{ 
     \begin{array}{ll}
-     V_M(i-1,j)-d \\
-     V_I(i-1,j)-e 
+     V_M(i-1,j)+d \\
+     V_I(i-1,j)+e 
     \end{array} \right.\nonumber\\
 &&
 V_D(i,j) =\max \left\{ 
     \begin{array}{ll}
-     V_M(i,j-1)-d\\
-     V_D(i,j-1)-e
+     V_M(i,j-1)+d\\
+     V_D(i,j-1)+e
     \end{array} \right.\nonumber
 \end{eqnarray}
 

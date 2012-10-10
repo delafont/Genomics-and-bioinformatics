@@ -37,7 +37,7 @@ The highest score is then retained and the corresponding arrow is labelled. Here
 \noindent
 One then applies the traceback process to the obtained table to deduce the best alignment between the two reads. 
 The traceback begins with the bottom-right cell and is completed when the top-left cell of table is reached. Note that several 
-traceback paths are possible and thus in general there may be more than one optimum alignment. The best alignments are given by the paths that have the maximum score. A traceback path is highlighted below.
+traceback paths are possible and thus in general there may be more than one optimum alignment. The best alignments are given by the paths that have the maximum score. A traceback path is highlighted below; a second one would go through the -1 at coordinate (3,4).
 
 \begin{center}
 \includegraphics[width=0.6\textwidth]{backtracking.png}
@@ -109,9 +109,10 @@ Matrix $V_I$:
  \newpage
 \subsection{Deducing the Alignments}
 
-The final matrix is formed by taking maximum value from the three elements of each matrix.
+The final matrix is formed by taking the maximum value from the three elements of each matrix. Note that it is exactly the matrix of Exercise 1.
+Remember (annote) which matrix the maximum came from. Then start at the bottom-right cell. 
+If the max came from $V_M$, go one step back diagonally (up-left direction); if it came from $VD$, go one step to the left; if from $V_I$, go up one step; if there are multiple choices for the maximum, this is what opens the possibility to have multiple alignments with the same probability.
 
-Alignment by backtracking:
 %\begin{figure}[ht]
 \begin{center}
 \includegraphics[width=0.6\textwidth]{Slide4.eps}
@@ -119,7 +120,7 @@ Alignment by backtracking:
 \end{center}
 %\end{figure}
 
-There are two possible optimal alignments.
+There are two possible optimal alignments (same as in Exercise 1).
 
 %\begin{figure}[h]
 \begin{center}
@@ -127,5 +128,7 @@ There are two possible optimal alignments.
 \end{center}
 %\caption{The alignments}
 %\end{figure}
+
+This procedure may seem more complicated that the Needleman-Wunsch algorithm to find the same result, but the point is that HMMs can be used in a wide range of others problems, providing efficient solutions thanks to the Viterbi algorithm. In this particular case, one can show that there is an equivalence between the recursion formulas for both algorithms.
 
 \end{document}
