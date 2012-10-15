@@ -10,9 +10,9 @@
 \usepackage[center,footnotesize]{caption}
 \usepackage[section]{placeins}
 \usepackage{subfig}
-\title{Series 5}
+\title{Series 4}
 \date{}
-\author{Genomics and bioinformatics - Week 6 - October 18, 2011}
+\author{Genomics and bioinformatics - Week 4 - October 16, 2012}
 \begin{document}
 \maketitle
 
@@ -28,7 +28,7 @@ The goal of this exercise is to design a Hidden Markov model. \emph{Plasmodium F
 \end{enumerate}
 
 \section{Reading frame}
-In this exercise you are given a nucleotide sequence (\texttt{"sequence\_001.txt"}) which contains a coding region somewhere. You have to deduce the correct reading frame of this coding region.
+In this exercise you are given a nucleotide sequence (\texttt{"sequence\_ex2.fasta"}) which contains a coding region somewhere\footnote{From the yeast TCP1-beta gene. The complete sequence can be found at \url{http://www.ncbi.nlm.nih.gov/sites/entrez?cmd=Retrieve&db=nucleotide&dopt=GenBank&list_uids=1293613}}. You have to deduce the correct (longest) reading frame of this coding region.
 
 The general procedure to find the right frame for reading a nucleotide sequence is to convert the nucleotide sequence into the corresponding possible amino acid sequences and see which one makes the most sense. As you know, the base pairs are read three by three and translated into amino acids. This can be done on the forward strand or the complementary strand. One can hence read a sequence in six different ways, depending on where one starts (``phase'').
 
@@ -53,10 +53,11 @@ codon_to_aminoacid = {'aaa': 'K', 'aac': 'N', 'aag': 'K', 'aat': 'N', 'aca': 'T'
 \end{verbatim}
 
 \subsection{Sequence to protein}
-You can now write the function that takes a nucleotide sequence as entry and outputs a protein sequence.
+You can now write the function that takes a nucleotide sequence as entry and outputs a protein sequence:
 
 \begin{verbatim}
-	def translate(seq): ...........
+def translate(seq): 
+   ...
 \end{verbatim}
 
 You should be able to use it like this:
@@ -65,16 +66,18 @@ You should be able to use it like this:
 	>>> QIL
 \end{verbatim}
 
+Construct also a second function \texttt{complementary} that takes a nucleotides sequence and returns its reverse complement.
+
 \subsection{Find the correct reading frame}
-You can now load the file \texttt{"sequence\_001.txt"} and call the function you wrote in the last step with the six different possible frames and decide which one is the right one.
+You can now load the file \texttt{"sequence\_001.txt"} and call the functions you wrote in the last step with the six different possible frames and find the longest reading frame.
 
 \subsection{Some useful features for this exercise (Python)}
 \begin{itemize}
 \item Dictionaries (\texttt{dict}) are \textit{the} mapping type in Python. \\
 	  One can make a dictionary from lists using \texttt{dict(zip(}$list1,list2$\texttt{))}.
 \item Strings: \texttt{replace, split}. \\
-	  Lists: \texttt{''.join(}$list$\texttt{)} transforms a list of characters into a string (\texttt{list(}$string$\texttt{)} does the contrary); $list$.append() add an element at the end of the list.
-\item Biopython probably provides tools to do all this rapidly (unchecked).
+	  Lists: \texttt{''.join(}$list$\texttt{)} transforms a list of characters into a string (\texttt{list(}$string$\texttt{)} does the contrary); $list$\texttt{.append()} adds an element at the end of the list.
+\item \textit{Biopython} probably provides tools to do all this rapidly (unchecked).
 \end{itemize}
 
 
@@ -84,7 +87,8 @@ A common use of the BLAST tool is to identify the function of an unknown sequenc
 \url{http://blast.ncbi.nlm.nih.gov/}
 
 \subsection{Nucleotide BLAST - blastn}
-Perform a nucleotide BLAST using \texttt{fragment\_007.fasta} .
+Perform a nucleotide BLAST using \texttt{fragment\_007.fasta} on the \textit{Nucleotide collection (nr/nt)}, allowing for \textit{More dissimilar sequences}. In the \textit{Algorithm parameters}, you can change the scores for match/mismatch and gap penalties.
+
 \begin{enumerate}
 \item Do you get any matches to \texttt{fragment\_007}? Which parameters did you use? Record the alignment statistics for the top hits.
 \item Extract the sequence of the hit with the highest query coverage (this may not necessarily be the top hit) and perform another nucleotide BLAST, using the same parameters. Record the alignment statistics for the top hits.
@@ -110,9 +114,10 @@ Perform a protein BLAST with \texttt{aa\_007.fasta}
 
 \subsection{Finding orthologs}
 
-You have been provided with the sequence of the Pho2p protein from the famous yeast, \emph{Saccharomyces cerevisiae}. Run BLAST to find out whether any putative orthologs of Pho2p are present in another, not so famous yeast, \emph{Candida glabrata}.\\
+You have been provided with the sequence of the Pho2p protein from the famous yeast, \emph{Saccharomyces cerevisiae}: \texttt{pho2p\_cerevisiae.fasta}. Run BLAST to find out whether any putative orthologs of Pho2p are present in another, not so famous yeast, \emph{Candida glabrata}.\\
 
-In a paper comparing the phosphate signal transduction in \emph{S. cerevisiae} and \emph{C. gabrata} (\mbox{Genetics 182:471-9,2009}), the authors identified the ortholog of Pho2p in \emph{C. gabrata}. \\
+In a paper comparing the phosphate signal transduction in \emph{S. cerevisiae} and \emph{C. gabrata}, the authors identified the ortholog of Pho2p in \emph{C. gabrata}\footnote{Kerwin and Wykoff, 2009}: \\
+\url{http://www.genetics.org/content/182/2/471.full}. 
 
 Are the findings of the paper consistent with your observations?
 
