@@ -18,30 +18,35 @@
 
 \section{Hidden Markov Model}
 \begin{enumerate}
-\item There are two states, say I (isochore) and N (normal). We observe sequences of bases A, T, G and C. For this exercise one can group G and C in one variable ``GC'', and similarly A and T in ``AT''. Note that from each state, probabilities of incoming arrows must sum to 1, as well as outgoing arrows.
+\item There are two states, say $I$ (isochore) and $N$ (normal). We observe sequences of bases A, T, G and C. For this exercise one can group G and C in one variable ``GC'', and similarly A and T in ``AT''. Note that from each state, the outgoing probabilities must sum to 1.
 
 \begin{center}
 \includegraphics[height=0.2\textwidth]{hmm.pdf}
 \end{center}
 
-\item In state I (isochore), the probability to see GC is 0.5, same for AT. From state N, probabilities are 0.2 for GC and 0.8 for AT.
+\item In state $I$ (isochore), the probability to see GC is 0.5, the same for AT. From state $N$, the probabilities are 0.2 for GC and 0.8 for AT.
 \item The isochore is 7000 bases long, the genome 23'000'000, so the probability for a random base in the genome to belong to the isochore is $x = P(I) = 7'000/23'000'000 = 3\cdot 10^{-4}$.
-\item Bayes' formula says that 
+\item We have
+$$ P(N|I)=p; \ P(I|N)=q; \ P(I|I)=(1-p); \ P(N|N)=(1-q)$$
 $$ P(I) = P(I|N)P(N) + P(I|I)P(I) $$
 $$ P(N) = P(N|I)P(I) + P(N|N)P(N) $$
 so in terms of $x$, $p$ and $q$:
 $$ x = q(1-x) + (1-p)x $$
 $$ 1-x = px + (1-q)(1-x) $$
 Note that the two equations are equivalent, so one cannot use them to find p and q.
-\item From state I, one can consider the event ``staying in I'' as a fail, with probability $1-p$, and ``leaving to N'' as a success, with probability $p$. The number X of failures before the first success is given by a geometric distribution:
-$$ P(X=k) = (1-p)^k p, \qquad P(X<k) = 1-(1-p)^{k+1}, $$
-which mean is $E[X] = \frac{1-p}{p}$ (another formulation, taking X as the time of the first success, leads to $E[X] = \frac{1}{p}$).
+\item From state $I$, one can consider the event ``staying in $I$'' as a fail, with probability $1-p$, and ``going to $N$'' as a success, with probability $p$. The number $X$ of failures before the first success is given by a geometric distribution:
+$$ P(X=k) = (1-p)^k p, \qquad P(X\leq k) = 1-(1-p)^{k+1}. $$
+Its mean is $E[X] = \frac{1-p}{p}$ (another formulation, taking $X$ as the time of the first success, leads to $E[X] = \frac{1}{p}$).
 \footnote{\url{http://en.wikipedia.org/wiki/Geometric_distribution}}
-\item If the isochore is generated from a geometric process as in the previous point, its length is most probably the mean of the distribution. So $7000 = E[X] = \frac{1-p}{p} \Rightarrow p = \frac{1}{7001}$ (or $\frac{1}{7000}$ with the alternative formulation), confirming what one could expect intuitively. The average length of the (two) normal regions is $\frac{23000000-7000}{2} = 11496500$, so one could do the same with $E[X] = 11496500 = \frac{1-q}{q}$ to obtain $q = \frac{1}{11496501}$.
+\item If the isochore is generated from a geometric process as in the previous point, its length is most probably the mean of the distribution. So $7000 = E[X] = \frac{1-p}{p} \Rightarrow p = \frac{1}{7001}$ (or $\frac{1}{7000}$ with the alternative formulation), confirming what one could expect intuitively. Taking $p=\frac{1}{7000}$, one deduces from point 4 that $q = x/(1-x) p = \frac{1}{11496500}$. One may also compute $q$ as follows: Exchanging the role of $I$ and $N$ in point 5, writing $Y$ for the corresponding random variable and $L$ for the average length of the two non GC-rich regions, one obtains $L= \frac{23000000-7000}{2}$, $E(Y)=L_{\rm total}=2L$ and $E(Y) =  \frac{1-q}{q}$, so that $q = \frac{1}{11496500}$ as before.
 \end{enumerate}
 
+\section{Reading frame}
+
+See the program "series5\_solution.py".
 
 \section{BLAST}
+\subsection{Nucleotide BLAST}
 
 \begin{enumerate}
 \item Do you get any matches to \texttt{fragment\_007}? Which parameters did you use? Record the alignment statistics for the top hits.
@@ -110,7 +115,7 @@ which mean is $E[X] = \frac{1-p}{p}$ (another formulation, taking X as the time 
 
 \end{enumerate}
 
-\section{Finding orthologs}
+\subsection{Finding orthologs}
 \begin{enumerate}
 \item Putative ortholog of \emph{Saccharomyces cerevisiae} Pho2p in \emph{Candida glabrata}?
 

@@ -1,4 +1,3 @@
-
 #--------------#
 # Question 2.1 #
 #--------------#
@@ -25,13 +24,38 @@ def translate(seq):
 # Question 2.4 #
 #--------------#
 
+def complementary(seq):
+    compl = []
+    for letter in seq:
+        if letter == "a":
+            compl.append("t")
+        if letter == "c":
+            compl.append("g")
+        if letter == "g":
+            compl.append("c")
+        if letter == "t":
+            compl.append("a")
+    return ''.join(reversed(compl))
+
+def cut(seq):
+    """Cut the given sequence such that its length is a factor of three."""
+    if len(seq)%3 == 0:
+        sequence = seq
+    elif len(seq)%3 == 1:
+        sequence = seq[:-1]
+    elif len(seq)%3 == 2:
+        sequence = seq[:-2]
+    return sequence
+
 raw = open('sequence_001.txt', 'r').read()
-sequence = raw.replace(' ','').replace('\n','') # remove spaces and newlines
-for i in [0,1,2]: # forward strand
-    print translate(sequence[i:])
-complementary = sequence.lower().replace('a','t').replace('t','a').replace('g','c').replace('c','g')
-for i in [-1,-2,-3]: # reverse strand
-    print translate(complementary[i::-1])
+sequence_raw = raw.replace('\n','').replace(' ','') # remove spaces and newlines
+complement_raw = complementary(sequence_raw)
+
+for i in [0,1,2]:
+    sequence = cut(sequence_raw[i:])
+    complement = cut(complement_raw[i:])
+    print "Forward strand "+str(i)+": ",  translate(sequence)
+    print "Reverse strand "+str(i)+": ", translate(complement)
 
 """
 The answer is obviously the third reading frame in the forward direction since the

@@ -17,19 +17,18 @@
 \maketitle
 
 \section{Hidden Markov Model}
-The goal of this exercise is to design and analyze a Hidden Markov model. \\
-\emph{Plasmodium Falciparum} (protozoan parasite that causes malaria in humans) has a GC content of about 20\%, and a genome length of 23Mb. Suppose now that our protein of interest has a strong affinity with GC rich isochores (long regions of DNA with a relatively homogeneous GC content, which tend to be more flexible and contain more genes). We are interested in finding isochores to discover potential binding sites of the protein. In the case of \emph{P. falciparum}, we know that only one 7Kb DNA isochore has a 50\% GC content - but suppose we don't know where it is.
+The goal of this exercise is to design a Hidden Markov model. \emph{Plasmodium Falciparum} (protozoan parasite that causes malaria in humans) has a GC content of about 20\%, and a genome length of 23Mb. Suppose that we are interested in a protein that has a strong affinity with GC-rich isochores (long regions of DNA with a relatively homogeneous GC content, which tend to be more flexible and contain more genes), and thus it is interesting to find GC-rich isochores to discover potential binding sites of the protein. In the case of \emph{P. falciparum}, we know that there is only one large (7 Kb) GC-rich isochore with a 50\% GC content - but suppose we do not know where it is.
 \begin{enumerate}
-\item Draw a Hidden Markov Model that reflects the situation: identify hidden states and observed variables.
+\item Draw a Hidden Markov Model that reflects the situation: specify hidden states and observed variables.
 \item What are the emission probabilities from each state?
-\item What is the probability, taking a random position in the genome, to be in the isochore? Call this probability $x = P(I)$, the complementary $1-x = P(N)$.
-\item Call $p$, $q$ the transition probabilities between two states $N$ and $I$. Write $P(I|N)$, $P(N|I)$, $P(I|I)$, $P(N|N)$, $P(I)$ and $P(N)$ as functions of $x$, $p$ and $q$, and the relations between them (Bayes' formula).
-\item Once in a given state, consider the random variable that describes the number of (Bernoulli) steps until one leaves the state. What is its distribution, and its mean?
+\item Taking uniformly a random position in the genome, what is the probability that it belongs to the GC-rich isochore? Call this probability $x = P(I)$, the complementary $1-x = P(N)$.
+\item Write $p$ and $q$ for the transition probabilities between the two states $N$ and $I$. Write $P(I|N)$, $P(N|I)$, $P(I|I)$, $P(N|N)$, $P(I)$ and $P(N)$ as functions of $x$, $p$ and $q$, and try to solve for $p$ and $q$.
+\item Once in a given state, consider the random variable $X$ that describes the number of steps until one leaves the state. What is its distribution, and its mean?
 \item Estimate $p$ and $q$.
 \end{enumerate}
 
 \section{Reading frame}
-In this exercise you are given a nucleotide sequence (\texttt{"sequence\_001.txt"}) which contains a coding region somewhere. You have to deduce what is the reading frame of this coding region.
+In this exercise you are given a nucleotide sequence (\texttt{"sequence\_001.txt"}) which contains a coding region somewhere. You have to deduce the correct reading frame of this coding region.
 
 The general procedure to find the right frame for reading a nucleotide sequence is to convert the nucleotide sequence into the corresponding possible amino acid sequences and see which one makes the most sense. As you know, the base pairs are read three by three and translated into amino acids. This can be done on the forward strand or the complementary strand. One can hence read a sequence in six different ways, depending on where one starts (``phase'').
 
@@ -38,9 +37,7 @@ So, to convert a base pair sequence (e.g. \texttt{CAGATTCTC}...) to a amino acid
 To do this, you can use you favorite programming language - choosing Python or R will make you assistants more willing to help you, and we advise Python for this kind of work.
 
 \subsection{All 3-mers}
-To build the conversion table that links 3-mers to amino acids. We first need to build an exhaustive list of 3-mers. Write the code that takes as input the list of the four nucleotides and generates as output all the possible permutations of size 3.
-	
-The output should start like this and have 64 elements:
+To build the conversion table that links 3-mers to amino acids, we first need to build an exhaustive list of 3-mers. Write the code that takes as input the list of the four nucleotides and generates as output all the possible permutations of size 3 (64 elements):
 	
 \begin{verbatim}
 bases = ['t', 'c', 'a', 'g']
@@ -48,7 +45,7 @@ codons = ['ttt', 'ttc', 'tta', 'ttg', 'tct', 'tcc', 'tca', 'tcg', 'tat', ... ]
 \end{verbatim}
 
 \subsection{3-mer to amino acid}
-We can now map each 3-mer to its amino acid. If you built the list in the same order as above, the corresponding amino acids are the following:
+We can now map each 3-mer to its amino acid. If you build the list in the same order as above, the corresponding amino acids are the following:
 
 \begin{verbatim}
 aminos = "FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG"
@@ -75,9 +72,8 @@ You can now load the file \texttt{"sequence\_001.txt"} and call the function you
 \begin{itemize}
 \item Dictionaries (\texttt{dict}) are \textit{the} mapping type in Python. \\
 	  One can make a dictionary from lists using \texttt{dict(zip(}$list1,list2$\texttt{))}.
-\item Strings: \texttt{replace, lower, upper, strip, split}. \\
-	  \texttt{''.join(}$list$\texttt{)} transforms a list of characters into a string; \\
-	  \texttt{list(}$string$\texttt{)} does the contrary.
+\item Strings: \texttt{replace, split}. \\
+	  Lists: \texttt{''.join(}$list$\texttt{)} transforms a list of characters into a string (\texttt{list(}$string$\texttt{)} does the contrary); $list$.append() add an element at the end of the list.
 \item Biopython probably provides tools to do all this rapidly (unchecked).
 \end{itemize}
 
@@ -130,7 +126,7 @@ Are the findings of the paper consistent with your observations?
 
 This is a simple and commonly used test for predicting orthologous sequences.
 
-Genes A (from species X) and B (from species Y) will be considered as (putative) orthologs if (1) a search of similar sequences of A in species Y yields as the best hit B, AND a search of similar sequences of B in species X yields as the best hit A.
+Genes A (from species X) and B (from species Y) will be considered as (putative) orthologs if (1) a search of similar sequences of A in species Y yields as the best hit B, and (2) a search of similar sequences of B in species X yields as the best hit A.
 
 \item One can automate large-scale, numerous BLAST requests using Biopython: \\
 	\url{http://biopython.org/DIST/docs/tutorial/Tutorial.html}, Chapter 7.
