@@ -2,13 +2,35 @@
 # Question 2.1 #
 #--------------#
 
-bases = ['t', 'c', 'a', 'g']
+bases = ['t','c','a','g']
+
+# Solution 1:
+codons = []
+for x in bases:
+    for y in bases:
+        for z in bases:
+            codons.append(x+y+z)
+
+# Solution 2 ("list comprehension"):
 codons = [x+y+z for x in bases for y in bases for z in bases]
 
 #--------------#
 # Question 2.2 #
 #--------------#
 
+# Solution 0 (manually):
+codon_to_amino = {}
+codon_to_amino['TTT'] = 'F'
+codon_to_amino['TTC'] = 'F'
+# ...
+
+# Solution 1:
+aminos = "FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG"
+codon_to_amino = {}
+for i in range(len(codons)):
+    codon_to_amino[codons[i]] = aminos[i]
+
+# Solution 2:
 aminos = "FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG"
 codon_to_amino = dict(zip(codons, aminos))
 
@@ -17,52 +39,59 @@ codon_to_amino = dict(zip(codons, aminos))
 #--------------#
 
 def translate(seq):
+    """Translates a nucleotide sequence *seq* into an aminoacid sequence."""
     translation = [codon_to_amino[seq[i:i+3]] for i in range(0,len(seq),3)]
-    return ''.join(translation) # transforms the list into a string
+    return ''.join(translation) # transforms the list into a string. str([1,2,3]) won't work directly.
 
 #--------------#
 # Question 2.4 #
 #--------------#
 
 def complementary(seq):
+    """Return the reverse complement of a given sequence *seq*."""
     compl = []
     for letter in seq:
-        if letter == "a":
+        if letter.lower() == "a":
             compl.append("t")
-        if letter == "c":
+        if letter.lower() == "c":
             compl.append("g")
-        if letter == "g":
+        if letter.lower() == "g":
             compl.append("c")
-        if letter == "t":
+        if letter.lower() == "t":
             compl.append("a")
     return ''.join(reversed(compl))
 
 def cut(seq):
-    """Cut the given sequence such that its length is a factor of three."""
+    """Cut the end of sequence *seq* so that its length is a multiple of three."""
     if len(seq)%3 == 0:
         sequence = seq
     elif len(seq)%3 == 1:
-        sequence = seq[:-1]
+        sequence = seq[:-1] # up to last element, excluded
     elif len(seq)%3 == 2:
         sequence = seq[:-2]
     return sequence
 
-raw = open('sequence_001.txt', 'r').read()
-sequence_raw = raw.replace('\n','').replace(' ','') # remove spaces and newlines
-complement_raw = complementary(sequence_raw)
+f = open('sequence_ex2.fasta', 'r') # Exercise 2
+#f = open('sequence_ex3.fasta', 'r') # Exercise 3
+f.readline() # skip header
+raw = f.read()
+raw = raw.lower() # small letters only
+sequence = raw.replace('\n','').replace(' ','') # remove spaces and newlines
+complement = complementary(sequence)
 
 for i in [0,1,2]:
-    sequence = cut(sequence_raw[i:])
-    complement = cut(complement_raw[i:])
-    print "Forward strand "+str(i)+": ",  translate(sequence)
-    print "Reverse strand "+str(i)+": ", translate(complement)
+    seq = cut(sequence[i:])
+    print "\nForward strand, shift " + str(i) + ":\n" + translate(seq)
+for i in [0,1,2]:
+    comp = cut(complement[i:])
+    print "\nReverse strand, shift " + str(i) + ":\n" + translate(comp)
 
 """
-The answer is obviously the third reading frame in the forward direction since the
-other reading frames are filled with stop codons everywhere.
+The third reading frame in the forward direction is best since the
+other reading frames are filled with stop codons.
 
 This example was taken from the yeast TCP1-beta gene.
-The original file is found here:
+The original file can be found found here:
 
 http://www.ncbi.nlm.nih.gov/sites/entrez?cmd=Retrieve&db=nucleotide&dopt=GenBank&list_uids=1293613
 """
