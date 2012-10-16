@@ -24,7 +24,7 @@
 \includegraphics[height=0.2\textwidth]{hmm.pdf}
 \end{center}
 
-\item In state $I$ (isochore), the probability to see GC is 0.5, the same for AT. From state $N$, the probabilities are 0.2 for GC and 0.8 for AT.
+\item In state $I$ (isochore), the probability to see GC is 0.5, same for AT. In state $N$, the probabilities are 0.2 for GC and 0.8 for AT.
 \item The isochore is 7000 bases long, the genome 23'000'000, so the probability for a random base in the genome to belong to the isochore is $x = P(I) = 7'000/23'000'000 = 3\cdot 10^{-4}$.
 \item We have
 $$ P(N|I)=p; \ P(I|N)=q; \ P(I|I)=(1-p); \ P(N|N)=(1-q)$$
@@ -43,7 +43,7 @@ Its mean is $E[X] = \frac{1-p}{p}$ (another formulation, taking $X$ as the time 
 
 \section{Reading frame}
 
-See the program "series5\_solution.py".
+See \texttt{series5\_solution.py}.
 
 %%%%%%%%%%%%%
 \section{BLAST}
@@ -62,8 +62,8 @@ See the program "series5\_solution.py".
 \end{center}
 \vspace{0.5cm}
 
-\item Using the Nucleotide Collection (nr/nt) Database and optimizing for ``more dissimilar sequences''
-(discontiguous megablast), setting Match/Mismatch Scores to (1,-1) and Gap Costs to (Existence: 1 Extension: 2), one finds "Alistipes shahii WAL 8301 draft genome" as the top hit (maximum score).
+\item Using the \textit{Nucleotide Collection (nr/nt)} database and optimizing for \textit{More dissimilar sequences
+(discontiguous megablast)}, setting \textit{Match/Mismatch Scores} to \textit{(1,-1)} and \textit{Gap Costs} to \textit{(Existence: 1 Extension: 2)}, one finds \textbf{Alistipes shahii WAL 8301 draft genome} as the top hit (maximum score).
 
 \vspace{0.5cm}
 \begin{center}
