@@ -71,8 +71,8 @@ def cut(seq):
         sequence = seq[:-2]
     return sequence
 
-f = open('sequence_ex2.fasta', 'r') # Exercise 2
-#f = open('sequence_ex3.fasta', 'r') # Exercise 3
+#f = open('sequence_ex2.fasta', 'r') # Exercise 2
+f = open('fragment_007.fasta', 'r') # Exercise 3
 f.readline() # skip header
 raw = f.read()
 raw = raw.lower() # small letters only

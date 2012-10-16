@@ -33,9 +33,9 @@ $$ P(N) = P(N|I)P(I) + P(N|N)P(N) $$
 so in terms of $x$, $p$ and $q$:
 $$ x = q(1-x) + (1-p)x $$
 $$ 1-x = px + (1-q)(1-x) $$
-Note that the two equations are equivalent, so one cannot use them to find p and q.
+Note that the two equations are equivalent, so one cannot solve directly for p and q.
 \item From state $I$, one can consider the event ``staying in $I$'' as a fail, with probability $1-p$, and ``going to $N$'' as a success, with probability $p$. The number $X$ of failures before the first success is given by a geometric distribution:
-$$ P(X=k) = (1-p)^k p, \qquad P(X\leq k) = 1-(1-p)^{k+1}. $$
+$$ P(X=k) = (1-p)^k p .$$
 Its mean is $E[X] = \frac{1-p}{p}$ (another formulation, taking $X$ as the time of the first success, leads to $E[X] = \frac{1}{p}$).
 \footnote{\url{http://en.wikipedia.org/wiki/Geometric_distribution}}
 \item If the isochore is generated from a geometric process as in the previous point, its length is most probably the mean of the distribution. So $7000 = E[X] = \frac{1-p}{p} \Rightarrow p = \frac{1}{7001}$ (or $\frac{1}{7000}$ with the alternative formulation), confirming what one could expect intuitively. Taking $p=\frac{1}{7000}$, one deduces from point 4 that $q = x/(1-x) p = \frac{1}{11496500}$. One may also compute $q$ as follows: Exchanging the role of $I$ and $N$ in point 5, writing $Y$ for the corresponding random variable and $L$ for the average length of the two non GC-rich regions, one obtains $L= \frac{23000000-7000}{2}$, $E(Y)=L_{\rm total}=2L$ and $E(Y) =  \frac{1-q}{q}$, so that $q = \frac{1}{11496500}$ as before.
@@ -45,7 +45,12 @@ Its mean is $E[X] = \frac{1-p}{p}$ (another formulation, taking $X$ as the time 
 
 See the program "series5\_solution.py".
 
+%%%%%%%%%%%%%
 \section{BLAST}
+%%%%%%%%%%%%%
+
+(Results here may change with the evolution of sequencing databases).
+
 \subsection{Nucleotide BLAST}
 
 \begin{enumerate}
@@ -85,11 +90,8 @@ See the program "series5\_solution.py".
 \subsection{Protein BLAST}
 
 \begin{enumerate}
-\item Are any well-known protein domains found? 
-
-- Peptidases S8 S53 superfamily
-
-\item Do you get any significant hits? Record the alignment statistics for the top hits. 
+\item Using your custom function from exercise 2, one can extract the following nucleotides sequence from the translation of the forward strand with shift 0 (must start with `M'; incomplete): \\ \texttt{MSTQIFNSDGDYTNSETLVYRAIVYGADNGAVISQNSWGSQSLTIKELQKAAIDYFIDYAGMDETGEIQT \\ GPMRGGIFIAAAGNDNVSTPNMPSAYERVLAVASMGPDFTKASYSTFGTWTDITAPGGDIDKFDLSEYGV \\ LSTYADNYYAYGEGTSMACPHVAGAA}.\\
+Copy it into a file \texttt{aa\_007.fasta}, or directly into the BLASTp interface, and run the alignment. After a few seconds, you get the following matches of the peptidases S8 S53 superfamily:
 
 \vspace{0.5cm}
 \begin{center}
@@ -97,33 +99,25 @@ See the program "series5\_solution.py".
 \end{center}
 \vspace{0.5cm}
 
-\item What is the possible function of the protein encoded by \texttt{fragment\_007}?
+\item \texttt{fragment\_007} encodes for a subtilase family domain protein. It is a member of the peptidases S8 (subtilisin and kexin) and S53 (sedolisin) family. These include endopeptidases and exopeptidases.
 
-- \texttt{fragment\_007} encodes for a subtilase family domain protein. It is a member of the peptidases S8 (subtilisin and kexin) and S53 (sedolisin) family. These include endopeptidases and exopeptidases.
+\item  \emph{Odoribacter, Prevotella, Porphyromonas} and \emph{Alistipes} species are predominant. Note that \emph{Alistipes} is the one you found with the nucleotide BLAST, and it is not the top match.
 
-\item Which species is most predominant in your BLAST output?
+\item BLASTx
 
-- \emph{Prevotella} species
-
-\item Could you have obtained the same results using another BLAST program, without having to translate the nucleotide sequence of \texttt{fragment\_007}?
-
-- Yes, using blastx
-
-\item How do results from Protein BLAST compare with the results from Nucleotide BLAST?
-
-- Amino acid sequences are more conserved than nucleotide sequences. Often even the highest-scoring subject sequences retrieved using the nucleotide sequence will cover only small regions of the query sequence, while quite often the corresponding sequences retrieved using the amino acid sequence will cover more of the gene.
+\item Amino acid sequences are more conserved than nucleotide sequences. Often even the highest-scoring subject sequences retrieved using the nucleotide sequence will cover only small regions of the query sequence, while quite often the corresponding sequences retrieved using the amino acid sequence will cover more of the gene.
 
 \end{enumerate}
 
 \subsection{Finding orthologs}
-\begin{enumerate}
-\item Putative ortholog of \emph{Saccharomyces cerevisiae} Pho2p in \emph{Candida glabrata}?
 
-- \texttt{CAGL0L07436g}
+Specify in the \textit{Organism} section of the BLASTp interface that you want to align on species \emph{Candida glabrata}. Consistently with the publication, the best match indicates \\ 
+\texttt{GENE ID: 2890989 CAGL0L07436g}:
 
-\item Are the findings of the paper consistent with your observations?
-
-- Yes
-\end{enumerate}
+\vspace{0.5cm}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{blastp_ortholog.png}
+\end{center}
+\vspace{0.5cm}
 
 \end{document}
