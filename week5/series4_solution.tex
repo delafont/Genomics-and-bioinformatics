@@ -18,7 +18,7 @@
 
 \section{Hidden Markov Model}
 \begin{enumerate}
-\item There are two states, say $I$ (isochore) and $N$ (normal). We observe sequences of bases A, T, G and C. For this exercise one can group G and C in one variable ``GC'', and similarly A and T in ``AT''. Note that from each state, the outgoing probabilities must sum to 1.
+\item We observe sequences of bases A, T, G and C. For this exercise, one should group G and C in one variable ``GC'', and similarly A and T in ``AT''. So there are two states, $I$ (isochore) and $N$ (normal).  Note that from each state, the outgoing probabilities must sum to 1.
 
 \begin{center}
 \includegraphics[height=0.2\textwidth]{hmm.pdf}
@@ -49,10 +49,7 @@ See the program "series4\_solution.py".
 \subsection{Nucleotide BLAST}
 
 \begin{enumerate}
-\item Do you get any matches to \texttt{fragment\_007}? Which parameters did you use? Record the alignment statistics for the top hits.
-
-- Using the Nucleotide Collection (nr/nt) Database and optimizing for ``more dissimilar sequences''
-(discontiguous megablast)
+\item In general, the default parameters will lead to zero matches. Possible reasons are: the selected species is not correct, the alignment optimization criterium is too stringent.
 
 \vspace{0.5cm}
 \begin{center}
@@ -60,7 +57,8 @@ See the program "series4\_solution.py".
 \end{center}
 \vspace{0.5cm}
 
-\item Extract the sequence of the hit with the highest query coverage (this may not necessarily be the top hit) and perform another nucleotide BLAST, using the same parameters. Record the alignment statistics for the top hits.
+\item Using the Nucleotide Collection (nr/nt) Database and optimizing for ``more dissimilar sequences''
+(discontiguous megablast), setting Match/Mismatch Scores to (1,-1) and Gap Costs to (Existence: 1 Extension: 2), one finds "Alistipes shahii WAL 8301 draft genome" as the top hit (maximum score).
 
 \vspace{0.5cm}
 \begin{center}
@@ -68,17 +66,9 @@ See the program "series4\_solution.py".
 \end{center}
 \vspace{0.5cm}
 
-\item What changes do you observe in the E-values? To which parameter could you attribute the these changes?  
+\item Depending on your interests, the following parameters may be used: The \textbf{max score} and \textbf{total score} specify the quality of the largest and total local alignment, respectively. The \textbf{query coverage} specifies the proportion of the query sequence that have been used during the alignment. The \textbf{E-value} specifies the nomber of alignments in a random database giving a score larger or equal to the one obtained. 
 
-- Improvement in the E-values. Parameter - Query coverage.
-
-\item What is the default threshold for the E-value on NCBI BLAST?
-
-- 10
-
-\item Do you have any significant hits suggesting a possible function for \texttt{fragment\_007}? 
-
-- The E-values are not significant. 
+\item From the top hit, one cannot deduce any particular function for \texttt{fragment\_007}. However, looking at the next hits one finds out that "protease" is a good candidate for the function of \texttt{fragment\_007}.
 
 \end{enumerate}
 
