@@ -57,7 +57,7 @@ You can now write the function that takes a nucleotide sequence as entry and out
 
 \begin{verbatim}
 def translate(seq): 
-   ...
+   <code>
 \end{verbatim}
 
 You should be able to use it like this:
@@ -87,39 +87,31 @@ A common use of the BLAST tool is to identify the function of an unknown sequenc
 \url{http://blast.ncbi.nlm.nih.gov/}
 
 \subsection{Nucleotide BLAST - blastn}
-Perform a nucleotide BLAST using \texttt{fragment\_007.fasta} on the \textit{Nucleotide collection (nr/nt)}, allowing for \textit{More dissimilar sequences}. In the \textit{Algorithm parameters}, you can change the scores for match/mismatch and gap penalties.
 
 \begin{enumerate}
-\item Do you get any matches to \texttt{fragment\_007}? Which parameters did you use? Record the alignment statistics for the top hits.
-\item Extract the sequence of the hit with the highest query coverage (this may not necessarily be the top hit) and perform another nucleotide BLAST, using the same parameters. Record the alignment statistics for the top hits.
-\item What changes do you observe in the E-values? To which parameter would you attribute the these changes?  
-\item What is the default threshold for the E-value on NCBI BLAST?
+\item Perform a nucleotide BLAST using \texttt{fragment\_007.fasta} using the default parameters. Do you get any matches to \texttt{fragment\_007}? Give two possible reasons why this does not work.
+\item Now choose a larger database (\textit{Nucleotide collection (nr/nt)}) and allow for \textit{More dissimilar sequences}. You can also change the scores for match/mismatch and gap penalties in the \textit{Algorithm parameters}. Run BLAST again and record the top hit.
+\item You can sort the BLAST results based on a number of alignment statistics. What criteria, i.e. which statistics would you consider in order to assess the statistical significance of BLAST hits? Justify your choice. 
 \item Do you have any significant hits suggesting a possible function for \texttt{fragment\_007}? 
 \end{enumerate}
 
 \subsection{Protein BLAST - blastp}
 
-Using the python function from the previous exercise, obtain the amino acid sequences for \texttt{fragment\_007.fasta} in three reading frames. Choose the appropriate reading frame and save the corresponding amino acid sequence in \texttt{aa\_007.fasta} format.\\
-
-Perform a protein BLAST with \texttt{aa\_007.fasta} 
+Using the python function from the previous exercise, obtain the amino acid sequences for \texttt{fragment\_007.fasta} in three reading frames. Choose the appropriate reading frame and save the corresponding amino acid sequence in a text file, say  \texttt{aa\_007.fasta}.\\
 
 \begin{enumerate}
-\item Are any well-known protein domains found? 
-\item Do you get any significant hits? Record the alignment statistics for the top hits. 
+\item Perform a protein BLAST with \texttt{aa\_007.fasta} using the default parameters. Are any well-known protein domains found? Record the top hit.
 \item What is the possible function of the protein encoded by \texttt{fragment\_007}?
 \item Which species is most predominant in your BLAST output?
 \item Is there a BLAST program that would have given you the same results as BLASTp using the nucleotide sequence of \texttt{fragment\_007} as input?
-\item How do results from BLASTp compare with the results from BLASTn?
+\item How do results from BLASTp compare with the results from BLASTn? How do you explain the differences? 
 \end{enumerate}
 
 \subsection{Finding orthologs}
 
 You have been provided with the sequence of the Pho2p protein from the famous yeast, \emph{Saccharomyces cerevisiae}: \texttt{pho2p\_cerevisiae.fasta}. Run BLAST to find out whether any putative orthologs of Pho2p are present in another, not so famous yeast, \emph{Candida glabrata}.\\
 
-In a paper comparing the phosphate signal transduction in \emph{S. cerevisiae} and \emph{C. gabrata}, the authors identified the ortholog of Pho2p in \emph{C. gabrata}\footnote{Kerwin and Wykoff, 2009}: \\
-\url{http://www.genetics.org/content/182/2/471.full}. 
-
-Are the findings of the paper consistent with your observations?
+In a 2009 publication\footnote{Kerwin and Wykoff, 2009: \url{http://www.genetics.org/content/182/2/471.full}} comparing the phosphate signal transduction in \emph{S. cerevisiae} and \emph{C. gabrata}, authors identified \texttt{CAGL0L07436g} as the ortholog of Pho2p in \emph{C. gabrata}. Are the findings of the paper consistent with your observations?
 
 \subsection{Some BLAST tips}
 
