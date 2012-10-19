@@ -1,0 +1,147 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{bbm} %math chars
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{fullpage} %minimizes the default margins
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage[center,footnotesize]{caption} %options des legendes des graphes
+\usepackage[section]{placeins} %place les figures d'une section avant le debut de la suivante
+\usepackage{subfig} %a) b) c)
+
+\title{Series 5}
+\date{}
+\author{Genomics and bioinformatics - Week 6 - September 23, 2012}
+
+\begin{document}
+\maketitle
+
+This series is about phylogenetic trees and a complement to HMMs.
+
+\section{Phylogenetic trees}
+
+...
+
+\section{Another HMM}
+
+\subsection{The Viterbi algorithm}
+
+... fill a 2x4 grid by hand
+
+\newpage
+
+\subsection{Using R}
+
+In this exercise we show you how to use an existing package to model a problem with an HMM and solve it. There exist such packages for most programming languages, but here we arbitrarily chose R.
+
+\subsubsection{Get started}
+
+Start R, then download, install and import the HMM package:
+
+\begin{verbatim}
+install.packages("HMM")
+library(HMM)
+\end{verbatim}
+
+Create an array of hidden states names \texttt{states}, an array of emission names \texttt{emissions}, a matrix \texttt{transProb} with the transition probabilities, a matrix \texttt{emissionProb} 
+with the emission probabilities, and a vector \texttt{initProb} with the probabilities of the initial state:
+
+\begin{verbatim}
+states <- c("N","I")
+emissions <- c("A","T","C","G")
+initProb <- c(0.5, 0.5)
+transProb <- matrix(c(0.9, 0.45, 0.1, 0.55), 2)
+emissionProb <- matrix(c(0.25, 0.05, 0.25, 0.05, 0.25, 0.45, 0.25, 0.45), 2)
+\end{verbatim}
+
+Create the model with these parameters:
+
+\begin{verbatim}
+hmm <- initHMM(states, emissions, initProb, transProb, emissionProb)
+hmm  # prints a summary of the model
+\end{verbatim}
+
+Using the model created above, let us generate a random observation of length 100:
+
+\begin{verbatim}
+simulation <- simHMM(hmm,100)
+simulation  # prints the chosen hidden states and emissions sequences
+\end{verbatim}
+
+\subsubsection{Visualize}
+
+Copy and paste the following code to visualize the situation. The plot on top shows the observed sequence,
+that at the bottom shown the hidden states:
+
+\begin{verbatim}
+obsToVal <- function(obs){
+	if((obs == "A") or (obs=="T")){return(2)}
+	else {return(4)}
+}
+stateToVal <- function(st){
+	if(st == "I"){return (1)}
+	if(st == "N"){return (3)}
+	else {return ("NA")}
+}
+par(mfrow=c(2,1))
+plot( sapply(simulation$observation, obsToVal),pch=19,ylim=c(0,8),col=sapply(simulation$observation, obsToVal),cex=.5)
+legend("topright",c("A/T","G/C"),pch=19,col=c("red","blue"))
+plot( sapply(simulation$states, stateToVal),type="l",ylim=c(0,5))
+\end{verbatim}
+
+\subsubsection{Forward, Backward algorithms}
+
+Here are the commands to run the forward and backward algorithms. What is the probability of the observed sequence, given the model? :
+
+\begin{verbatim}
+logForwardProb <- forward(hmm, simulation$observation)
+exp(logForwardProb)
+logBackwardProbabilities <- backward(hmm, simulation$observations)
+exp(logBackwardProb)
+\end{verbatim}
+
+\subsubsection{Viterbi}
+
+For the simulated sequence, we knew the hidden states. Now say we have an observed sequences, but
+do not know the hidden states. Try first to guess where are the ``I'' region(s) in these two sequences:
+
+\begin{verbatim}
+obs1 <- c("A","T","G","A","A","G","T","A","C","T","T","A","A","G","T","G","A",
+          "C","T","A","A","T","T","A","G","T","T","T","A","T","C","T","A","A")
+obs2 <- c("A","T","A","G","A","T","T","C","T","G","C","C","G","A","A","A","T",
+          "T","T","C","A","T","T","A","G","T","T","T","A","T","C","T","A","A")
+\end{verbatim}
+
+Now we are going to find the most probable hidden sequence that explains these observations thanks to the Viterbi algorithm. Is it close to what you expected?
+
+\begin{verbatim}
+viterbi1 <- viterbi(hmm, obs1)
+viterbi1
+viterbi2 <- viterbi(hmm, obs2)
+viterbi2
+\end{verbatim}
+
+\subsubsection{Baum-Welsch}
+
+Finally, let us admit that our transition and emission probabilities are just a first guess, but we would like to update the model parameters by training it with the Baum-Welsch algorithm:
+
+\begin{verbatim}
+bw = baumWelch(hmm, obs2, 10)  # 10 iterations
+print(bw$hmm)
+\end{verbatim}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
