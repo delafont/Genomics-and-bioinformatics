@@ -31,19 +31,21 @@ $$ P(N|I)=p; \ P(I|N)=q; \ P(I|I)=(1-p); \ P(N|N)=(1-q)$$
 $$ P(I) = P(I|N)P(N) + P(I|I)P(I) $$
 $$ P(N) = P(N|I)P(I) + P(N|N)P(N) $$
 so in terms of $x$, $p$ and $q$:
-$$ x = q(1-x) + (1-p)x $$
-$$ 1-x = px + (1-q)(1-x) $$
+\begin{eqnarray*}
+x &=& q(1-x) + (1-p)x\\ 
+1-x &=& px + (1-q)(1-x)   \ \rightarrow \ q = \frac{x}{1-x} p
+\end{eqnarray*}
 Note that the two equations are equivalent, so one cannot solve directly for p and q.
 \item From state $I$, one can consider the event ``staying in $I$'' as a fail, with probability $1-p$, and ``going to $N$'' as a success, with probability $p$. The number $X$ of failures before the first success is given by a geometric distribution:
 $$ P(X=k) = (1-p)^k p .$$
 Its mean is $E[X] = \frac{1-p}{p}$ (another formulation, taking $X$ as the time of the first success, leads to $E[X] = \frac{1}{p}$).
 \footnote{\url{http://en.wikipedia.org/wiki/Geometric_distribution}}
-\item If the isochore is generated from a geometric process as in the previous point, its length is most probably the mean of the distribution. So $7000 = E[X] = \frac{1-p}{p} \Rightarrow p = \frac{1}{7001}$ (or $\frac{1}{7000}$ with the alternative formulation), confirming what one could expect intuitively. Taking $p=\frac{1}{7000}$, one deduces from point 4 that $q = x/(1-x) p = \frac{1}{11496500}$. One may also compute $q$ as follows: Exchanging the role of $I$ and $N$ in point 5, writing $Y$ for the corresponding random variable and $L$ for the average length of the two non GC-rich regions, one obtains $L= \frac{23000000-7000}{2}$, $E(Y)=L_{\rm total}=2L$ and $E(Y) =  \frac{1-q}{q}$, so that $q = \frac{1}{11496500}$ as before.
+\item If the isochore is generated from a geometric process as in the previous point, its length is most probably the mean of the distribution. So $7000 = E[X] = \frac{1-p}{p} \Rightarrow p = \frac{1}{7001}$ (or $\frac{1}{7000}$ with the alternative formulation), confirming what one could expect intuitively. Taking $p=\frac{1}{7000}$, one deduces from point 4 that $q = x/(1-x) p = \frac{1}{22993000}$. One may also compute $q$ as follows: Exchanging the role of $I$ and $N$ in point 5, writing $Y$ for the corresponding random variable and $L$ for the average length of the non GC-rich region, one obtains $L= 23000000-7000 = 22993000$, $L = E(Y) =  \frac{1-q}{q}$, so that $q = \frac{1}{22993000}$ as before.
 \end{enumerate}
 
 \section{Reading frame}
 
-See \texttt{series5\_solution.py}.
+See \texttt{series4\_solution.py}.
 
 %%%%%%%%%%%%%
 \section{BLAST}
