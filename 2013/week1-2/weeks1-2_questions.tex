@@ -1,0 +1,152 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{bbm} %math chars
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{fullpage} %minimizes the default margins
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage[center,footnotesize]{caption} %options des legendes des graphes
+\usepackage[section]{placeins} %place les figures d'une section avant le debut de la suivante
+\usepackage{subfig} %a) b) c)
+
+\title{Series 1-2}
+\date{}
+\author{Genomics and bioinformatics - Weeks 1 and 2}
+
+\begin{document}
+\maketitle
+
+This first series will introduce you with data visualization, and its treatment using computer programming.
+Solutions will be provided the next week. 
+
+Solutions to programming exercises are scripts showing \textit{one}
+way to solve them, accompanied with many comments and advice. Since the best way to learn programming is to 
+imitate examples, we strongly advise to look at them carefully.
+
+\section{Website of this course}
+Add the course website to your bookmarks:
+
+\url{http://moodle.epfl.ch/course/view.php?id=11181}
+
+\section{Demo of the UCSC genome browser}
+Go to the address \url{http://genome.ucsc.edu/}. Click on ``Genome browser'', select a species
+and visualize its genomic content; zoom in and out.
+
+\section{Programming exercise}
+To complete this (and next weeks') exercise, you must have R and Python installed on your computer (see instructions below).
+
+This simple exercise, which consists in playing with a sample text file, should be completed in both languages. You must write your scripts successively in R and Python. Use as much of the documentation given below as needed to obtain the result we desire here.
+
+Testing file: download \texttt{genes\_expression\_100.txt} on the course Moodle website. It is an output file of a typical bioinformatics program in raw text tab-delimited format - 100 lines of the form:\\
+
+\texttt{Gene name <tab> Expression in condition 1 <tab> Expression in condition 2}\\
+
+Using Python, then R, do:
+\begin{enumerate}
+\item Read the file and extract gene names and associated numbers;
+\item Compute the ratios between the two numerical columns; take $log_{2}$ of the result;
+\item Compute the geometric means between the two numerical columns; take $log_{10}$ of the result;
+\item Write these results in a new text file: \texttt{"GeneName <tab> $log_2$(ratio) <tab> $log_{10}$(mean)"}
+\item Plot ratios vs means (use  \texttt{matplotlib} for Python).
+\item Find an interpretation of the graph you produced.
+\end{enumerate}
+
+\clearpage
+
+\section{About programming}
+\subsection{A suitable text editor}
+Programming is about writing scripts, which are plain text, i.e. without any specific style, as opposed to Word documents, for instance. Thus you need an appropriate text editor. We recommend the following free software:
+
+\begin{itemize}
+\item For Windows users: {\it Notepad++} ($\ne$ {\it Notepad}): \url{http://notepad-plus-plus.org/}
+\item For Mac users: {\it TextWrangler}, {\it Emacs}*, {\it MacVim}*
+\item For Linux users: {\it Emacs}*, {\it Vim}*
+\end{itemize}
+* need some learning of their more efficient but maybe non-intuitive usage.
+
+\section{R}
+Cran R is a programming language {\it dedicated to statistical analysis}, widely used amongst scientists
+because it is free (GNU license), provides a large variety of efficient statistical libraries, and can produce 
+nice graphics without too much effort. Do not try to use it for any other purpose, though: other programming languages 
+would make it easier.
+
+\subsection{Installation}
+Download the latest version of R at \url{http://stat.ethz.ch/CRAN/}. During the installation, when you are asked what to install, don't forget to include the help files.
+
+For Windows users: during the installation, choose where you want to install your folder; then you can run it clicking on the \texttt{.exe} file located in the \texttt{bin/} sub-folder (make a shortcut).
+
+You can optionally download Rstudio, an IDE for R, at \url{http://www.rstudio.com/}
+\subsection{If you need help}
+\begin{enumerate}
+\item Some R tutorials: \\
+      \url{http://www.statmethods.net/} (english),\\
+      \url{http://www.duclert.org/Aide-memoire-R/Le-langage/Introduction.php} (french), \\
+      \url{http://cran.r-project.org/doc/manuals/R-intro.pdf} (official, english).
+\item The \texttt{?}, \texttt{help()} and \texttt{example()} commands give you informations about other commands.
+\item Use Google for fast access to the reference (type ``cran R <command>'' to ensure it is about the right `R'...).
+\item Ask you assistants.
+\item Whole reference documentation: \url{http://cran.r-project.org/doc/manuals/refman.pdf}
+\end{enumerate}
+
+\subsection{Some useful features for this exercise}
+\begin{itemize}
+\item \texttt{read.table, write.table, c, plot, data.frame, log2, log10, colnames, rownames}.
+\item How to select rows and columns:\\ \texttt{data[,1], data\$col1, data[''col1'']; data[1,]; data[1,1]; data[2:5,3:4]}.
+\item Data types: data frames, vectors.
+\end{itemize}
+
+\clearpage
+
+\section{Python}
+
+Python is a very general programming language like C++ or Java. Compared to R, one could say it is a ``lower level'' language:
+you can do {\it everything} with it, but you start from basics and have to build your functions yourself, in more details.
+Fortunately, often someone did the job for you (``libraries'').
+
+\subsection{Installing}
+Create an academic account at Enthought and download the Enthought Canopy distribution of Python at \url{https://www.enthought.com/products/canopy/academic/}. It embeds:
+\begin{itemize}
+\item The {\it Python} interpreter;
+\item The {\it IPython} improved interface;
+\item The {\it numpy} and {\it scipy} libraries for scientific calculus;
+\item The {\it matplotlib} library for graphics.
+\end{itemize}
+You will need to install {\it Biopython} (libraries for biological analysis) in the package manager of Canopy by using your account. Open a console and type ``ipython''
+(to get a console on Windows, open the ``Start'' menu and type ``cmd'' in the search field. On a Mac, use Terminal 
+from your Applications folder).
+
+\subsection{If you need help}
+\begin{enumerate}
+\item Some Python tutorials: \\
+      \url{http://docs.python.org/tutorial/} (official, english, read 3.1 to 4.6, 5.5 and 7.2),\\
+      \url{http://www.siteduzero.com/} (french).
+\item Use Google for fast access to the reference.
+\item Ask you assistants.
+\item Whole reference documentation: \url{http://docs.python.org/library/index.html}
+\end{enumerate}
+
+\subsection{Some useful features for this exercise}
+\begin{itemize}
+\item Print a variable: \texttt{print}. \\
+    Run a script (do not copy \& paste): \texttt{execfile}.
+\item Files: \texttt{open, close, read, readline, readlines, write}. Strings: \texttt{split}. \\
+      A useful pattern:
+	\begin{verbatim}
+	for line in myfile:
+     <do something with> line.split()  # Comment: `line' is a string.
+	\end{verbatim}
+\item Data types: \texttt{file, int, float, str, list}, \\
+	  	and conversions: \texttt{int('4'), float('4.0'), str(4)}.
+\item Loops and conditions: \texttt{for, if, in}.
+\item Libraries and their specific functions: 
+	\begin{verbatim}
+	from math import sqrt, log
+	from matplotlib.pyplot import plot, show
+	\end{verbatim}
+\end{itemize}
+
+
+\end{document}
