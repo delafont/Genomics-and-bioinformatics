@@ -6,17 +6,15 @@ from Bio import SeqIO
 genome = SeqIO.read("chrI.fa", "fasta")  # This creates a 'SeqRecord' object
 sequence = genome.seq  # a 'Seq' object, similar to a string
 
-"""
-Alternatively:
+# Alternatively:
 
 f = open("chrI.fa")
-sequence = f.read()
+sequence = f.read()  # a string
 f.close()
 
-Note that in this case all the file is read as a single string.
+"""Note that in this case all the file is read as a single string.
 For large genomes this could cause memory problems! It is even worse with annotation files.
-Note also the multiple-line comment we use here.
-"""
+Note also the multiple-line comment we use here."""
 
 #--------------#
 # Question 3.2 #
