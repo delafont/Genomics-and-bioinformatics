@@ -51,13 +51,14 @@ def complementary(seq):
     """Return the reverse complement of a given sequence *seq*."""
     compl = []
     for letter in seq:
-        if letter.lower() == "a":
+        letter = letter.lower() # lower case
+        if letter == "a":
             compl.append("t")
-        if letter.lower() == "c":
+        elif letter == "c":
             compl.append("g")
-        if letter.lower() == "g":
+        elif letter == "g":
             compl.append("c")
-        if letter.lower() == "t":
+        elif letter == "t":
             compl.append("a")
     return ''.join(reversed(compl))
 
