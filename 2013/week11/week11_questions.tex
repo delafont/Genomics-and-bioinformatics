@@ -1,0 +1,179 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{bbm} %math chars
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{indentfirst}
+\usepackage{fullpage} %minimizes the default margins
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage[center,footnotesize]{caption} %options des legendes des graphes
+\usepackage[section]{placeins} %place les figures d'une section avant le debut de la suivante
+\usepackage{subfig} %a) b) c)
+\usepackage{fancyvrb}
+
+\title{Exercises - Week 11}
+\date{}
+\author{Genomics and bioinformatics}
+
+\begin{document}
+\maketitle
+
+\section{Transcription Equilibrium}
+
+%\begin{enumerate}
+%\item 
+\noindent
+Solve for $m$ the differential equation
+$$ \dot{m}(t) = P - \gamma\cdot m(t) \quad , $$
+where $m(t)$ is the quantity of RNA in the cell at time $t$, $P$ is a constant transcription rate, 
+and $\gamma$ is a constant degradation rate.
+%\item Show that 
+%$$ \frac{P_0}{\gamma} + \frac{1}{\omega} \sin(\omega \tau) \cos (\omega (t-\tau))$$
+%is a solution of 
+%$$ \dot{m}(t) = P_0 + \cos (\omega t) - \gamma \cdot m(t) \quad .$$
+%\end{enumerate}
+
+\section{Quantile Normalization}
+
+\noindent
+The expression of a few genes (g1 to g5) has been quantified and reported in the table below,
+for two technical replicates R1 and R2. 
+
+\begin{table}[tbh]
+\centering
+\begin{tabular}{ c | ccccc }
+      &     g1   &    g2    &    g3    &    g4    &   g5 \\
+      \hline
+R1 &    0.8   &    1.5   &   1.7    &    2.6   &   3.9    \\
+R2 &    1.1   &    2.2   &   1.6    &    2.6   &   3.8   
+\end{tabular}
+\end{table}
+
+\begin{enumerate}
+\item What is the median of the values in R1, and in R2?
+\item Apply quantile normalization to these two samples, by hand.
+\item Write a function that applies quantile normalization to any couple of vectors.
+\item Test it: create two random vectors of size 2'000, apply quantile normalization to them, and
+	check that after transformation they have the same median.
+\end{enumerate}
+
+
+\section{Linear Models}
+
+
+\subsection{Continuous variable}
+
+The overall gene expression of an individual has been quantified (by a numerologist) at different body temperatures 
+and reported in the table below.
+
+\begin{table}[tbh]
+\centering
+\begin{tabular}{ l | ccccccc }
+Temperature &  -25  &  -10  &  -5  &  0   &  5  &  10  &  25  \\ 
+Expression    &   13  &   18   &  19 &  22 &  24 & 32  &  37  
+\end{tabular}
+\end{table}
+
+\noindent
+We want to model the gene expression as a linear function of the temperature. The problem is to
+find the ``best'' straight line across our points. A line is defined by its intercept and its slope. 
+Roughly speaking, if we find a slope that is nearly zero, the temperature has no effect on gene expression, 
+while a bigger slope means bigger effect.
+
+\begin{enumerate}
+\item Plot in R the expression against the temperature. Do you think a linear model can be appropriate?
+Do you think that the temperature has an effect?
+\item Define a linear model of the form $Y = a + b T + \epsilon$ : what does each of the terms 
+correspond to in our problem (with the usual notation, close to the course's) ?
+\item Apply the model to our data: each measurement of T and Y is a ``realization'' of this model, so we get 7 equations:
+$$y_1 = a + b t_1 + \epsilon_1 \; ,$$
+$$y_2 = a + b t_2 + \epsilon_2 \; ,$$
+$$...$$
+Rewrite this system as a single equation in matrix form: $Y = X\beta + \epsilon$, where this time
+$Y,\epsilon \in \mathbb{R}^7$, $X \in \mathbb{R}^{7\text{x}2}$, and $\beta={a \choose b}$.
+Replace $t_i$'s and $y_i$'s by their values. \\
+
+\item We are interested in estimating from our data the intercept $a$ and the slope $b$, 
+so that the the sum of all square measurement errors ($\epsilon$) is minimal. 
+Let 
+$$
+X = (\mathbbm{1}, T) = \left( 
+\begin{array}{cc}
+1 & t_1 \\
+1 & t_2 \\
+... & ...
+\end{array}
+\right) .
+$$
+The usual estimator for $\beta$ is 
+$$\hat{\beta} = (X'X)^{-1}X'Y ,$$
+where $X'$ denotes $X$ transposed.\\
+Use either R or Python's \textit{numpy} library to compute this vector. \\
+\textit{Hints:} In R, the matrix product is \texttt{\%*\%} ; use \texttt{solve()} for the inverse.
+
+\item Load your data (T and Y vectors) into R and do the regression the usual way, as follows: 
+\begin{verbatim}
+	model = lm(Y~T)
+	summary(model)
+\end{verbatim}	
+Visualize the result:
+\begin{verbatim}
+	plot(T,Y)
+	abline(model)
+\end{verbatim}
+\begin{itemize}
+	\item Identify the intercept $a$, the slope $b$, the p-value for each (quality of 
+		their estimation), the ``R-squared'' value (overall quality of the model (0 to 1; closer to 1 is better)).
+	\item Compare with your own estimation of $\beta$. 
+	\item Does the temperature significantly affect gene expression? 
+	\item If one increases the body temperature by 1 degree, by how much does it increase the gene expression?
+	\item Is the linear fit a good choice?
+\end{itemize}
+
+\end{enumerate}
+
+
+\newpage
+
+\subsection{Categorical variable}
+
+The expression of a gene has been quantified several times (replicates)
+in two individuals and reported in the table below. One individual has been treated by some drug, 
+the other has not. We now want to model the gene expression as a linear function of the binary variable 
+"Treated/Untreated".
+
+\begin{table}[hbt]
+\centering
+\begin{tabular}{ l | ccccc }
+                 & R1 & R2 & R3 & R4 & R5 \\
+                 \hline
+Untreated    & 41  & 29 & 55  & 50 & 40  \\
+Treated & 43  & 35 & 60  & 53 & 42 
+\end{tabular}
+\end{table}
+
+\noindent
+Assign (arbitrary) numeric values to the factors: ``Treated''=1, ``Untreated''=0. 
+
+\begin{enumerate}
+\item Plot in R the expression against the treatment, similarly to the figure in the course's slides.
+Do you think that the treatment has an effect?
+\item Use the \texttt{boxplot} function of R to better compare graphically the two individuals.
+\item Perform the same analysis as above and answer the same questions.
+\end{enumerate}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
