@@ -1,0 +1,209 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{bbm} %math chars
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{fullpage} %minimizes the default margins
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage[center,footnotesize]{caption} %options des legendes des graphes
+\usepackage[section]{placeins} %place les figures d'une section avant le debut de la suivante
+\usepackage{subfig} %a) b) c)
+\usepackage{fancyvrb}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
+
+\begin{document}
+\title{Exercises - Week 12}
+\date{}
+\author{Genomics and bioinformatics}
+\maketitle
+
+This series concerns the analysis of genomics data using multiple sequence alignments, DNA motifs and protein domains. More precisely, the goal of this exercise is to mimick the process of
+annotating a newly discovered gene sequence, in this case the mRNA \textbf{AY239498.1} from the Genbank database. We will search homolog candidates, reconstruct their phylogeny, and analyze the potential function of the protein by identifying conserved domains and their properties.
+
+\section{Retrieving homologs}
+
+\begin{enumerate}
+\item Search the entry AY239498.1 in the
+  NCBI nucleotide database \footnote{\url{http://www.ncbi.nlm.nih.gov/nucleotide/}} and save it in
+  FASTA format as \textbf{AY239498.fasta} [click on the link \textit{FASTA} at the top of the page and use the menu \textit{Send}].
+\item BLAST \footnote{\url{http://blast.ncbi.nlm.nih.gov/Blast.cgi}}
+  the FASTA file \textbf{AY239498.fasta} against the
+  \textbf{refseq\_rna} database with parameter \textit{Max target
+  sequences=50} in \textit{Algorithm parameters}. 
+\item Download the resulting sequences in FASTA format (in the \textit{Descriptions} section, click on
+  \textit{All$\rightarrow$Download$\rightarrow$FASTA (Complete Sequence)})
+  and rename the file as \textbf{AY239498\_hom ologs.fasta}. This will be used
+  later. 
+\item Explore BLAST features: 
+\begin{itemize}
+\item Draw the corresponding tree using \textit{Distance tree of results}. Which species are present?
+\item Run BLAST against the (for example) \textbf{Nucleotide collection} database. What difference does it
+  make? 
+\item Change the parameter values in \textit{Algorithm parameters}
+  (e.g.\ \textit{Word Size}) and observe how this affects the results.
+\end{itemize}
+\end{enumerate}
+
+\section{Multiple sequence alignment}
+
+We will next use MAFFT to perform a multiple alignment of the
+homologous sequences found previously. This
+is a required input for phylogenetic analysis.
+To improve visualization of results later, we choose to 
+modify the sequence names in the FASTA file. The resulting formatted file is \textbf{AY239498\_homologs\_formated.fasta}.
+
+\subsection{MAFFT}\label{Mafft}
+
+\begin{enumerate}
+\item Use MAFFT\footnote{\url{http://mafft.cbrc.jp/alignment/server/index.html}}
+  with default parameters to perform a multiple sequence alignment of
+  the file \textbf{AY239498\_homologs\_formated.fasta}. 
+\item Save the results in \textit{CLUSTAL} format as \textbf{AY239498\_homologs\_formated.aln}.
+\end{enumerate}
+
+
+\subsection{Jalview}\label{Jalview}
+
+\begin{enumerate}
+\item Download and install Jalview:
+  \url{http://www.jalview.org/download.html}
+%\footnote{Some browsers
+%    may lead to a broken installation file; in this case one should try to use the command
+%    \emph{wget}.}.
+\item Launch Jalview and visualise the alignment
+  (\textit{File$\rightarrow$Input Alignment$\rightarrow$From File}). 
+\item Test various features of Jalview:
+\begin{itemize}
+\item Color nucleotides (menu \textit{Colour$\rightarrow$Nucleotides}).
+\item Display a global view (menu \textit{View$\rightarrow$Overview
+  window}) and try to identify regions with the best alignment. 
+\item Display the logo of the consensus sequence (right-click on the consensus and select \textit{Show Logo}).
+\item Edit the alignment (remove divergent or short sequences, etc.)
+\end{itemize}
+\item Select the block from position \textbf{1108} to \textbf{2461},
+  in menu \textit{Edit} do \textit{Copy/Paste to new
+alignment}, and export the sequences in a FASTA file \textbf{conserved\_block.fasta} (use
+\textit{save as}).
+\end{enumerate}
+
+\section{Inferring the evolutionary tree}
+\subsection{RAxML}
+\begin{enumerate}
+\item Run \textbf{RAxML}\footnote{\url{http://phylobench.vital-it.ch/raxml-bb/}} with
+  the multiple alignment \textbf{AY239498\_homologs\_formated.aln} to
+  infer the phylogenetic tree. \textit{If it takes too
+  long, go to the next section}.
+\item Save the MRE consensus tree in a file named
+  \textbf{AY239498\_MRE.tree}.
+\end{enumerate}
+
+
+\subsection{Dendroscope}
+\begin{enumerate} 
+%http://ab.inf.uni-tuebingen.de/data/software/dendroscope3/download/welcome.html
+\item Install Dendroscope\footnote{\url{http://ab.inf.uni-tuebingen.de/software/dendroscope/}}
+\item Visualise the consensus tree
+  \textbf{AY239498\_MRE.tree} obtained
+  in the previous section.
+\item Explore the various visualization modes, re-root the tree.
+\end{enumerate}
+
+\section{Identifying protein domains}
+
+The conserved block identified in the multiple sequence alignment
+probably contains a functionally important domain of the protein. We will search
+databases for proteins containing the same sequence block and see
+which characterized functional domains they contain.
+
+\subsection{BLASTX}
+
+\begin{enumerate}
+\item Run BLASTX\footnote{\url{http://blast.ncbi.nlm.nih.gov/}} with
+  the conserved sequence block saved in section \ref{Jalview}
+  (\textbf{conserved\_block. fasta})
+  against the \textbf{swissprot} database with default parameters. 
+\item Save the top protein hits in FASTA format for the next step (\textbf{protein\_sequences.fasta}).
+\end{enumerate}
+
+\subsection{Prosite and InterPro searches}
+
+\begin{enumerate}
+\item Search the BLASTX result \textbf{protein\_sequences.fasta} on Prosite\footnote{\url{http://prosite.expasy.org/scanprosite/}}.
+\item Search the first protein sequence
+  (\textbf{P22555}) on
+  InterProScan\footnote{\url{http://www.ebi.ac.uk/Tools/pfa/iprscan/}}.
+\item Which domain is found by these tools?
+\item Are there domains described only in one source? Note the differences between the descriptors of the same domains.
+\end{enumerate}
+
+\section{DNA motif discovery}
+
+We have identified our sequence \textbf{AY239498.1} as coding for a
+\textbf{c-Myc} homolog and containing a \textbf{bHLH} DNA-binding
+domain. To determine its
+targets, we might perform a ChIP-seq experiment.
+Today we will use the data from a similar experiment on the
+Human c-Myc
+(from the ENCODE project \url{http://www.genome.ucsc.edu/ENCODE/}). 
+Sequencing data have been mapped to the Human genome and, after peak calling,
+a list of chromosomal coordinates containing 
+the genomic regions bound by c-Myc are obtained. We will use them to identify
+the motif specifically recognized by c-Myc's bHLH domain.
+
+\subsection{Retrieve sequences by their genome coordinates (with UCSC)}
+
+\begin{enumerate}
+\item Download the BED file \textbf{posPeakMyc.bed} and go to the UCSC genome
+  browser\footnote{\url{http://genome.ucsc.edu/}}, click on \textit{Genome}
+  (top left) and select the Human genome assembly hg19. Click on
+  \textit{manage custom tracks}, then on \textit{add custom
+    tracks} and load the bed file.  
+\item Click on \emph{go to table browser} and select \textit{sequence} in
+  the list of output format. Enter \textbf{posPeakMyc.fasta} in field
+  output file. Click on \emph{get output}. 
+\item In this page, select the \textit{All upper case} option and
+  click on \textit{get sequence} to save the sequences into file
+  \textbf{posPeakMyc.fasta}.
+\item In the result file, you can check that the first line looks like:
+\end{enumerate}
+\begin{verbatim} 
+>hg19_ct_UserTrack_3545_(null) range=chr1:8939139-8939538 5'pad=0 
+3'pad=0 strand=+ repeatMasking=none
+\end{verbatim}
+
+\newpage
+\subsection{ Mask low complexity and repeated elements}
+
+Motif search can be hindered by repetitive sequences included in the
+binding regions. We will use a tool to identify
+and remove potential repetitive sequences.
+
+\begin{enumerate}
+\item Go to repeatMasker\footnote{\url{http://www.repeatmasker.org/}}. The
+  interest of this tool is to mask regions of low complexity to
+  facilitate the identification of relevant motifs. 
+\item Choose \textit{RepeatMasking} service.
+\item Select your file \textbf{posPeakMyc.fasta} and submit the job with default parameters.
+\item Check which elements have been masked in \textit{xxx.out.html} and save the masked file \textit{xxx.masked}. 
+\item Which difference can you see with the input file ?
+\end{enumerate}
+
+\subsection{Motif discovery with MEME-ChIP}
+
+\begin{enumerate}
+\item Go to
+  MEME-ChIP\footnote{\url{http://meme.sdsc.edu/meme/cgi-bin/meme-chip.cgi}},
+  and fill the form with the masked sequences \textbf{posPeakMyc\_masked .fasta} previously
+  obtained.
+
+Note: In MEME options, we recommend to choose one occurrence per sequence, a maximum width of 15, and a maximum number of motif of 5.
+\item Have a look at the MEME and TOMTOM html results.
+\item Which transcription factor corresponds to the main motif? 
+\end{enumerate}
+
+\end{document}

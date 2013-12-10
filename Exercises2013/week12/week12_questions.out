@@ -1,0 +1,14 @@
+\BOOKMARK [1][-]{section.1}{Retrieving homologs}{}% 1
+\BOOKMARK [1][-]{section.2}{Multiple sequence alignment}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{MAFFT}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Jalview}{section.2}% 4
+\BOOKMARK [1][-]{section.3}{Inferring the evolutionary tree}{}% 5
+\BOOKMARK [2][-]{subsection.3.1}{RAxML}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.2}{Dendroscope}{section.3}% 7
+\BOOKMARK [1][-]{section.4}{Identifying protein domains}{}% 8
+\BOOKMARK [2][-]{subsection.4.1}{BLASTX}{section.4}% 9
+\BOOKMARK [2][-]{subsection.4.2}{Prosite and InterPro searches}{section.4}% 10
+\BOOKMARK [1][-]{section.5}{DNA motif discovery}{}% 11
+\BOOKMARK [2][-]{subsection.5.1}{Retrieve sequences by their genome coordinates \(with UCSC\)}{section.5}% 12
+\BOOKMARK [2][-]{subsection.5.2}{ Mask low complexity and repeated elements}{section.5}% 13
+\BOOKMARK [2][-]{subsection.5.3}{Motif discovery with MEME-ChIP}{section.5}% 14
