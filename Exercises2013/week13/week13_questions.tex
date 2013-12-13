@@ -43,7 +43,7 @@ TCGAGT
 $$
 I_j = 2 + \sum_{i \in \{A, C, G, T\}} M_{ij} \cdot \log_2(M_{ij}) \in [0,2] ~.
 $$
-Here we assume that $M_{ij} \cdot \log_2(M_{ij})=0$ if $M_{ij}=0$. Note by comparing with the lecture notes that we have set for simplicity $f_i = 1/4$ for the background frequencies. The height of the character $i$ at position $j$ is given by 
+Here we assume that $M_{ij} \cdot \log_2(M_{ij})=0$ if $M_{ij}=0$. Note by comparing with the lecture notes that we have set for simplicity $f_i = 1/4$ for the background frequencies \footnote{$I_j = \sum_{i \in \{A, C, G, T\}} e^{W_{ij}} \log_2(e^{W_{ij}}/f_i)  = \sum_{i \in \{A, C, G, T\}} M_{ij} \log_2(M_{ij}/f_i) = \sum_{i \in \{A, C, G, T\}} M_{ij} [\log_2(M_{ij}) - \log_2(f_i)] = \sum_{i \in \{A, C, G, T\}} M_{ij} [\log_2(M_{ij}) + 2] = 2 + \sum_{i \in \{A, C, G, T\}} M_{ij} \cdot \log_2(M_{ij})$ since $\sum_{i \in \{A, C, G, T\}} M_{ij} = 1$.}. The height of the character $i$ at position $j$ is given by 
 $$
 \mbox{Height}_{ij} = M_{ij} \cdot I_j~.
 $$
