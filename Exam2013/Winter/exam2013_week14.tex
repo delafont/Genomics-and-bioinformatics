@@ -1,0 +1,189 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{a4wide}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{a4wide}
+\usepackage{graphicx}
+\usepackage{enumerate}
+
+\renewcommand{\topfraction}{1}
+\renewcommand{\bottomfraction}{1}
+
+\title{Genomics and Bioinformatics}
+\date{December 17, 2013}
+\author{Examination - Week 14}
+\begin{document}
+\maketitle
+
+\section*{Question 1 - Phylogenetic trees}
+
+\noindent Use the UPGMA algorithm to build the rooted tree $T$ corresponding to the following distance matrix $M$:
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ M & a & b & c & d & e\\
+\hline
+a & 0 & 4 & 10 & 10 & 14\\
+\hline
+b & 4 & 0 & 10 & 10 & 14\\
+\hline
+c & 10 & 10 & 0 & 2 & 14\\
+\hline
+d & 10 & 10 & 2 & 0 & 14\\
+\hline
+e & 14 & 14 & 14 & 14 & 0\\
+ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\section*{Question 2 - Linear models}
+
+\noindent A microarray contains 6 probes (P1 to P6).
+The raw intensities for three experimental conditions A,B,C (three
+different arrays) have been recorded and reported in the table
+below. We want to compare them.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{l | cccccc}
+   & P1 & P2 & P3 & P4 & P5 & P6\\
+\hline
+A & 166 & 121 & 166 & 270 & 39 & 121 \\
+B & 49   & 49   & 90 & 126 & 18 & 90 \\
+C & 10   & 14   & 24 & 14   & 10 & 3 \\  
+\end{tabular}
+\end{table}
+
+\begin{enumerate}
+\item Consider C as the control (untreated) sample, A as the treated sample.
+  Write a linear model that describes the probe intensities as a
+  function of the treatment A.  
+  Write it in matrix form, replacing all known
+  quantities by their numeric value.
+\item Here is the result of a similar linear regression with treatment B: \\
+	
+\begin{minipage}{\linewidth}
+\begin{verbatim}
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept)    12.50      11.37   1.099  0.29749
+B              57.83      16.08   3.596  0.00488 **
+\end{verbatim}
+\end{minipage}
+	
+	\begin{itemize}
+	\item Would you say that treatment B has a significant effect 
+	  (i.e. what is the probability to observe an even
+          bigger difference in the future, given our data,
+	  under the hypothesis that B has no effect)?
+	\item What is the expected increase in probe intensity when
+          treatment B is applied? 
+	\end{itemize}
+		
+\item Apply quantile normalization to all three samples in the data
+  above. Explain the purpose of this operation.
+
+\end{enumerate}
+
+\section*{Question 3 - Transcription}
+
+\noindent The following questions are based on the NET-seq paper discussed in week 10.
+
+\begin{enumerate}
+\item In figure 1b of the article, why is there a region with no (or
+  very low) signal in the fragmented mature RNA? 
+\item What do you deduce from figure 2d?
+\item Based on the data in figure 2d and knowing that RCO1 is
+  required for histone H4 deacetylation:
+	\begin{itemize}
+	\item What is the expected effect of RCO1 deletion on transcription?
+	\item Which figure demonstrates this effect on the genome-wide transcriptional levels? And how?
+	\end{itemize}
+%\item Figure 1c shows the effect of alpha-Amanitin (an inhibitor of
+%  transcription) in the lysis buffer on RNAPII density. Is there a
+%  significant effect? And why did the authors do this experiment?
+\end{enumerate}
+
+\begin{figure}[h!]
+\vskip -.5cm\includegraphics[scale=.45]{NetSeqF1.pdf}
+\vskip -2cm
+\end{figure}
+\begin{figure}[h!]
+\includegraphics[scale=.45]{NetSeqF2.pdf}
+\rule\textwidth{0.5mm}
+\includegraphics[scale=.45]{NetSeqF3A.pdf}\hskip .1cm\includegraphics[scale=.45]{NetSeqF3B.pdf}
+\end{figure}
+\begin{figure}[h!]
+\vskip -6.6cm\hskip .91cm\includegraphics[scale=.45]{NetSeqCorrect.pdf}
+\end{figure}
+
+\clearpage
+
+\section*{Question 4 - DNA Binding}
+
+\noindent A transcription factor's DNA-binding domain (of length $4$) is described by
+a Position-Weight Matrix (PWM). In units of nucleotide frequencies, the matrix is:
+$$
+M\,=\,\bordermatrix{
+&\mathrm{A}&\mathrm{C}&\mathrm{G}&\mathrm{T}\cr 
+\mathrm{1}&0.082594539&0.610295685&0.224515236&0.082594539\cr 
+\mathrm{2}&0.610360368&0.370202277&0.009718678&0.009718678\cr 
+\mathrm{3}&0.009718678&0.009718678&0.370202277&0.610360368\cr 
+\mathrm{4}&0.082594539&0.224515236&0.610295685&0.082594539\cr
+}~.
+$$
+We usually work with the logarithm of this matrix, which has the same
+units as the free energy and, after subtracting an arbitrary constant
+to make the numbers simpler, the PWM is as follows:
+$$
+W\,=\,\bordermatrix{
+&\mathrm{A}&\mathrm{C}&\mathrm{G}&\mathrm{T}\cr 
+\mathrm{1}&-1&1&0&-1\cr 
+\mathrm{2}&1&0.5&-3.14&-3.14\cr 
+\mathrm{3}&-3.14&-3.14&0.5&1\cr 
+\mathrm{4}&-1&0&1&-1\cr 
+}~.
+$$
+
+\begin{enumerate}
+\item What is the consensus sequence for this motif? 
+\item What are the two second best sequences?
+\item Compute the best motif score on the following sequence: \texttt{ATAGCCTAG}
+%\item Compute all the motif scores on the same sequence but relative to a
+%  non-uniform nucleotide background distribution. This distribution,
+%  expressed in the same (logarithmic) units as the $W$ matrix, is:
+%$$
+%\log f\,=\,\bordermatrix{
+%&\mathrm{A}&\mathrm{C}&\mathrm{G}&\mathrm{T}\cr 
+%&-0.02&1.25&1.25&-0.02}~.
+%$$
+\item Using the limit of low protein concentration we know that the
+  occupancy of a sequence by the transcription factor is
+  proportional to $\exp(W)$ (we set $\beta=1$% and don't use the
+                                % background frequencies
+  ) and assuming that the accessible part of
+  the genome consists of $1000$ times the motif \texttt{CTGG} and $1$
+  motif \texttt{CATG}, which proportion of transcription factors
+  will bind to \texttt{CATG}? Here are some numerical values that can
+  be useful:
+
+\begin{eqnarray*}
+\put(-10,-10){\line(10,0){100}}
+x&&e^x\\
+-3&&0.05\\
+-4&&0.02\\
+-4.64&&0.01\\
+-5.00&&0.007\\
+-6.14&&0.002\\
+-6.64&&0.001\\
+-7.64&&0.0005\\
+-8.28&&0.0002
+\end{eqnarray*}
+
+\end{enumerate}
+
+\end{document}
